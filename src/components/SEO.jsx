@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 export default function SEO({ title, description, ogType = 'website', canonicalUrl, schemaJson }) {
   useEffect(() => {
     // 1. Update document title
-    const fullTitle = `${title} | Land Registry Transfers UK`;
+    const fullTitle = title.includes("Land Registry Transfers") ? title : `${title} | Land Registry Transfers`;
     document.title = fullTitle;
 
     // 2. Update meta description

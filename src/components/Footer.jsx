@@ -3,115 +3,82 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
-  const services = [
-    { id: 'transfer-of-equity', title: 'Transfer of Equity' },
-    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor' },
-    { id: 'name-change', title: 'Name Change' },
-    { id: 'removal-of-restriction', title: 'Removal of a Restriction' },
-    { id: 'transfer-of-equity-wills-probate', title: 'Transfer of Equity (Wills/Probate)' },
-    { id: 'applying-for-restriction', title: 'Applying for a Restriction' },
-    { id: 'first-registration', title: 'First Registration' },
-  ];
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="site-footer">
-      <div className="container">
-        <div className="footer-grid">
-          {/* Brand Col */}
-          <div className="footer-brand">
-            <Link to="/" className="logo">
-              LandRegistry<span>Transfers</span>
+    <footer className="site-footer-light">
+      {/* Decorative background overlays */}
+      <div className="footer-mesh" />
+      <div className="footer-glow" />
+      
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        
+        {/* Main Footer Row */}
+        <div className="footer-main-row">
+          
+          {/* Left: Brand Logo & Copyright */}
+          <div className="footer-left-brand">
+            <Link to="/">
+              <img
+                src="/land-registry-transfers-logo.svg"
+                alt="Land Registry Transfers"
+                className="footer-logo-img"
+              />
             </Link>
-            <p>
-              Professional, fixed-fee legal services for UK property transfers, restriction additions, removals, and land registrations. Experienced team, direct communication, and rapid turnaround times.
-            </p>
-            <div style={{ display: 'flex', gap: 16 }}>
-              {/* Trust badges can go here */}
-              <div style={{ border: '1px solid var(--dark-border)', borderRadius: 'var(--radius-sm)', padding: '6px 12px', fontSize: 11, backgroundColor: 'rgba(255,255,255,0.02)', color: '#fff' }}>
-                ⭐ <strong>4.9/5 Rating</strong> on Reviews
-              </div>
-              <div style={{ border: '1px solid var(--dark-border)', borderRadius: 'var(--radius-sm)', padding: '6px 12px', fontSize: 11, backgroundColor: 'rgba(255,255,255,0.02)', color: '#fff' }}>
-                🔒 <strong>Secure Portal</strong> SSL Encrypted
-              </div>
-            </div>
+            <span className="footer-copyright-text">
+              &copy; {year} Land Registry Transfers. All rights reserved.
+            </span>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="footer-heading">Company</h4>
-            <ul className="footer-links">
-              <li><Link to="/" className="footer-link">Home Page</Link></li>
-              <li><Link to="/about" className="footer-link">About Us</Link></li>
-              <li><Link to="/contact" className="footer-link">Contact & Support</Link></li>
-            </ul>
+          {/* Middle: Links */}
+          <div className="footer-center-links">
+            <Link to="/about" className="footer-inline-link">About Us</Link>
+            <span className="link-dot">•</span>
+            <Link to="/contact" className="footer-inline-link">Contact</Link>
+            <span className="link-dot">•</span>
+            <Link to="/privacy" className="footer-inline-link">Privacy Policy</Link>
+            <span className="link-dot">•</span>
+            <Link to="/terms" className="footer-inline-link">Terms of Use</Link>
           </div>
 
-          {/* Services Links */}
-          <div>
-            <h4 className="footer-heading">Our Services</h4>
-            <ul className="footer-links">
-              {services.slice(0, 5).map((s) => (
-                <li key={s.id}>
-                  <Link to={`/services/${s.id}`} className="footer-link">{s.title}</Link>
-                </li>
-              ))}
-              <li>
-                <Link to="/services/applying-for-restriction" className="footer-link" style={{ fontSize: 13, color: 'var(--secondary)' }}>
-                  View All Services +
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Details & Times */}
-          <div>
-            <h4 className="footer-heading">Contact Details</h4>
+          {/* Right: Compact Contact Row */}
+          <div className="footer-right-contact">
+            <a href="tel:02079460192" className="footer-contact-item" title="Call Us">
+              <Phone size={14} />
+              <span>020 7946 0192</span>
+            </a>
             
-            <div className="footer-contact-item">
-              <Phone size={16} />
-              <div>
-                <p style={{ fontWeight: 600, color: 'var(--text-light)' }}>020 7946 0192</p>
-                <p style={{ fontSize: 12 }}>Mon - Fri, 9 AM - 6 PM</p>
-              </div>
-            </div>
-
-            <div className="footer-contact-item">
-              <Mail size={16} />
-              <div>
-                <p style={{ color: 'var(--text-light)' }}>support@landregistrytransfers.com</p>
-                <p style={{ fontSize: 12 }}>24/7 Enquiry Intake</p>
-              </div>
-            </div>
-
-            <div className="footer-contact-item">
-              <MapPin size={16} />
-              <div>
-                <p>128 City Road</p>
-                <p>London, EC1V 2NX</p>
-              </div>
-            </div>
-
-            <div className="footer-contact-item">
-              <Clock size={16} />
-              <div>
-                <p>Office Opening Hours</p>
-                <p style={{ fontSize: 12 }}>Monday to Friday: 9am - 6pm (Closed Bank Holidays)</p>
-              </div>
-            </div>
+            <span className="contact-divider">|</span>
+            
+            <a href="mailto:Enquiries@landregistrytransfers.com" className="footer-contact-item" title="Email Enquiries">
+              <Mail size={14} />
+              <span>Enquiries@landregistrytransfers.com</span>
+            </a>
           </div>
+
         </div>
 
-        {/* Bottom Bar */}
-        <div className="footer-bottom">
-          <p>&copy; {currentYear} Land Registry Transfers. All rights reserved. Land Registry Transfers is a private conveyancing service portal. We are not affiliated with HM Land Registry or any government agency.</p>
-          <div className="footer-bottom-links">
-            <Link to="/privacy" className="footer-link">Privacy Policy</Link>
-            <Link to="/terms" className="footer-link">Terms & Conditions</Link>
-            <Link to="/cookies" className="footer-link">Cookie Policy</Link>
+        {/* Divider */}
+        <div className="footer-divider-light" />
+
+        {/* Bottom Details Row */}
+        <div className="footer-details-row">
+          <div className="footer-meta-block">
+            <div className="footer-meta-item">
+              <MapPin size={13} className="meta-icon" />
+              <span>Registered Office: 1 Limbrick, Blackburn, BB1 8AB</span>
+            </div>
+            <div className="footer-meta-item">
+              <Clock size={13} className="meta-icon" />
+              <span>Opening Hours: Mon – Fri, 9am – 5pm</span>
+            </div>
           </div>
+          
+          <p className="footer-legal-notice">
+            Disclaimer: Land Registry Transfers is an independent specialist agency providing property transfer coordination and document retrieval services. We are not associated or affiliated with HM Land Registry, the UK Government, or any government department. Registered in England &amp; Wales. SRA-regulated lawyers handle legal filings.
+          </p>
         </div>
+
       </div>
     </footer>
   );

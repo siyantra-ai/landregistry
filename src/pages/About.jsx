@@ -1,83 +1,68 @@
 import React from 'react';
-import { ShieldCheck, Award, Users, Scale, FileText, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Shield, Users, Clock, Award, Heart, Target } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function About() {
   return (
     <>
-      <SEO 
-        title="About Us - Property Title Deed Specialists" 
-        description="Learn about Land Registry Transfers. We are an online conveyancing portal specializing in fast, fixed-fee property deed changes and registrations."
-      />
+      <SEO title="About Our Property Transfer Specialists" description="Meet the team behind LandRegistryTransfers.com — professional conveyancing experts making property deed changes simple." />
 
-      {/* Hero Header */}
-      <section className="service-detail-hero" style={{ textAlign: 'center', padding: '80px 0' }}>
-        <div className="container" style={{ maxWidth: 800 }}>
-          <span className="service-badge">Our Company</span>
-          <h1 className="service-title-h1">Conveyancing Made Simple</h1>
-          <p className="hero-subtitle">
-            We are built on transparency, fixed fees, and exceptional speed.
+      {/* Hero */}
+      <section className="service-hero" style={{ paddingBottom: 60 }}>
+        <div className="hero-grid-pattern" />
+        <div className="container" style={{ position: 'relative', zIndex: 2, maxWidth: 720, textAlign: 'center' }}>
+          <span className="service-hero-badge">About Us</span>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)' }}>About Land Registry Transfers</h1>
+          <p className="service-hero-desc" style={{ maxWidth: 540, margin: '16px auto 0' }}>
+            We make property deed changes fast, transparent, and affordable for everyone in the UK.
           </p>
         </div>
       </section>
 
-      {/* Core Section */}
-      <section className="section section-light" style={{ borderBottom: '1px solid var(--border-color)' }}>
+      {/* Values */}
+      <section className="section section-white">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 48, alignItems: 'center' }}>
-            
-            <div>
-              <h2 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.5px', marginBottom: 16 }}>Who We Are</h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 20, fontSize: 15, lineHeight: 1.7 }}>
-                Land Registry Transfers was created to solve a common headache in UK property management: the slow, opaque, and expensive process of updating property deeds. 
-              </p>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: 15, lineHeight: 1.7 }}>
-                Instead of dealing with traditional hourly legal rates and convoluted legal paperwork, we provide a modern online portal. We handle everything from Transfer of Equity to removing restrictions at flat, transparent fees that include VAT.
-              </p>
+          <div className="section-header">
+            <span className="section-eyebrow">Our Values</span>
+            <h2 className="section-title">What We Stand For</h2>
+            <p className="section-desc">Every decision we make is guided by these core principles.</p>
+          </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                <div style={{ padding: 20, backgroundColor: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                  <h4 style={{ fontWeight: 700, color: 'var(--primary)', marginBottom: 6 }}>10,000+</h4>
-                  <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Successful Registrations</p>
+          <div className="features-grid" style={{ gap: 20 }}>
+            {[
+              { icon: <Target size={22} />, title: 'Radical Transparency', desc: 'Fixed fees displayed upfront. No call to find out. No hidden extras. You know what you\'re paying before you start.' },
+              { icon: <Heart size={22} />, title: 'Human-First Service', desc: 'Every client gets direct access to a named specialist. No call centres, no ticket queues. Real people solving real problems.' },
+              { icon: <Clock size={22} />, title: 'Speed as Standard', desc: 'Most applications are drafted within 3–5 working days. We file electronically whenever possible for faster registry processing.' },
+              { icon: <Shield size={22} />, title: 'Regulated & Insured', desc: 'All work is handled by regulated firms with Professional Indemnity Insurance up to £3,000,000.' },
+              { icon: <Award size={22} />, title: 'Deep Expertise', desc: 'Our team of conveyancing experts has collectively filed thousands of HM Land Registry applications.' },
+              { icon: <Users size={22} />, title: 'Built on Trust', desc: '4.9/5 rating from 10,000+ completed transfers. Our reputation is our most valuable asset.' }
+            ].map((v, i) => (
+              <div key={i} className="feature-card">
+                <div className="micro-grid-bg" />
+                <div className="feature-icon">
+                  {v.icon}
                 </div>
-                <div style={{ padding: 20, backgroundColor: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                  <h4 style={{ fontWeight: 700, color: 'var(--primary)', marginBottom: 6 }}>100% Fixed</h4>
-                  <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Guaranteed Fees (Inc. VAT)</p>
-                </div>
+                <h3 className="feature-name">{v.title}</h3>
+                <p className="feature-desc">{v.desc}</p>
               </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Philosophy / Values */}
-      <section className="section" style={{ backgroundColor: '#ffffff' }}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">Core Pillars</span>
-            <h2 className="section-title">Our Operational Philosophy</h2>
-            <p className="section-desc">We operate on three simple commitments to our clients.</p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 30 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 24 }}>
-              {[
-                { icon: <Scale size={20} />, title: 'Absolute Transparency', text: 'Traditional solicitors quote "estimates" that quickly snowball with disbursements. We quote a single, fixed fee that includes VAT. You know exactly what you are paying from day one.' },
-                { icon: <ShieldCheck size={20} />, title: 'Compliance & Safety First', text: 'All property filings undergo rigorous quality audits. We strictly adhere to HM Land Registry guidelines, Anti-Money Laundering (AML) standards, and Form ID1 identification protocols.' },
-                { icon: <Award size={20} />, title: 'Proactive Communications', text: 'We submit all files electronically through the Land Registry business portal. We update you at every key stage of your transfer, Assent, or registration.' }
-              ].map((value, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: 16, padding: 24, backgroundColor: 'var(--light-bg)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                  <div style={{ color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'fit-content', padding: 10, borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--primary-light)' }}>
-                    {value.icon}
-                  </div>
-                  <div>
-                    <h4 style={{ fontWeight: 700, fontSize: 16, color: 'var(--text-main)', marginBottom: 8 }}>{value.title}</h4>
-                    <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>{value.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* CTA */}
+      <section className="section section-dark" style={{ textAlign: 'center' }}>
+        <div className="container" style={{ maxWidth: 600 }}>
+          <h2 className="section-title" style={{ color: 'white', marginBottom: 16 }}>Ready to Get Started?</h2>
+          <p className="section-desc" style={{ marginBottom: 32 }}>Pick a service and get your free quote in under 60 seconds.</p>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/#services" className="btn-primary btn-lg">
+              View Services <ArrowRight size={16} />
+            </Link>
+            <Link to="/contact" className="btn-secondary btn-lg" style={{ background: 'rgba(255,255,255,0.06)', color: 'white', borderColor: 'rgba(255,255,255,0.12)' }}>
+              Contact Us
+            </Link>
           </div>
         </div>
       </section>

@@ -10,8 +10,8 @@ export default function Legal() {
   if (pathname === '/privacy') {
     return (
       <>
-        <SEO title="Privacy Policy" description="Privacy policy and data protection guidelines for Land Registry Transfers UK." />
-        <section className="section section-light">
+        <SEO title="Privacy Policy" description="Privacy policy and data protection guidelines for Land Registry Transfers." />
+        <section className="section section-white">
           <div className="container">
             <div className="legal-wrapper">
               <h1 className="legal-title">Privacy Policy</h1>
@@ -54,7 +54,7 @@ export default function Legal() {
     return (
       <>
         <SEO title="Terms & Conditions" description="Terms of service and conditions of use for Land Registry Transfers." />
-        <section className="section section-light">
+        <section className="section section-white">
           <div className="container">
             <div className="legal-wrapper">
               <h1 className="legal-title">Terms & Conditions</h1>
@@ -87,7 +87,7 @@ export default function Legal() {
     return (
       <>
         <SEO title="Cookie Policy" description="Cookie policy and website analytics statement for Land Registry Transfers." />
-        <section className="section section-light">
+        <section className="section section-white">
           <div className="container">
             <div className="legal-wrapper">
               <h1 className="legal-title">Cookie Policy</h1>

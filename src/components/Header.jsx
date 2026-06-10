@@ -1,128 +1,132 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { ChevronDown, Phone, Menu, X, ArrowRight, Home } from 'lucide-react';
+import React, { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { ChevronDown } from 'lucide-react'
+
+import { Button } from './ui/button'
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion'
 
 export default function Header({ onRequestCallback }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const phoneNumber = '020 7946 0192';
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
 
   const services = [
-    { id: 'transfer-of-equity', title: 'Transfer of Equity', price: '£450' },
-    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor', price: '£400' },
-    { id: 'name-change', title: 'Name Change', price: '£150' },
-    { id: 'removal-of-restriction', title: 'Removal of a Restriction', price: '£350' },
-    { id: 'transfer-of-equity-wills-probate', title: 'Transfer of Equity (Wills/Probate)', price: '£450' },
-    { id: 'applying-for-restriction', title: 'Applying for a Restriction', price: '£350' },
-    { id: 'first-registration', title: 'First Registration', price: '£600' },
-  ];
+    { id: 'title-register', title: 'Title Register', href: '/apply/title-register', description: 'Official record of ownership, charges, and restrictions.' },
+    { id: 'title-plan-doc', title: 'Title Plan (document)', href: '/apply/title-plan/document', description: 'Plan showing the general extent of the registered title.' },
+    { id: 'title-plan', title: 'Title Plan (apply)', href: '/apply/title-plan', description: 'Order an official title plan for your property.' },
+    { id: 'map-search', title: 'Map Search', href: '/map-search', description: 'Explore titles geographically before you apply.' },
+    { id: 'deed-search', title: 'Deed Search', href: '/apply/deed-search', description: 'Search filed deeds and (optional) flood risk.' },
+    { id: 'conveyancing-pack', title: 'Conveyancing Pack', href: '/apply/conveyancing-pack', description: 'Prepared pack to speed up solicitor checks.' },
+    { id: 'property-ownership', title: 'Property Ownership', href: '/apply/property-ownership', description: 'Combined title register and plan for a property.' },
+    { id: 'djp', title: 'DJP Application', href: '/apply/deceased-joint-proprietor', description: 'Remove a deceased joint proprietor from the register.' },
+    { id: 'property-alert', title: 'Property Alert', href: 'https://propertyalert.landregistry.gov.uk/', description: 'HM Land Registry property alert service.' },
+  ]
 
   return (
     <header className="site-header">
-      <div className="container header-container">
-        {/* Logo */}
-        <Link to="/" className="logo" onClick={() => setMobileMenuOpen(false)}>
-          LandRegistry<span>Transfers</span>
+      <div className="container header-inner gap-4 lg:gap-8">
+        <Link to="/" className="brand" onClick={() => setMobileOpen(false)}>
+          <img
+            src="/land-registry-transfers-logo.svg"
+            alt="Land Registry Transfers"
+            className="brand-logo"
+          />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="nav-menu">
-          <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            Home
-          </NavLink>
-          
-          <div className="dropdown-container">
-            <button className="dropdown-trigger">
-              Services <ChevronDown size={14} />
+        <nav className="hidden flex-1 items-center justify-end gap-8 text-[15px] font-semibold text-[#1e2f78] lg:flex" aria-label="Primary">
+          <div className="relative">
+            <button
+              type="button"
+              className="nav-dropdown-trigger bg-transparent px-0 text-[15px] font-semibold text-[#1e2f78] hover:bg-transparent hover:text-[#1e2f78]"
+              aria-expanded={servicesOpen}
+              aria-controls="services-dropdown"
+              aria-haspopup="menu"
+              onClick={() => setServicesOpen((open) => !open)}
+            >
+              Services
             </button>
-            <div className="dropdown-menu">
-              {services.map((s) => (
-                <Link key={s.id} to={`/services/${s.id}`} className="dropdown-item">
-                  <span className="dropdown-item-title">{s.title}</span>
-                  <span className="dropdown-item-subtitle">Fixed Fee: {s.price} inc. VAT</span>
-                </Link>
-              ))}
-            </div>
-          </div>
 
-          <NavLink to="/about" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            About
-          </NavLink>
-          <NavLink to="/contact" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            Contact
-          </NavLink>
-          
-          <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`} className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600 }}>
-            <Phone size={15} style={{ color: 'var(--primary)' }} /> {phoneNumber}
-          </a>
+            {servicesOpen && (
+              <div
+                id="services-dropdown"
+                className="services-menu-panel absolute right-0 top-[calc(100%+12px)] z-50 w-[360px] overflow-hidden"
+                role="menu"
+              >
+                <div className="services-menu-header">Services</div>
+                <ul className="flex w-full flex-col">
+                  {services.map((service) => (
+                    <li key={service.id} className="border-b border-[#edf1f7] last:border-b-0" role="none">
+                      {service.href && service.href.startsWith('http') ? (
+                        <a href={service.href} target="_blank" rel="noreferrer" role="menuitem" className="services-menu-link block w-full px-4 py-3 text-[17px] font-normal text-[#2d2f36]" onClick={() => setServicesOpen(false)}>
+                          {service.title}
+                        </a>
+                      ) : (
+                        <Link to={service.href} role="menuitem" className="services-menu-link block w-full px-4 py-3 text-[17px] font-normal text-[#2d2f36]" onClick={() => setServicesOpen(false)}>
+                          {service.title}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </nav>
 
-        {/* Desktop CTA */}
-        <button 
-          onClick={onRequestCallback} 
-          className="nav-cta" 
-          style={{ display: 'none', border: 'none', cursor: 'pointer' }}
-        >
-          Request Callback <ArrowRight size={14} />
-        </button>
+        <div className="header-actions">
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="mobile-toggle rounded-md border border-[#ced6e6] text-[#1e2f78] lg:hidden" aria-label="Toggle menu">
+                <span className="hamburger" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-full gap-0 p-0 sm:max-w-sm" showClose={false}>
+              <div className="mobile-menu-top flex items-center justify-between px-4 py-4">
+                <div className="mobile-menu-title">Menu</div>
+                <Link to="/" className="brand" onClick={() => setMobileOpen(false)}>
+                  <img
+                    src="/land-registry-transfers-logo.svg"
+                    alt="Land Registry Transfers"
+                    className="brand-logo brand-logo--mobile"
+                  />
+                </Link>
+                <SheetClose asChild>
+                  <Button variant="ghost" size="icon" className="rounded-md border border-[#ced6e6] text-[#1e2f78]">
+                    <span className="sr-only">Close menu</span>
+                    ×
+                  </Button>
+                </SheetClose>
+              </div>
 
-        {/* Mobile menu toggle */}
-        <button 
-          className="mobile-toggle" 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
+              <div className="mobile-menu-content px-4 pb-6 pt-2">
+                <div className="mobile-menu-section">
+                  <Accordion type="single" collapsible defaultValue="services">
+                    <AccordionItem value="services">
+                      <AccordionTrigger>Services</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="mobile-menu-sublist">
+                          {services.map((service) => (
+                            <SheetClose asChild key={service.id}>
+                              <a href={service.href} target={service.href.startsWith('http') ? '_blank' : undefined} rel={service.href.startsWith('http') ? 'noreferrer' : undefined} className="mobile-menu-sublink" onClick={() => setMobileOpen(false)}>
+                                {service.title}
+                              </a>
+                            </SheetClose>
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
 
-      {/* Mobile nav panel */}
-      {mobileMenuOpen && (
-        <div className="mobile-menu-panel">
-          <div className="mobile-menu-title">Main Menu</div>
-          <div className="mobile-nav-links">
-            <Link to="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
-              Home
-            </Link>
-            <Link to="/about" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
-              About Us
-            </Link>
-            <Link to="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
-              Contact Details
-            </Link>
-          </div>
-
-          <div className="mobile-menu-title" style={{ marginTop: 16 }}>Our Conveyancing Services</div>
-          <div className="mobile-services-grid">
-            {services.map((s) => (
-              <Link 
-                key={s.id} 
-                to={`/services/${s.id}`} 
-                className="mobile-service-item"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>{s.title}</span>
-                <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{s.price}</span>
-              </Link>
-            ))}
-          </div>
-
-          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <a 
-              href={`tel:${phoneNumber.replace(/\s+/g, '')}`} 
-              className="form-submit-btn" 
-              style={{ background: 'var(--light-bg)', color: 'var(--text-main)', border: '1px solid var(--border-color)', display: 'flex', gap: 8 }}
-            >
-              <Phone size={18} /> Call {phoneNumber}
-            </a>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onRequestCallback(); }} 
-              className="form-submit-btn"
-            >
-              Request Call Back
-            </button>
-          </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
-      )}
+      </div>
     </header>
-  );
+  )
 }
