@@ -76,8 +76,8 @@ export default function DocumentAccessSection() {
   };
 
   return (
-    <section className="section doc-access-section" id="document-access" style={{ backgroundColor: 'var(--bg-secondary)', padding: '80px 24px' }}>
-      <div className="container doc-access-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '48px', alignItems: 'center', maxWidth: 'var(--container-max)', margin: '0 auto' }}>
+    <section className="section doc-access-section" id="document-access">
+      <div className="container doc-access-container">
         
         {/* Left Side: Copy & Selection Dropdown */}
         <div className="doc-access-left" style={{ textAlign: 'left' }}>

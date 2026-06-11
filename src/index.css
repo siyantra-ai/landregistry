@@ -4289,3 +4289,31 @@ input, select, textarea { font: inherit; }
     align-items: center;
   }
 }
+
+/* Responsive Document Access Section Layout */
+.doc-access-section {
+  background-color: var(--bg-secondary);
+  padding: 48px 16px;
+}
+
+.doc-access-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .doc-access-section {
+    padding: 80px 24px;
+  }
+}
+
+@media (min-width: 992px) {
+  .doc-access-container {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+  }
+}
