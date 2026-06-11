@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function WhatsAppButton() {
-  const url = 'https://wa.me/442079460192?text=' + encodeURIComponent("Hello, I'd like to enquire about your land registry services.");
+  const url = 'https://wa.me/443335770077?text=' + encodeURIComponent("Hello, I'd like to enquire about your property deed services.");
 
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className="whatsapp-float" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">

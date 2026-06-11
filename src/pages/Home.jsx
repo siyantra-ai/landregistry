@@ -133,9 +133,9 @@ export default function Home() {
   const businessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Land Registry Transfers",
+    "name": "Landregistrytransfers.com",
     "url": "https://landregistrytransfers.com",
-    "telephone": "+442079460192",
+    "telephone": "+443335770077",
     "priceRange": "£150-£600",
     "address": { "@type": "PostalAddress", "streetAddress": "1 Limbrick", "addressLocality": "Blackburn", "postalCode": "BB1 8AB", "addressCountry": "GB" },
     "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "17:00" }
@@ -143,7 +143,7 @@ export default function Home() {
 
   return (
     <>
-      <SEO title="Land Registry Transfers | Fixed-Fee Property Deed Transfers" description="Professional fixed-fee conveyancing for Transfer of Equity, Name Changes, Restrictions, and First Registrations. VAT included." schemaJson={businessSchema} />
+      <SEO title="Landregistrytransfers.com | Fixed-Fee Property Deed Transfers" description="Professional fixed-fee conveyancing for Transfer of Equity, Name Changes, Restrictions, and First Registrations. VAT included." schemaJson={businessSchema} />
 
       {/* ── HERO ── */}
       <section className="hero">

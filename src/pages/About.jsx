@@ -13,9 +13,19 @@ export default function About() {
         <div className="hero-grid-pattern" />
         <div className="container" style={{ position: 'relative', zIndex: 2, maxWidth: 720, textAlign: 'center' }}>
           <span className="service-hero-badge">About Us</span>
-          <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)' }}>About Land Registry Transfers</h1>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)' }}>About Landregistrytransfers.com</h1>
           <p className="service-hero-desc" style={{ maxWidth: 540, margin: '16px auto 0' }}>
             We make property deed changes fast, transparent, and affordable for everyone in the UK.
+          </p>
+        </div>
+      </section>
+
+      {/* Who We Are */}
+      <section className="section section-light">
+        <div className="container" style={{ maxWidth: 720, textAlign: 'center' }}>
+          <h2 style={{ fontSize: '28px', marginBottom: '16px', color: 'var(--blue-600)' }}>Who We Are</h2>
+          <p style={{ fontSize: '15.5px', lineHeight: '1.7', color: 'var(--text-secondary)' }}>
+            Swift Task Services Ltd is a UK-based property services company helping homeowners, families and businesses with property deed changes quickly and at a fixed price. Whether you need to add or remove a name, deal with a deceased joint owner, change your name on the title, or register a property for the first time, our team handles the entire process for you — clearly, efficiently and without the legal jargon.
           </p>
         </div>
       </section>

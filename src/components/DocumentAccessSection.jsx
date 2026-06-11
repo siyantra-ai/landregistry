@@ -57,6 +57,23 @@ export default function DocumentAccessSection() {
   
   const dropdownRef = useRef(null);
 
+  const getPriceSplit = () => {
+    if (!selectedDoc) return { documentFee: 0, searchProcessingFee: 0, vat: 0, total: 0 };
+    const totalVal = parseFloat(selectedDoc.price.replace('£', ''));
+    const docFeeVal = 7.00;
+    const taxableVal = totalVal - docFeeVal;
+    const vatVal = taxableVal * 1 / 6;
+    const searchProcessingFeeVal = taxableVal * 5 / 6;
+    return {
+      documentFee: docFeeVal,
+      searchProcessingFee: searchProcessingFeeVal,
+      vat: vatVal,
+      total: totalVal
+    };
+  };
+
+  const { documentFee, searchProcessingFee, vat, total } = getPriceSplit();
+
   // Close dropdown on click outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -254,6 +271,48 @@ export default function DocumentAccessSection() {
                         onChange={(e) => setPhone(e.target.value)}
                       />
                     </div>
+                  </div>
+
+                  {/* Price Split Breakdown */}
+                  <div className="price-split-breakdown" style={{ 
+                    marginTop: '20px', 
+                    padding: '16px', 
+                    backgroundColor: 'var(--bg-secondary)', 
+                    borderRadius: '8px', 
+                    border: '1px solid var(--border-default)', 
+                    fontSize: '13px'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
+                      <span>Document Fee (from gov.uk):</span>
+                      <span style={{ fontWeight: 600 }}>£{documentFee.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
+                      <span>Search &amp; Processing Fee:</span>
+                      <span style={{ fontWeight: 600 }}>£{searchProcessingFee.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
+                      <span>VAT (20%):</span>
+                      <span style={{ fontWeight: 600 }}>£{vat.toFixed(2)}</span>
+                    </div>
+                    <div style={{ height: '1px', backgroundColor: 'var(--border-default)', margin: '12px 0' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>
+                      <span>Total Price (incl. VAT):</span>
+                      <span>£{total.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  {/* Required Cancellation Waiver Checkbox */}
+                  <div className="compliance-checkbox-group" style={{ marginTop: '16px', marginBottom: '16px' }}>
+                    <label style={{ display: 'flex', gap: '10px', cursor: 'pointer', alignItems: 'flex-start' }}>
+                      <input 
+                        type="checkbox" 
+                        required 
+                        style={{ marginTop: '3px', accentColor: 'var(--blue-600)' }}
+                      />
+                      <span style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                        I agree to waive my 14-day cancellation right to allow Swift Task Services Ltd to start the search and document retrieval immediately. I understand that the search and processing fee is non-refundable once started.
+                      </span>
+                    </label>
                   </div>
                   
                   <button type="submit" disabled={loading} className="btn-order-submit">

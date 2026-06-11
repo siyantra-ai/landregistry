@@ -1,31 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <!-- Gradient background -->
   <defs>
     <linearGradient id="fav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#1d4ed8" />
+      <stop offset="0%" stop-color="#2F4F46" />
+      <stop offset="100%" stop-color="#1e332d" />
     </linearGradient>
   </defs>
   
-  <!-- Circle shape -->
   <circle cx="24" cy="24" r="22" fill="url(#fav-grad)" />
+  <circle cx="24" cy="24" r="19" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.4" />
+
+  <!-- Document outline in white -->
+  <path 
+    d="M 17 13 H 29 L 34 18 V 33 C 34 34.5, 33 35.5, 31.5 35.5 H 17 C 15.5 35.5, 14.5 34.5, 14.5 33 V 15.5 C 14.5 14, 15.5 13, 17 13 Z" 
+    fill="none" 
+    stroke="#ffffff" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    opacity="0.9"
+  />
+  <path d="M 29 13 V 18 H 34" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
+  <line x1="18.5" y1="22" x2="29.5" y2="22" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.8" />
+  <line x1="18.5" y1="27" x2="25.5" y2="27" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.8" />
+
+  <!-- Separation layer for pin -->
+  <circle cx="30" cy="30" r="6" fill="#1e332d" />
   
-  <!-- Outer dotted/dashed ring -->
-  <circle cx="24" cy="24" r="19" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.6" />
-
-  <!-- Document 1 -->
-  <rect x="15" y="13" width="13" height="18" rx="1.5" fill="#ffffff" opacity="0.85" />
-  <line x1="18" y1="17" x2="25" y2="17" stroke="#1d4ed8" stroke-width="1.2" stroke-linecap="round" />
-  <line x1="18" y1="21" x2="25" y2="21" stroke="#1d4ed8" stroke-width="1.2" stroke-linecap="round" />
-  <line x1="18" y1="25" x2="22" y2="25" stroke="#1d4ed8" stroke-width="1.2" stroke-linecap="round" />
-
-  <!-- Document 2 (Overlapping/Active) -->
-  <rect x="21" y="17" width="13" height="18" rx="1.5" fill="#ffffff" />
-  <line x1="24" y1="21" x2="31" y2="21" stroke="#2563eb" stroke-width="1.2" stroke-linecap="round" />
-  <line x1="24" y1="25" x2="31" y2="25" stroke="#2563eb" stroke-width="1.2" stroke-linecap="round" />
-  <line x1="24" y1="29" x2="28" y2="29" stroke="#2563eb" stroke-width="1.2" stroke-linecap="round" />
-
-  <!-- Transfer Arrow (Slight curve) -->
-  <path d="M 13 33 C 13 36, 17 38, 23 38" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" />
-  <path d="M 23 38 L 20 35 M 23 38 L 20 41" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" />
+  <!-- Location pin in Gold -->
+  <path 
+    d="M 30 24.5 C 27.2 24.5, 25 26.7, 25 29.5 C 25 33, 30 38.5, 30 38.5 C 30 38.5, 35 33, 35 29.5 C 35 26.7, 32.8 24.5, 30 24.5 Z" 
+    fill="#C7A25A" 
+  />
+  <circle cx="30" cy="29.5" r="1.5" fill="#ffffff" />
 </svg>

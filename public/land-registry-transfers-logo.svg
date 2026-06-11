@@ -1,43 +1,62 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 90" role="img" aria-labelledby="title">
-  <title>Land Registry Transfers</title>
-  <!-- Brand Icon -->
-  <g transform="translate(10, 5)">
-    <!-- Shield / House Background -->
-    <path d="M 40 5 C 19.3 5 5 19.3 5 40 C 5 60.7 19.3 75 40 75 C 60.7 75 75 60.7 75 40 C 75 19.3 60.7 5 40 5 Z" fill="url(#grad-icon)" opacity="0.1" />
+  <title>Landregistrytransfers.com</title>
+  
+  <!-- Icon Group: Document + Location Pin -->
+  <g transform="translate(15, 2)">
+    <!-- Document outline in Forest Green -->
+    <path 
+      d="M 22 14 H 42 L 50 22 V 58 C 50 60, 48 62, 46 62 H 22 C 20 62, 18 60, 18 58 V 18 C 18 16, 20 14, 22 14 Z" 
+      fill="none" 
+      stroke="#2F4F46" 
+      stroke-width="3.5" 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+    />
     
-    <!-- Outer Ring -->
-    <circle cx="40" cy="40" r="35" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6 3 1 3" />
+    <!-- Document folded corner -->
+    <path 
+      d="M 42 14 V 22 H 50" 
+      fill="none" 
+      stroke="#2F4F46" 
+      stroke-width="3.5" 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+    />
     
-    <!-- Document 1 (Source) -->
-    <rect x="24" y="22" width="22" height="30" rx="3" fill="#ffffff" stroke="#1d4ed8" stroke-width="2" />
-    <line x1="29" y1="28" x2="41" y2="28" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="round" />
-    <line x1="29" y1="34" x2="41" y2="34" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="round" />
-    <line x1="29" y1="40" x2="36" y2="40" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="round" />
-    
-    <!-- Document 2 (Destination / Overlapping) -->
-    <rect x="34" y="30" width="22" height="30" rx="3" fill="#ffffff" stroke="#2563eb" stroke-width="2" filter="url(#shadow-drop)" />
-    <line x1="39" y1="36" x2="51" y2="36" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" />
-    <line x1="39" y1="42" x2="51" y2="42" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" />
-    <line x1="39" y1="48" x2="46" y2="48" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" />
+    <!-- Document text lines -->
+    <line x1="24" y1="30" x2="44" y2="30" stroke="#2F4F46" stroke-width="3" stroke-linecap="round" />
+    <line x1="24" y1="38" x2="44" y2="38" stroke="#2F4F46" stroke-width="3" stroke-linecap="round" />
+    <line x1="24" y1="46" x2="34" y2="46" stroke="#2F4F46" stroke-width="3" stroke-linecap="round" />
 
-    <!-- Swooshing Transfer Arrow -->
-    <path d="M 22 52 C 22 58, 28 62, 38 62" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
-    <path d="M 38 62 L 34 58 M 38 62 L 34 66" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
+    <!-- White silhouette mask layer for location pin separation -->
+    <path 
+      d="M 50 42 C 45 42, 41 46, 41 51 C 41 58, 50 68, 50 68 C 50 68, 59 58, 59 51 C 59 46, 55 42, 50 42 Z" 
+      fill="#ffffff" 
+      stroke="#ffffff" 
+      stroke-width="5" 
+      stroke-linejoin="round"
+    />
+    
+    <!-- Gold Location Pin Teardrop -->
+    <path 
+      d="M 50 42 C 45 42, 41 46, 41 51 C 41 58, 50 68, 50 68 C 50 68, 59 58, 59 51 C 59 46, 55 42, 50 42 Z" 
+      fill="#C7A25A" 
+    />
+    
+    <!-- Pin Center White Dot -->
+    <circle cx="50" cy="51" r="2.5" fill="#ffffff" />
   </g>
   
-  <!-- Typography using robust relative tspan positioning -->
-  <text x="105" y="58" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-size="44" font-weight="700" letter-spacing="0.02em" fill="#0f172a">
-    LAND REGISTRY <tspan fill="#2563eb" font-weight="800" letter-spacing="0.04em">TRANSFERS</tspan>
+  <!-- Typography next to the icon -->
+  <text 
+    x="95" 
+    y="58" 
+    font-family="'Poppins', 'Inter', 'Segoe UI', sans-serif" 
+    font-size="44" 
+    font-weight="600" 
+    fill="#2F4F46" 
+    letter-spacing="-0.02em"
+  >
+    Landregistry<tspan fill="#C7A25A">transfers.com</tspan>
   </text>
-
-  <!-- Gradients & Filters -->
-  <defs>
-    <linearGradient id="grad-icon" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#3b82f6" />
-    </linearGradient>
-    <filter id="shadow-drop" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#0f172a" flood-opacity="0.15" />
-    </filter>
-  </defs>
 </svg>

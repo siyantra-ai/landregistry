@@ -30,7 +30,7 @@ export default function ServiceDetail() {
   const s = DATA[id];
   if (!s) return <Navigate to="/" replace />;
 
-  const schema = {"@context":"https://schema.org","@graph":[{"@type":"Service","name":s.title,"description":s.desc,"provider":{"@type":"LocalBusiness","name":"Land Registry Transfers","telephone":"+442079460192"},"offers":{"@type":"Offer","price":s.price.replace('£',''),"priceCurrency":"GBP","valueAddedTaxIncluded":true}},{"@type":"FAQPage","mainEntity":s.faqs.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))}]};
+  const schema = {"@context":"https://schema.org","@graph":[{"@type":"Service","name":s.title,"description":s.desc,"provider":{"@type":"LocalBusiness","name":"Landregistrytransfers.com","telephone":"+443335770077"},"offers":{"@type":"Offer","price":s.price.replace('£',''),"priceCurrency":"GBP","valueAddedTaxIncluded":true}},{"@type":"FAQPage","mainEntity":s.faqs.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))}]};
 
   return (
     <>
@@ -53,8 +53,11 @@ export default function ServiceDetail() {
             </div>
 
             <div style={{ marginTop: 24, display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-              <a href="#enquiry-section" className="btn-primary">
-                Get a Quote <ArrowRight size={14} />
+              <Link to={`/apply/${id}`} className="btn-primary">
+                Apply Online <ArrowRight size={14} />
+              </Link>
+              <a href="#enquiry-section" className="btn-secondary">
+                Request Quote
               </a>
               <div className="timeline-badge-sm">
                 <Clock size={16} style={{ color: 'var(--blue-500)' }} />

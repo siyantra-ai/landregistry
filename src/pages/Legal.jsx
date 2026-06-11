@@ -10,7 +10,7 @@ export default function Legal() {
   if (pathname === '/privacy') {
     return (
       <>
-        <SEO title="Privacy Policy" description="Privacy policy and data protection guidelines for Land Registry Transfers." />
+        <SEO title="Privacy Policy" description="Privacy policy and data protection guidelines for Landregistrytransfers.com." />
         <section className="section section-white">
           <div className="container">
             <div className="legal-wrapper">
@@ -18,7 +18,7 @@ export default function Legal() {
               <div className="legal-meta">Last Updated: {dateUpdated}</div>
               
               <div className="legal-content">
-                <p>Land Registry Transfers ("we", "our", "us") is committed to protecting and respecting your privacy. This policy sets out the basis on which any personal data we collect from you, or that you provide to us, will be processed.</p>
+                <p>Landregistrytransfers.com ("we", "our", "us"), operated by Swift Task Services Ltd, is committed to protecting and respecting your privacy. This policy sets out the basis on which any personal data we collect from you, or that you provide to us, will be processed.</p>
                 
                 <h2>1. Information We Collect</h2>
                 <p>We may collect and process the following data about you:</p>
@@ -53,7 +53,7 @@ export default function Legal() {
   if (pathname === '/terms') {
     return (
       <>
-        <SEO title="Terms & Conditions" description="Terms of service and conditions of use for Land Registry Transfers." />
+        <SEO title="Terms & Conditions" description="Terms of service and conditions of use for Landregistrytransfers.com." />
         <section className="section section-white">
           <div className="container">
             <div className="legal-wrapper">
@@ -64,7 +64,7 @@ export default function Legal() {
                 <p>Please read these Terms and Conditions carefully before using our conveyancing service portal.</p>
 
                 <h2>1. Service Scope</h2>
-                <p>Land Registry Transfers is a private online portal connecting users to property title specialists and regulated conveyancing solicitors. We are not HM Land Registry, nor are we a government agency. Our fee covers documentation preparation, compliance reviews, and submission management.</p>
+                <p>Landregistrytransfers.com, operated by Swift Task Services Ltd, is a private online portal connecting users to property title specialists and regulated conveyancing solicitors. We are not HM Land Registry, nor are we a government agency. Our fee covers documentation preparation, compliance reviews, and submission management.</p>
 
                 <h2>2. Fixed Fee Guarantee</h2>
                 <p>The prices stated on our portal are fixed and inclusive of VAT. These fees cover standard, uncontested applications. If your application becomes contested, requires complex boundary disputes, or involves litigation, additional legal fees may apply, which will be fully disclosed beforehand.</p>
@@ -86,7 +86,7 @@ export default function Legal() {
   if (pathname === '/cookies') {
     return (
       <>
-        <SEO title="Cookie Policy" description="Cookie policy and website analytics statement for Land Registry Transfers." />
+        <SEO title="Cookie Policy" description="Cookie policy and website analytics statement for Landregistrytransfers.com." />
         <section className="section section-white">
           <div className="container">
             <div className="legal-wrapper">

@@ -28,16 +28,16 @@ export default function Header({ onRequestCallback }) {
         <Link to="/" className="brand" onClick={() => setMobileOpen(false)}>
           <img
             src="/land-registry-transfers-logo.svg"
-            alt="Land Registry Transfers"
+            alt="Landregistrytransfers.com"
             className="brand-logo"
           />
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-end gap-8 text-[15px] font-semibold text-[#1e2f78] lg:flex" aria-label="Primary">
+        <nav className="hidden flex-1 items-center justify-end gap-8 text-[15px] font-semibold text-[#2F4F46] lg:flex" aria-label="Primary">
           <div className="relative">
             <button
               type="button"
-              className="nav-dropdown-trigger bg-transparent px-0 text-[15px] font-semibold text-[#1e2f78] hover:bg-transparent hover:text-[#1e2f78]"
+              className="nav-dropdown-trigger bg-transparent px-0 text-[15px] font-semibold text-[#2F4F46] hover:bg-transparent hover:text-[#2F4F46]"
               aria-expanded={servicesOpen}
               aria-controls="services-dropdown"
               aria-haspopup="menu"
@@ -76,7 +76,7 @@ export default function Header({ onRequestCallback }) {
         <div className="header-actions">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="mobile-toggle rounded-md border border-[#ced6e6] text-[#1e2f78] lg:hidden" aria-label="Toggle menu">
+              <Button variant="ghost" size="icon" className="mobile-toggle rounded-md border border-[#ced6e6] text-[#2F4F46] lg:hidden" aria-label="Toggle menu">
                 <span className="hamburger" aria-hidden="true">
                   <span />
                   <span />
@@ -90,12 +90,12 @@ export default function Header({ onRequestCallback }) {
                 <Link to="/" className="brand" onClick={() => setMobileOpen(false)}>
                   <img
                     src="/land-registry-transfers-logo.svg"
-                    alt="Land Registry Transfers"
+                    alt="Landregistrytransfers.com"
                     className="brand-logo brand-logo--mobile"
                   />
                 </Link>
                 <SheetClose asChild>
-                  <Button variant="ghost" size="icon" className="rounded-md border border-[#ced6e6] text-[#1e2f78]">
+                  <Button variant="ghost" size="icon" className="rounded-md border border-[#ced6e6] text-[#2F4F46]">
                     <span className="sr-only">Close menu</span>
                     ×
                   </Button>

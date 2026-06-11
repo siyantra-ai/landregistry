@@ -21,12 +21,12 @@ export default function Footer() {
             <Link to="/">
               <img
                 src="/land-registry-transfers-logo.svg"
-                alt="Land Registry Transfers"
+                alt="Landregistrytransfers.com Logo"
                 className="footer-logo-img"
               />
             </Link>
             <span className="footer-copyright-text">
-              &copy; {year} Land Registry Transfers. All rights reserved.
+              &copy; {year} Swift Task Services Ltd. All rights reserved.
             </span>
           </div>
 
@@ -43,16 +43,16 @@ export default function Footer() {
 
           {/* Right: Compact Contact Row */}
           <div className="footer-right-contact">
-            <a href="tel:02079460192" className="footer-contact-item" title="Call Us">
+            <a href="tel:03335770077" className="footer-contact-item" title="Call Us">
               <Phone size={14} />
-              <span>020 7946 0192</span>
+              <span>0333 577 0077</span>
             </a>
             
             <span className="contact-divider">|</span>
             
-            <a href="mailto:Enquiries@landregistrytransfers.com" className="footer-contact-item" title="Email Enquiries">
+            <a href="mailto:enquiries@landregistrytransfers.com" className="footer-contact-item" title="Email Enquiries">
               <Mail size={14} />
-              <span>Enquiries@landregistrytransfers.com</span>
+              <span>enquiries@landregistrytransfers.com</span>
             </a>
           </div>
 
@@ -66,7 +66,7 @@ export default function Footer() {
           <div className="footer-meta-block">
             <div className="footer-meta-item">
               <MapPin size={13} className="meta-icon" />
-              <span>Registered Office: 1 Limbrick, Blackburn, BB1 8AB</span>
+              <span>Swift Task Services Ltd, Company No. 17125428, 1 Limbrick, Blackburn, BB1 8AB</span>
             </div>
             <div className="footer-meta-item">
               <Clock size={13} className="meta-icon" />
@@ -75,7 +75,7 @@ export default function Footer() {
           </div>
           
           <p className="footer-legal-notice">
-            Disclaimer: Land Registry Transfers is an independent specialist agency providing property transfer coordination and document retrieval services. We are not associated or affiliated with HM Land Registry, the UK Government, or any government department. Registered in England &amp; Wales. SRA-regulated lawyers handle legal filings.
+            Disclaimer: Landregistrytransfers.com is an independent property services portal operated by Swift Task Services Ltd (Company No. 17125428). We are not associated or affiliated with HM Land Registry, the UK Government, or any government department. The same documents are available from gov.uk for £7. SRA-regulated lawyers handle legal conveyancing filings.
           </p>
         </div>
 

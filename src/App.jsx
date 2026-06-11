@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import ServiceDetail from './pages/ServiceDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
+import ApplyWizard from './pages/ApplyWizard';
 
 // Scroll to top helper on page/route transition
 function ScrollToTop() {
@@ -18,6 +19,12 @@ function ScrollToTop() {
   return null;
 }
 
+// Redirect helper for /apply/:serviceId to /apply/:serviceId/step/1
+function ApplyRedirect() {
+  const { serviceId } = useParams();
+  return <Navigate to={`/apply/${serviceId}/step/1`} replace />;
+}
+
 export default function App() {
   return (
     <Router>
@@ -25,6 +32,8 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/apply/:serviceId/step/:stepId" element={<ApplyWizard />} />
+          <Route path="/apply/:serviceId" element={<ApplyRedirect />} />
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -37,3 +46,4 @@ export default function App() {
     </Router>
   );
 }
+

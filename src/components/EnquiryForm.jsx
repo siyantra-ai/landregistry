@@ -27,6 +27,25 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
     { value: 'other', label: 'Other / General Enquiry' }
   ];
 
+  const getPriceSplit = () => {
+    const serviceObj = services.find(s => s.value === service);
+    if (!serviceObj) return null;
+    const match = serviceObj.label.match(/£\d+/);
+    if (!match) return null;
+    const totalVal = parseFloat(match[0].replace('£', ''));
+    const docFeeVal = 7.00;
+    const taxableVal = totalVal - docFeeVal;
+    const vatVal = taxableVal * 1 / 6;
+    const searchProcessingFeeVal = taxableVal * 5 / 6;
+    return {
+      documentFee: docFeeVal,
+      searchProcessingFee: searchProcessingFeeVal,
+      vat: vatVal,
+      total: totalVal
+    };
+  };
+  const priceSplit = getPriceSplit();
+
   useEffect(() => {
     if (initialService) setService(initialService);
   }, [initialService]);
@@ -214,7 +233,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
 
   const getCallCaption = () => {
     if (callDuration < 4) {
-      return `Hi Charlotte! Oliver here from Land Registry Transfers. I saw your Transfer of Equity request...`;
+      return `Hi Charlotte! Oliver here from Landregistrytransfers.com. I saw your Transfer of Equity request...`;
     } else if (callDuration < 9) {
       return `I've opened the title records. The fixed fee is £450 as quoted on our website, including VAT.`;
     } else {
@@ -256,8 +275,8 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
           <div className="phone-screen" style={{ background: '#1e293b' }}>
             <div className="phone-call-screen">
               <div>
-                <div className="call-avatar">LR</div>
-                <div className="call-caller">Land Registry Transfers</div>
+                <div className="call-avatar">LT</div>
+                <div className="call-caller">Landregistrytransfers.com</div>
                 <div className="call-sub">Conveyancing Team</div>
               </div>
 
@@ -289,7 +308,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
           <div className="phone-screen" style={{ background: '#0f172a' }}>
             <div className="phone-call-screen" style={{ background: '#0f172a', paddingTop: '36px', paddingBottom: '16px' }}>
               <div>
-                <div className="call-caller" style={{ color: 'white', marginTop: 12 }}>Land Registry Transfers</div>
+                <div className="call-caller" style={{ color: 'white', marginTop: 12 }}>Landregistrytransfers.com</div>
                 <div className="call-sub" style={{ color: '#3b82f6', fontWeight: 600 }}>{formatDuration(callDuration)}</div>
               </div>
 
@@ -370,6 +389,51 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
               <textarea onFocus={handleUserInteraction} className="form-input form-textarea" style={{ padding: '8px 12px', fontSize: 13, height: 44, minHeight: 44 }} placeholder="Mortgage details, joint names..." value={notes} onChange={(e) => setNotes(e.target.value)} />
             </div>
             
+            {priceSplit && (
+              <>
+                <div className="price-split-breakdown" style={{ 
+                  marginTop: '6px', 
+                  padding: '10px 12px', 
+                  backgroundColor: 'var(--bg-secondary)', 
+                  borderRadius: '6px', 
+                  border: '1px solid var(--border-default)', 
+                  fontSize: '11px',
+                  lineHeight: '1.4'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', color: 'var(--text-secondary)' }}>
+                    <span>Document Fee (from gov.uk):</span>
+                    <span style={{ fontWeight: 600 }}>£{priceSplit.documentFee.toFixed(2)}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', color: 'var(--text-secondary)' }}>
+                    <span>Search &amp; Processing Fee:</span>
+                    <span style={{ fontWeight: 600 }}>£{priceSplit.searchProcessingFee.toFixed(2)}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', color: 'var(--text-secondary)' }}>
+                    <span>VAT (20%):</span>
+                    <span style={{ fontWeight: 600 }}>£{priceSplit.vat.toFixed(2)}</span>
+                  </div>
+                  <div style={{ height: '1px', backgroundColor: 'var(--border-default)', margin: '8px 0' }} />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '12.5px', color: 'var(--text-primary)' }}>
+                    <span>Total (incl. VAT):</span>
+                    <span>£{priceSplit.total.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                <div className="compliance-checkbox-group" style={{ marginTop: '6px' }}>
+                  <label style={{ display: 'flex', gap: '8px', cursor: 'pointer', alignItems: 'flex-start' }}>
+                    <input 
+                      type="checkbox" 
+                      required 
+                      style={{ marginTop: '2px', accentColor: 'var(--blue-600)' }}
+                    />
+                    <span style={{ fontSize: '10.5px', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
+                      I agree to waive my 14-day cancellation right to allow Swift Task Services Ltd to start the work immediately. I understand the search/processing fee is non-refundable once started.
+                    </span>
+                  </label>
+                </div>
+              </>
+            )}
+            
             <button type="submit" disabled={loading} className="form-submit" style={{ padding: '10px', fontSize: 13, marginTop: 4 }}>
               {loading ? 'Submitting…' : <><Send size={12} /> Request Free Quote</>}
             </button>
@@ -424,6 +488,52 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
             <label className="form-label" htmlFor="eq-notes">Additional Details <span style={{ fontWeight: 400, color: 'var(--text-tertiary)' }}>(optional)</span></label>
             <textarea id="eq-notes" className="form-input form-textarea" placeholder="Mortgage details, joint names, probate status…" value={notes} onChange={(e) => setNotes(e.target.value)} />
           </div>
+          
+          {priceSplit && (
+            <>
+              <div className="price-split-breakdown" style={{ 
+                marginTop: '16px', 
+                padding: '16px', 
+                backgroundColor: 'var(--bg-secondary)', 
+                borderRadius: '8px', 
+                border: '1px solid var(--border-default)', 
+                fontSize: '13px',
+                marginBottom: '16px'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
+                  <span>Document Fee (from gov.uk):</span>
+                  <span style={{ fontWeight: 600 }}>£{priceSplit.documentFee.toFixed(2)}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
+                  <span>Search &amp; Processing Fee:</span>
+                  <span style={{ fontWeight: 600 }}>£{priceSplit.searchProcessingFee.toFixed(2)}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
+                  <span>VAT (20%):</span>
+                  <span style={{ fontWeight: 600 }}>£{priceSplit.vat.toFixed(2)}</span>
+                </div>
+                <div style={{ height: '1px', backgroundColor: 'var(--border-default)', margin: '12px 0' }} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>
+                  <span>Total Price (incl. VAT):</span>
+                  <span>£{priceSplit.total.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div className="compliance-checkbox-group" style={{ marginTop: '12px', marginBottom: '16px' }}>
+                <label style={{ display: 'flex', gap: '10px', cursor: 'pointer', alignItems: 'flex-start' }}>
+                  <input 
+                    type="checkbox" 
+                    required 
+                    style={{ marginTop: '3px', accentColor: 'var(--blue-600)' }}
+                  />
+                  <span style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    I agree to waive my 14-day cancellation right to allow Swift Task Services Ltd to start the work immediately. I understand the search/processing fee is non-refundable once started.
+                  </span>
+                </label>
+              </div>
+            </>
+          )}
+          
           <button type="submit" disabled={loading} className="form-submit">
             {loading ? 'Submitting…' : <><Send size={14} /> Request Free Quote</>}
           </button>

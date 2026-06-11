@@ -8,7 +8,7 @@ export default function Contact() {
     <>
       <SEO 
         title="Contact Us - Free Fixed Conveyancing Quote" 
-        description="Get in touch with Land Registry Transfers. Call 020 7946 0192, email Enquiries@landregistrytransfers.com or Sales@landregistrytransfers.com, or visit our office in Blackburn."
+        description="Get in touch with Landregistrytransfers.com. Call 0333 577 0077, email enquiries@landregistrytransfers.com or sales@landregistrytransfers.com, or visit our office in Blackburn."
       />
 
       {/* Hero */}
@@ -42,7 +42,7 @@ export default function Contact() {
                 </div>
                 <div className="contact-info-content">
                   <h4>Phone Support</h4>
-                  <p style={{ fontWeight: 700, color: 'var(--blue-600)', fontSize: 16, marginTop: 2 }}>020 7946 0192</p>
+                  <p style={{ fontWeight: 700, color: 'var(--blue-600)', fontSize: 16, marginTop: 2 }}>0333 577 0077</p>
                   <p style={{ fontSize: 13, marginTop: 2 }}>Speak directly to a property conveyancing expert.</p>
                 </div>
               </div>
@@ -54,8 +54,8 @@ export default function Contact() {
                 <div className="contact-info-content">
                   <h4>Email Enquiry</h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginTop: 2 }}>
-                    <a href="mailto:Enquiries@landregistrytransfers.com" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>Enquiries@landregistrytransfers.com</a>
-                    <a href="mailto:Sales@landregistrytransfers.com" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>Sales@landregistrytransfers.com</a>
+                    <a href="mailto:enquiries@landregistrytransfers.com" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>enquiries@landregistrytransfers.com</a>
+                    <a href="mailto:sales@landregistrytransfers.com" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>sales@landregistrytransfers.com</a>
                   </div>
                   <p style={{ fontSize: 13, marginTop: 2 }}>Send documents and scans for file audits.</p>
                 </div>
@@ -67,7 +67,7 @@ export default function Contact() {
                 </div>
                 <div className="contact-info-content">
                   <h4>Office Address</h4>
-                  <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginTop: 2 }}>Land Registry Transfers</p>
+                  <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginTop: 2 }}>Swift Task Services Ltd</p>
                   <p style={{ fontSize: 13 }}>1 Limbrick, Blackburn, BB1 8AB</p>
                 </div>
               </div>
