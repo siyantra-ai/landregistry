@@ -4,7 +4,6 @@ import { ArrowRight, Star, ChevronDown } from 'lucide-react';
 import SEO from '../components/SEO';
 import EnquiryForm from '../components/EnquiryForm';
 import ServiceStackSection from '../components/ServiceStackSection';
-import DocumentAccessSection from '../components/DocumentAccessSection';
 
 export default function Home() {
   const [activeFaq, setActiveFaq] = useState(null);
@@ -121,7 +120,6 @@ export default function Home() {
   }, []);
 
   const faqs = [
-    { q: 'How do I obtain an official copy of my HM Land Registry Title Register or Title Plan?', a: 'You can order official copies of the Title Register (documenting ownership, active mortgages, and restrictions) and the Title Plan (detailing boundary lines) directly through our portal. We submit applications electronically to HM Land Registry, and the official PDF documents are sent to your email once retrieved.' },
     { q: 'How long does a Transfer of Equity take to register with HM Land Registry?', a: 'Preparing and drafting the TR1 transfer deed takes 3 to 5 working days. Once signed and submitted electronically to HM Land Registry, the official processing time can range from 2 weeks to several months depending on their current application queues. We track your application status to ensure swift registration.' },
     { q: 'Do I need a solicitor to change or update a name on my property deeds?', a: 'While you can file applications independently, using a regulated practitioner ensures forms (like the AP1) are filled legally and comply with strict anti-fraud checks. We manage the entire process for name changes due to marriage, divorce, or deed poll.' },
     { q: 'What is the process to remove a deceased joint owner from land registry deeds?', a: 'To remove a deceased owner, a surviving proprietor must file a Deceased Joint Proprietor application (Form DJP) supported by a certified copy of the Death Certificate or Grant of Probate. This updates the register under survivorship rules, ensuring legal records remain accurate.' },
@@ -316,8 +314,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── INDIVIDUAL DOCUMENT ACCESS ── */}
-      <DocumentAccessSection />
+
 
 
       {/* ── FAQ ── */}

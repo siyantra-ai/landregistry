@@ -7,7 +7,6 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import ApplyWizard from './pages/ApplyWizard';
-import DocApplyWizard from './pages/DocApplyWizard';
 
 // Scroll to top helper on page/route transition
 function ScrollToTop() {
@@ -31,23 +30,11 @@ const VALID_WIZARD_SERVICES = [
   'first-registration'
 ];
 
-const VALID_DOC_SERVICES = [
-  'title-register',
-  'title-plan',
-  'map-search',
-  'deed-search',
-  'property-ownership',
-  'property-alert'
-];
-
-// Redirect helper for /apply/:serviceId to /apply/:serviceId/step/1 or render DocApplyWizard
+// Redirect helper for /apply/:serviceId to /apply/:serviceId/step/1
 function ApplyRedirect() {
   const { serviceId } = useParams();
   if (VALID_WIZARD_SERVICES.includes(serviceId)) {
     return <Navigate to={`/apply/${serviceId}/step/1`} replace />;
-  }
-  if (VALID_DOC_SERVICES.includes(serviceId)) {
-    return <DocApplyWizard />;
   }
   return <Navigate to={`/?select=${serviceId}`} replace />;
 }
