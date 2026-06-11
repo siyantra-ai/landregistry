@@ -80,16 +80,25 @@ const DOC_SERVICES = {
     printedCopyPrice: 7.50,
     smsUpdatesPrice: 4,
   },
+  'property-alert': {
+    title: 'Property Alert Service',
+    desc: 'Monitor your property for any official updates or potential fraudulent applications.',
+    basePrice: 45,
+    basePriceLabel: 'Property Alert Setup',
+    addOns: [
+      { id: 'title_register', label: 'Include Current Title Register', price: 30 },
+      { id: 'flood_risk', label: 'Include Flood Risk Report', price: 12.50 },
+    ],
+    extraFields: [],
+    timescales: { standard: 'Setup completed within 24 working hours', fast_track: 'Setup completed within 12 working hours' },
+    fastTrackPrice: 10,
+    printedCopyPrice: 7.50,
+    smsUpdatesPrice: 4,
+  },
 };
 
 export default function DocApplyWizard() {
   const { serviceId } = useParams();
-
-  // Redirect property-alert externally
-  if (serviceId === 'property-alert') {
-    window.location.href = 'https://propertyalert.landregistry.gov.uk/';
-    return null;
-  }
 
   const svc = DOC_SERVICES[serviceId];
   if (!svc) {
