@@ -74,7 +74,17 @@ export default function Header({ onRequestCallback }) {
           </div>
         </nav>
 
-        <div className="header-actions">
+        <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {import.meta.env.VITE_CALENDLY_URL && (
+            <a 
+              href={import.meta.env.VITE_CALENDLY_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="header-book-btn"
+            >
+              Book a Call
+            </a>
+          )}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="mobile-toggle rounded-md border border-[#ced6e6] text-[#2F4F46] lg:hidden" aria-label="Toggle menu">

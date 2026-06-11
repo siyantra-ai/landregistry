@@ -38,6 +38,22 @@ export default function CallbackModal({ isOpen, onClose }) {
             <h3 className="modal-title">Request a Callback</h3>
             <p className="modal-desc">Free advice, no obligation. We'll call you back shortly.</p>
 
+            {import.meta.env.VITE_CALENDLY_URL && (
+              <div style={{ padding: '16px', backgroundColor: 'var(--bg-secondary)', border: '1.5px solid var(--border-default)', borderRadius: '12px', marginBottom: '20px', textAlign: 'center' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px', margin: 0 }}>Prefer to schedule a specific time?</h4>
+                <p style={{ fontSize: '11.5px', color: 'var(--text-secondary)', marginBottom: '12px', marginTop: '4px', lineHeight: '1.4' }}>Book a direct call with a specialist on our calendar.</p>
+                <a 
+                  href={import.meta.env.VITE_CALENDLY_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-primary" 
+                  style={{ display: 'inline-flex', width: '100%', justifyContent: 'center', backgroundColor: 'var(--text-accent)', color: '#ffffff', padding: '10px 16px', borderRadius: '8px', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}
+                >
+                  Book Instant Appointment
+                </a>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label className="form-label" htmlFor="cb-name">Your Name</label>
