@@ -19,10 +19,24 @@ function ScrollToTop() {
   return null;
 }
 
+const VALID_WIZARD_SERVICES = [
+  'transfer-of-equity',
+  'death-of-joint-proprietor',
+  'deceased-joint-proprietor',
+  'name-change',
+  'removal-of-restriction',
+  'transfer-of-equity-wills-probate',
+  'applying-for-restriction',
+  'first-registration'
+];
+
 // Redirect helper for /apply/:serviceId to /apply/:serviceId/step/1
 function ApplyRedirect() {
   const { serviceId } = useParams();
-  return <Navigate to={`/apply/${serviceId}/step/1`} replace />;
+  if (VALID_WIZARD_SERVICES.includes(serviceId)) {
+    return <Navigate to={`/apply/${serviceId}/step/1`} replace />;
+  }
+  return <Navigate to={`/?select=${serviceId}`} replace />;
 }
 
 export default function App() {

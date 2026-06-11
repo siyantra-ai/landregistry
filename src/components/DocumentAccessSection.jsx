@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChevronDown, ArrowRight, CheckCircle, FileText, Loader2, Sparkles } from 'lucide-react';
 import { saveEnquiry } from '../db/supabase';
 
@@ -56,6 +57,25 @@ export default function DocumentAccessSection() {
   const [success, setSuccess] = useState(false);
   
   const dropdownRef = useRef(null);
+  const location = useLocation();
+
+  // Handle document pre-selection and smooth scroll from query parameter
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const selectId = params.get('select');
+    if (selectId) {
+      const matched = DOCUMENT_SERVICES.find(doc => doc.id === selectId);
+      if (matched) {
+        setSelectedDoc(matched);
+        setTimeout(() => {
+          const element = document.getElementById('document-access');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 150);
+      }
+    }
+  }, [location.search]);
 
   const getPriceSplit = () => {
     if (!selectedDoc) return { documentFee: 0, searchProcessingFee: 0, vat: 0, total: 0 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle, FileText, Loader2, Lock, Clock, Sparkles, MapPin, Calendar, User, ShieldAlert } from 'lucide-react';
 import SEO from '../components/SEO';
 import { saveEnquiry } from '../db/supabase';
@@ -54,9 +54,9 @@ export default function ApplyWizard() {
   const currentStep = parseInt(stepId) || 1;
   const s = SERVICES[serviceId];
 
-  // If service is invalid, redirect to home
+  // If service is invalid, redirect to home with pre-selected document type
   if (!s) {
-    return <Link to="/" style={{ display: 'none' }} id="auto-home" onClick={(e) => { e.preventDefault(); navigate('/'); }} />;
+    return <Navigate to={`/?select=${serviceId}`} replace />;
   }
 
   // --- WIZARD FORM STATE ---
@@ -102,12 +102,6 @@ export default function ApplyWizard() {
   // Submit / Success States
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  // --- AUTOMATIC REDIRECT TO HOME HELPER ---
-  useEffect(() => {
-    if (!s) navigate('/');
-  }, [s, navigate]);
-
   // --- PRICE SPLIT CALCULATION ---
   const getCheckoutCalculations = () => {
     const basePrice = s.price;
