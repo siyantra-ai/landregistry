@@ -76,14 +76,20 @@ export default function Header({ onRequestCallback }) {
 
         <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {import.meta.env.VITE_CALENDLY_URL && (
-            <a 
-              href={import.meta.env.VITE_CALENDLY_URL} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <button 
+              type="button"
+              onClick={() => {
+                if (window.Calendly) {
+                  window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                } else {
+                  window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
+                }
+              }}
               className="header-book-btn"
+              style={{ border: 'none', cursor: 'pointer', outline: 'none' }}
             >
               Book a Call
-            </a>
+            </button>
           )}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
