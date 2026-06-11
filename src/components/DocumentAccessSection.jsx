@@ -139,7 +139,9 @@ export default function DocumentAccessSection() {
                   borderRadius: '12px',
                   boxShadow: 'var(--shadow-lg)',
                   zIndex: 200,
-                  overflow: 'hidden'
+                  maxHeight: '320px',
+                  overflowY: 'auto',
+                  overflowX: 'hidden'
                 }}
               >
                 {DOCUMENT_SERVICES.map((doc) => (
