@@ -1,8 +1,194 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle, FileText, Loader2, Lock, Clock, MapPin, User, Eye, ShieldCheck, Plus, Minus } from 'lucide-react';
 import SEO from '../components/SEO';
 import { saveEnquiry } from '../db/supabase';
+
+/* ─────────────────────────────────────────────
+   HELPER COMPONENTS: MAP SELECTOR & POSTCODE LOOKUP
+   ───────────────────────────────────────────── */
+function GoogleMapSelector({ apiKey, onLocationSelect }) {
+  const mapRef = useRef(null);
+  const [map, setMap] = useState(null);
+  const [marker, setMarker] = useState(null);
+
+  useEffect(() => {
+    if (!apiKey) return;
+    
+    // Check if script already loaded
+    if (window.google && window.google.maps) {
+      initMap();
+      return;
+    }
+
+    let script = document.getElementById('google-maps-script');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'google-maps-script';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+      script.async = true;
+      script.defer = true;
+      script.onload = initMap;
+      document.head.appendChild(script);
+    } else {
+      const interval = setInterval(() => {
+        if (window.google && window.google.maps) {
+          clearInterval(interval);
+          initMap();
+        }
+      }, 100);
+    }
+
+    function initMap() {
+      const defaultLatLng = { lat: 51.5034, lng: -0.1276 }; // London Downing Street
+      const newMap = new window.google.maps.Map(mapRef.current, {
+        center: defaultLatLng,
+        zoom: 13,
+      });
+
+      const newMarker = new window.google.maps.Marker({
+        position: defaultLatLng,
+        map: newMap,
+        draggable: true,
+      });
+
+      newMap.addListener('click', (event) => {
+        const lat = event.latLng.lat();
+        const lng = event.latLng.lng();
+        newMarker.setPosition({ lat, lng });
+        onLocationSelect(lat, lng);
+      });
+
+      newMarker.addListener('dragend', () => {
+        const lat = newMarker.getPosition().lat();
+        const lng = newMarker.getPosition().lng();
+        onLocationSelect(lat, lng);
+      });
+
+      setMap(newMap);
+      setMarker(newMarker);
+    }
+  }, [apiKey]);
+
+  return (
+    <div style={{ height: '300px', width: '100%', borderRadius: '12px', border: '1.5px solid var(--border-default)', overflow: 'hidden', marginBottom: '16px' }}>
+      {apiKey ? (
+        <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
+      ) : (
+        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)', padding: '24px', textAlign: 'center', gap: '8px' }}>
+          <MapPin size={24} style={{ color: 'var(--blue-600)' }} />
+          <strong>Interactive Map (Demo Mode)</strong>
+          <span style={{ fontSize: '12px', maxWidth: '300px', lineHeight: '1.4' }}>Click map pin in production. Google Maps API Key not configured. Enter coordinates manually below.</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PostcodeLookup({ onAddressSelect }) {
+  const [postcode, setPostcode] = useState('');
+  const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const lookupPostcode = async () => {
+    if (!postcode) return;
+    setLoading(true);
+    setError('');
+    setAddresses([]);
+
+    const apiKey = import.meta.env.VITE_GETADDRESS_API_KEY;
+    if (apiKey) {
+      try {
+        const res = await fetch(`https://api.getaddress.io/find/${postcode}?api-key=${apiKey}&expand=true`);
+        if (res.ok) {
+          const data = await res.json();
+          const formatted = (data.addresses || []).map(addr => ({
+            line1: addr.line_1 || addr.formatted_address[0] || '',
+            line2: addr.line_2 || addr.formatted_address[1] || '',
+            city: addr.town_or_city || data.town_or_city || '',
+            county: addr.county || data.county || '',
+            postcode: data.postcode
+          }));
+          setAddresses(formatted);
+          if (formatted.length === 0) setError('No addresses found for this postcode.');
+        } else {
+          setError('Postcode not found or API error.');
+        }
+      } catch (err) {
+        setError('Error reaching postcode service.');
+      }
+    } else {
+      // Demo Mode: Mock response after delay
+      await new Promise(resolve => setTimeout(resolve, 600));
+      const cleanPc = postcode.toUpperCase().replace(/\s/g, '');
+      if (cleanPc === 'SW1A1AA') {
+        setAddresses([
+          { line1: '10 Downing Street', line2: '', city: 'London', county: 'Greater London', postcode: 'SW1A 1AA' },
+          { line1: '11 Downing Street', line2: '', city: 'London', county: 'Greater London', postcode: 'SW1A 1AA' },
+          { line1: '12 Downing Street', line2: '', city: 'London', county: 'Greater London', postcode: 'SW1A 1AA' }
+        ]);
+      } else {
+        const mockStreets = ['High Street', 'London Road', 'Church Street', 'Park Lane', 'Main Street'];
+        const mockCities = ['Manchester', 'Birmingham', 'Leeds', 'Liverpool', 'Bristol'];
+        const cleanPcShow = postcode.toUpperCase();
+        setAddresses([
+          { line1: `1 ${mockStreets[Math.floor(Math.random()*5)]}`, line2: 'Flat A', city: mockCities[Math.floor(Math.random()*5)], county: 'West Midlands', postcode: cleanPcShow },
+          { line1: `15 ${mockStreets[Math.floor(Math.random()*5)]}`, line2: '', city: mockCities[Math.floor(Math.random()*5)], county: 'Lancashire', postcode: cleanPcShow },
+          { line1: `42 ${mockStreets[Math.floor(Math.random()*5)]}`, line2: '', city: mockCities[Math.floor(Math.random()*5)], county: 'Yorkshire', postcode: cleanPcShow }
+        ]);
+      }
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div style={{ marginBottom: '16px', background: 'rgba(199, 162, 90, 0.04)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-default)' }}>
+      <label className="form-label" style={{ fontSize: '13px', fontWeight: 700 }}>Search Address by Postcode</label>
+      <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+        <input 
+          type="text" 
+          placeholder="e.g. SW1A 1AA" 
+          value={postcode} 
+          onChange={e => setPostcode(e.target.value)} 
+          className="form-input" 
+          style={{ textTransform: 'uppercase', padding: '10px 14px' }}
+        />
+        <button 
+          type="button" 
+          onClick={lookupPostcode} 
+          disabled={loading} 
+          className="btn-primary"
+          style={{ whiteSpace: 'nowrap', padding: '10px 16px', fontSize: '13px', backgroundColor: 'var(--blue-600)', color: '#ffffff', borderRadius: '10px', border: 'none', cursor: 'pointer' }}
+        >
+          {loading ? 'Searching...' : 'Find Address'}
+        </button>
+      </div>
+      {error && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', marginBottom: 0 }}>{error}</p>}
+      {addresses.length > 0 && (
+        <div style={{ marginTop: '12px' }}>
+          <label className="form-label" style={{ fontSize: '12px' }}>Select from {addresses.length} addresses</label>
+          <select 
+            className="form-select" 
+            onChange={e => {
+              const idx = parseInt(e.target.value);
+              if (!isNaN(idx)) onAddressSelect(addresses[idx]);
+            }}
+            defaultValue=""
+            style={{ padding: '10px 14px', borderRadius: '10px' }}
+          >
+            <option value="" disabled>Choose an address...</option>
+            {addresses.map((addr, idx) => (
+              <option key={idx} value={idx}>
+                {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}, {addr.city}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ─────────────────────────────────────────────
    SERVICE CONFIGURATION
@@ -448,12 +634,19 @@ export default function DocApplyWizard() {
                   {/* Map Search: location fields */}
                   {isMapSearch ? (
                     <>
+                      <GoogleMapSelector 
+                        apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} 
+                        onLocationSelect={(lat, lng) => {
+                          updateProperty(idx, 'latitude', lat.toString());
+                          updateProperty(idx, 'longitude', lng.toString());
+                        }}
+                      />
                       <div className="form-group">
                         <label className="form-label">Enter the address, street, town, city or postcode</label>
                         <input type="text" required className="form-input" placeholder="e.g. 10 Downing Street, London" value={prop.locationLookup} onChange={e => updateProperty(idx, 'locationLookup', e.target.value)} />
                       </div>
                       <p style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: '1.5', marginBottom: '16px' }}>
-                        Please provide the latitude and longitude of the property or land. You can find coordinates using Google Maps (right-click → "What's here?").
+                        Please provide the latitude and longitude of the property or land. You can find coordinates using Google Maps (click/drag pin above or right-click on Google Maps).
                       </p>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                         <div className="form-group">
@@ -472,6 +665,17 @@ export default function DocApplyWizard() {
                     </>
                   ) : (
                     <>
+                      {/* Postcode Address Finder */}
+                      <PostcodeLookup 
+                        onAddressSelect={(addr) => {
+                          updateProperty(idx, 'postcode', addr.postcode);
+                          updateProperty(idx, 'addressLine1', addr.line1);
+                          updateProperty(idx, 'addressLine2', addr.line2);
+                          updateProperty(idx, 'city', addr.city);
+                          updateProperty(idx, 'county', addr.county);
+                        }}
+                      />
+
                       {/* Standard property address fields */}
                       <div style={{ background: 'rgba(47, 79, 70, 0.04)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '10px 14px', marginBottom: '16px', fontSize: '12.5px', color: 'var(--text-secondary)' }}>
                         <strong>Tip:</strong> You can search for <strong>any property</strong> — you do not need to own the property.

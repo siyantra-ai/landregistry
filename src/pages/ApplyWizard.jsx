@@ -4,6 +4,111 @@ import { ArrowLeft, ArrowRight, CheckCircle, FileText, Loader2, Lock, Clock, Spa
 import SEO from '../components/SEO';
 import { saveEnquiry } from '../db/supabase';
 
+function PostcodeLookup({ onAddressSelect }) {
+  const [postcode, setPostcode] = useState('');
+  const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const lookupPostcode = async () => {
+    if (!postcode) return;
+    setLoading(true);
+    setError('');
+    setAddresses([]);
+
+    const apiKey = import.meta.env.VITE_GETADDRESS_API_KEY;
+    if (apiKey) {
+      try {
+        const res = await fetch(`https://api.getaddress.io/find/${postcode}?api-key=${apiKey}&expand=true`);
+        if (res.ok) {
+          const data = await res.json();
+          const formatted = (data.addresses || []).map(addr => ({
+            line1: addr.line_1 || addr.formatted_address[0] || '',
+            line2: addr.line_2 || addr.formatted_address[1] || '',
+            city: addr.town_or_city || data.town_or_city || '',
+            county: addr.county || data.county || '',
+            postcode: data.postcode
+          }));
+          setAddresses(formatted);
+          if (formatted.length === 0) setError('No addresses found for this postcode.');
+        } else {
+          setError('Postcode not found or API error.');
+        }
+      } catch (err) {
+        setError('Error reaching postcode service.');
+      }
+    } else {
+      // Demo Mode: Mock response after delay
+      await new Promise(resolve => setTimeout(resolve, 600));
+      const cleanPc = postcode.toUpperCase().replace(/\s/g, '');
+      if (cleanPc === 'SW1A1AA') {
+        setAddresses([
+          { line1: '10 Downing Street', line2: '', city: 'London', county: 'Greater London', postcode: 'SW1A 1AA' },
+          { line1: '11 Downing Street', line2: '', city: 'London', county: 'Greater London', postcode: 'SW1A 1AA' },
+          { line1: '12 Downing Street', line2: '', city: 'London', county: 'Greater London', postcode: 'SW1A 1AA' }
+        ]);
+      } else {
+        const mockStreets = ['High Street', 'London Road', 'Church Street', 'Park Lane', 'Main Street'];
+        const mockCities = ['Manchester', 'Birmingham', 'Leeds', 'Liverpool', 'Bristol'];
+        const cleanPcShow = postcode.toUpperCase();
+        setAddresses([
+          { line1: `1 ${mockStreets[Math.floor(Math.random()*5)]}`, line2: 'Flat A', city: mockCities[Math.floor(Math.random()*5)], county: 'West Midlands', postcode: cleanPcShow },
+          { line1: `15 ${mockStreets[Math.floor(Math.random()*5)]}`, line2: '', city: mockCities[Math.floor(Math.random()*5)], county: 'Lancashire', postcode: cleanPcShow },
+          { line1: `42 ${mockStreets[Math.floor(Math.random()*5)]}`, line2: '', city: mockCities[Math.floor(Math.random()*5)], county: 'Yorkshire', postcode: cleanPcShow }
+        ]);
+      }
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div style={{ marginBottom: '16px', background: 'rgba(199, 162, 90, 0.04)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-default)' }}>
+      <label className="form-label" style={{ fontSize: '13px', fontWeight: 700 }}>Search Address by Postcode</label>
+      <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+        <input 
+          type="text" 
+          placeholder="e.g. SW1A 1AA" 
+          value={postcode} 
+          onChange={e => setPostcode(e.target.value)} 
+          className="form-input" 
+          style={{ textTransform: 'uppercase', padding: '10px 14px' }}
+        />
+        <button 
+          type="button" 
+          onClick={lookupPostcode} 
+          disabled={loading} 
+          className="btn-primary"
+          style={{ whiteSpace: 'nowrap', padding: '10px 16px', fontSize: '13px', backgroundColor: 'var(--blue-600)', color: '#ffffff', borderRadius: '10px', border: 'none', cursor: 'pointer' }}
+        >
+          {loading ? 'Searching...' : 'Find Address'}
+        </button>
+      </div>
+      {error && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', marginBottom: 0 }}>{error}</p>}
+      {addresses.length > 0 && (
+        <div style={{ marginTop: '12px' }}>
+          <label className="form-label" style={{ fontSize: '12px' }}>Select from {addresses.length} addresses</label>
+          <select 
+            className="form-select" 
+            onChange={e => {
+              const idx = parseInt(e.target.value);
+              if (!isNaN(idx)) onAddressSelect(addresses[idx]);
+            }}
+            defaultValue=""
+            style={{ padding: '10px 14px', borderRadius: '10px' }}
+          >
+            <option value="" disabled>Choose an address...</option>
+            {addresses.map((addr, idx) => (
+              <option key={idx} value={idx}>
+                {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}, {addr.city}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const SERVICES = {
   'transfer-of-equity': {
     title: 'Transfer of Equity',
@@ -435,6 +540,12 @@ export default function ApplyWizard() {
           {currentStep === 1 && (
             <form onSubmit={handleNextStep}>
               <h3 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center' }}><MapPin size={18} /> Step 1: Property Location</h3>
+              
+              <PostcodeLookup onAddressSelect={(addr) => {
+                setPostcode(addr.postcode);
+                setAddress(addr.line1 + (addr.line2 ? ', ' + addr.line2 : '') + ', ' + addr.city);
+              }} />
+
               <div className="form-group">
                 <label className="form-label" htmlFor="apply-postcode">Property Postcode</label>
                 <input id="apply-postcode" type="text" required className="form-input" placeholder="e.g. BB1 8AB" value={postcode} onChange={(e) => setPostcode(e.target.value)} />
