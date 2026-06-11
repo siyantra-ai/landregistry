@@ -4071,6 +4071,198 @@ input, select, textarea { font: inherit; }
   }
 }
 
+/* ═══════════════════════════════════════════════
+   DOCUMENT APPLICATION WIZARD (dw-*)
+   ═══════════════════════════════════════════════ */
+.dw-price-bar {
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  margin-bottom: 24px;
+}
 
+.dw-price-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid var(--border-default);
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: var(--shadow-md);
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
 
+.dw-progress-wrapper {
+  margin-bottom: 24px;
+}
 
+.dw-progress-track {
+  height: 6px;
+  background-color: var(--bg-tertiary);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.dw-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-600) 0%, var(--blue-500) 100%);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.dw-progress-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dw-section-card {
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.dw-property-block {
+  background: #ffffff;
+  border: 1.5px solid var(--border-default);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+}
+
+.dw-property-block:hover {
+  border-color: var(--blue-500);
+  box-shadow: var(--shadow-md);
+}
+
+.dw-addon-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  background: #ffffff;
+}
+
+.dw-addon-row:hover {
+  border-color: var(--blue-500);
+  background-color: var(--bg-secondary);
+}
+
+.dw-addon-row--active {
+  border-color: var(--blue-600);
+  background-color: rgba(47, 79, 70, 0.04);
+  box-shadow: 0 0 0 1px var(--blue-600);
+}
+
+.dw-addon-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dw-addon-price {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+.dw-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.dw-option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+  text-align: left;
+}
+
+.dw-option-row:hover {
+  border-color: var(--blue-500);
+  background-color: var(--bg-secondary);
+}
+
+.dw-option-row--selected {
+  border-color: var(--blue-600);
+  background-color: rgba(47, 79, 70, 0.04);
+  box-shadow: 0 0 0 1px var(--blue-600);
+}
+
+.dw-option-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dw-option-sub {
+  display: block;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-left: 28px;
+  margin-top: 4px;
+}
+
+.dw-option-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+.dw-review-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.dw-review-table tr {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.dw-review-table tr:last-child {
+  border-bottom: none;
+}
+
+.dw-review-table td {
+  padding: 12px 8px;
+  vertical-align: top;
+}
+
+.dw-review-table td:first-child {
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 35%;
+}
+
+.dw-review-table td:last-child {
+  color: var(--text-primary);
+}

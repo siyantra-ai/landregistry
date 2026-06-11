@@ -12,14 +12,15 @@ export default function Header({ onRequestCallback }) {
 
   const services = [
     { id: 'title-register', title: 'Title Register', href: '/apply/title-register', description: 'Official record of ownership, charges, and restrictions.' },
-    { id: 'title-plan-doc', title: 'Title Plan (document)', href: '/apply/title-plan/document', description: 'Plan showing the general extent of the registered title.' },
-    { id: 'title-plan', title: 'Title Plan (apply)', href: '/apply/title-plan', description: 'Order an official title plan for your property.' },
-    { id: 'map-search', title: 'Map Search', href: '/map-search', description: 'Explore titles geographically before you apply.' },
+    { id: 'title-plan', title: 'Title Plan', href: '/apply/title-plan', description: 'Order an official title plan for your property.' },
+    { id: 'map-search', title: 'Map Search', href: '/apply/map-search', description: 'Search and retrieve documents for any land or property.' },
     { id: 'deed-search', title: 'Deed Search', href: '/apply/deed-search', description: 'Search filed deeds and (optional) flood risk.' },
-    { id: 'conveyancing-pack', title: 'Conveyancing Pack', href: '/apply/conveyancing-pack', description: 'Prepared pack to speed up solicitor checks.' },
-    { id: 'property-ownership', title: 'Property Ownership', href: '/apply/property-ownership', description: 'Combined title register and plan for a property.' },
-    { id: 'djp', title: 'DJP Application', href: '/apply/deceased-joint-proprietor', description: 'Remove a deceased joint proprietor from the register.' },
-    { id: 'property-alert', title: 'Property Alert', href: 'https://propertyalert.landregistry.gov.uk/', description: 'HM Land Registry property alert service.' },
+    { id: 'property-ownership', title: 'Property Ownership Search', href: '/apply/property-ownership', description: 'Combined title register and plan showing full ownership details.' },
+    { id: 'property-alert', title: 'Property Alert', href: '/apply/property-alert', description: 'HM Land Registry property alert service.' },
+    { id: 'transfer-of-equity', title: 'Transfer of Equity', href: '/apply/transfer-of-equity', description: 'Add or remove a partner, spouse, or family member from property deeds.' },
+    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor', href: '/apply/deceased-joint-proprietor', description: 'Remove a deceased joint owner from the title deeds.' },
+    { id: 'name-change', title: 'Name Change on Deeds', href: '/apply/name-change', description: 'Update legal name on property records.' },
+    { id: 'removal-of-restriction', title: 'Removal of a Restriction', href: '/apply/removal-of-restriction', description: 'Clear outdated charges or restrictions from the title.' },
   ]
 
   return (

@@ -1,98 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import { ChevronDown, ArrowRight, CheckCircle, FileText, Loader2, Sparkles } from 'lucide-react';
-import { saveEnquiry } from '../db/supabase';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ChevronDown, ArrowRight, FileText, Sparkles, ShieldCheck, Clock, MapPin } from 'lucide-react';
 
 const DOCUMENT_SERVICES = [
   {
     id: 'title-register',
     title: 'Title Register',
     price: '£45',
-    desc: 'Official record of ownership, charges, and restrictions',
+    desc: 'Official record of ownership, charges, mortgages, and restrictions',
   },
   {
     id: 'title-plan',
     title: 'Title Plan',
     price: '£45',
-    desc: 'Plan showing the general extent of the registered title',
+    desc: 'Plan showing the general extent of the registered title boundaries',
   },
   {
     id: 'map-search',
-    title: 'Map search',
+    title: 'Map Search',
     price: '£65',
-    desc: 'Explore titles geographically before you apply',
+    desc: 'Retrieve Title Register & Plan for land/property without a known address',
   },
   {
     id: 'deed-search',
-    title: 'Deed search',
+    title: 'Deed Search',
     price: '£75',
-    desc: 'General filed deed and optional flood risk for your property',
+    desc: 'Search filed transfer, conveyancing, charge, or lease deeds',
   },
   {
-    id: 'leasehold-register',
-    title: 'Leasehold Register & Plan',
+    id: 'property-ownership',
+    title: 'Property Ownership Search',
     price: '£55',
-    desc: 'Official lease terms, freeholder details and charges',
+    desc: 'Combined title register and plan showing full ownership details',
   },
   {
-    id: 'ownership-history',
-    title: 'Property History Search',
-    price: '£95',
-    desc: 'Trace historic ownership deeds and transfer records',
+    id: 'property-alert',
+    title: 'Property Alert Service',
+    price: 'Redirect',
+    desc: 'Protect against property fraud with HM Land Registry alerts',
   }
 ];
 
 export default function DocumentAccessSection() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedDoc, setSelectedDoc] = useState(null);
-  
-  // Form fields
-  const [postcode, setPostcode] = useState('');
-  const [houseNumber, setHouseNumber] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  
   const dropdownRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Handle document pre-selection and smooth scroll from query parameter
+  // Redirect if query param ?select=service-id is passed
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const selectId = params.get('select');
     if (selectId) {
       const matched = DOCUMENT_SERVICES.find(doc => doc.id === selectId);
       if (matched) {
-        setSelectedDoc(matched);
-        setTimeout(() => {
-          const element = document.getElementById('document-access');
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 150);
+        navigate(`/apply/${matched.id}`, { replace: true });
       }
     }
-  }, [location.search]);
-
-  const getPriceSplit = () => {
-    if (!selectedDoc) return { documentFee: 0, searchProcessingFee: 0, vat: 0, total: 0 };
-    const totalVal = parseFloat(selectedDoc.price.replace('£', ''));
-    const docFeeVal = 7.00;
-    const taxableVal = totalVal - docFeeVal;
-    const vatVal = taxableVal * 1 / 6;
-    const searchProcessingFeeVal = taxableVal * 5 / 6;
-    return {
-      documentFee: docFeeVal,
-      searchProcessingFee: searchProcessingFeeVal,
-      vat: vatVal,
-      total: totalVal
-    };
-  };
-
-  const { documentFee, searchProcessingFee, vat, total } = getPriceSplit();
+  }, [location.search, navigate]);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -106,55 +71,28 @@ export default function DocumentAccessSection() {
   }, []);
 
   const handleSelectService = (doc) => {
-    setSelectedDoc(doc);
+    navigate(`/apply/${doc.id}`);
     setIsOpen(false);
-    setSuccess(false); // Reset success state if switching docs
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedDoc) return;
-    setLoading(true);
-
-    const enquiryPayload = {
-      name,
-      email,
-      phone,
-      service: `Document Order: ${selectedDoc.title}`,
-      notes: `Order for ${selectedDoc.title} (${selectedDoc.price}).\nAddress: ${houseNumber}, Postcode: ${postcode}`
-    };
-
-    const res = await saveEnquiry(enquiryPayload);
-    setLoading(false);
-    
-    if (res.success) {
-      setSuccess(true);
-      // Clear form
-      setPostcode('');
-      setHouseNumber('');
-      setName('');
-      setEmail('');
-      setPhone('');
-    }
   };
 
   return (
-    <section className="section doc-access-section" id="document-access">
-      <div className="container doc-access-container">
+    <section className="section doc-access-section" id="document-access" style={{ backgroundColor: 'var(--bg-secondary)', padding: '80px 24px' }}>
+      <div className="container doc-access-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '48px', alignItems: 'center', maxWidth: 'var(--container-max)', margin: '0 auto' }}>
         
-        {/* Left Side: Copy, Dropdown & Inline Form */}
-        <div className="doc-access-left">
-          <h2 className="doc-access-title">Individual document access</h2>
-          <p className="doc-access-desc">
-            Need official extracts or searches? Order the register, plan, or map-led lookup below—or ask us about deeds, ownership checks, and alerts.
-          </p>
-          
-          <p className="doc-access-instruction">
-            Hover or tab into the menu below to choose a service.
+        {/* Left Side: Copy & Selection Dropdown */}
+        <div className="doc-access-left" style={{ textAlign: 'left' }}>
+          <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-accent)', fontWeight: 700, display: 'block', marginBottom: '12px' }}>
+            HM Land Registry Documents
+          </span>
+          <h2 className="doc-access-title" style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontFamily: 'Poppins, sans-serif', color: 'var(--text-primary)', fontWeight: 700, marginBottom: '16px', lineHeight: '1.2' }}>
+            Official Document Access
+          </h2>
+          <p className="doc-access-desc" style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '28px', maxWidth: '540px' }}>
+            Need official extracts, title boundaries, deed records, or geographic land lookups? Select a service below to begin your secure application.
           </p>
           
           {/* Custom Dropdown */}
-          <div className="doc-dropdown-wrapper" ref={dropdownRef}>
+          <div className="doc-dropdown-wrapper" ref={dropdownRef} style={{ position: 'relative', width: '100%', maxWidth: '480px' }}>
             <button 
               type="button"
               className={`doc-trigger ${isOpen ? 'active' : ''}`}
@@ -162,9 +100,27 @@ export default function DocumentAccessSection() {
               onMouseEnter={() => setIsOpen(true)}
               aria-haspopup="listbox"
               aria-expanded={isOpen}
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '16px 20px',
+                backgroundColor: '#ffffff',
+                border: '1.5px solid var(--border-default)',
+                borderRadius: '12px',
+                fontSize: '15px',
+                fontWeight: 600,
+                color: 'var(--text-primary)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: 'var(--shadow-sm)'
+              }}
             >
-              <span>{selectedDoc ? selectedDoc.title : 'Property & document services'}</span>
-              <ChevronDown size={18} className={`doc-trigger-chevron ${isOpen ? 'rotated' : ''}`} />
+              <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FileText size={18} style={{ color: 'var(--blue-600)' }} /> Select Land Registry Service...
+              </span>
+              <ChevronDown size={18} style={{ transition: 'transform 0.2s ease', transform: isOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
             </button>
             
             {isOpen && (
@@ -172,202 +128,72 @@ export default function DocumentAccessSection() {
                 className="doc-menu" 
                 role="listbox"
                 onMouseLeave={() => setIsOpen(false)}
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  marginTop: '8px',
+                  backgroundColor: '#ffffff',
+                  border: '1.5px solid var(--border-default)',
+                  borderRadius: '12px',
+                  boxShadow: 'var(--shadow-lg)',
+                  zIndex: 200,
+                  overflow: 'hidden'
+                }}
               >
                 {DOCUMENT_SERVICES.map((doc) => (
                   <div
                     key={doc.id}
-                    className={`doc-item ${selectedDoc?.id === doc.id ? 'selected' : ''}`}
+                    className="doc-item"
                     role="option"
-                    aria-selected={selectedDoc?.id === doc.id}
                     onClick={() => handleSelectService(doc)}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '14px 20px',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.15s ease',
+                      borderBottom: '1px solid var(--border-subtle)'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
                   >
-                    <div className="doc-item-content">
-                      <span className="doc-item-title">{doc.title}</span>
-                      <span className="doc-item-desc">{doc.desc}</span>
+                    <div className="doc-item-content" style={{ flex: 1, paddingRight: '16px' }}>
+                      <span className="doc-item-title" style={{ display: 'block', fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '2px' }}>{doc.title}</span>
+                      <span className="doc-item-desc" style={{ display: 'block', fontSize: '12.5px', color: 'var(--text-secondary)' }}>{doc.desc}</span>
                     </div>
-                    <div className="doc-item-action">
-                      <span className="doc-item-price">{doc.price}</span>
-                      <ArrowRight size={16} className="doc-item-arrow" />
+                    <div className="doc-item-action" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span className="doc-item-price" style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text-accent)', backgroundColor: 'rgba(199, 162, 90, 0.1)', padding: '4px 8px', borderRadius: '6px' }}>{doc.price}</span>
+                      <ArrowRight size={14} style={{ color: 'var(--text-tertiary)' }} />
                     </div>
                   </div>
                 ))}
               </div>
             )}
           </div>
-          
-          {/* Order Details & Inline Form (displays only if a doc is selected) */}
-          {selectedDoc && (
-            <div className="doc-order-card">
-              {success ? (
-                <div className="doc-order-success">
-                  <CheckCircle size={40} className="doc-success-icon" />
-                  <h3>Order Request Received!</h3>
-                  <p>
-                    We will retrieve the official <strong>{selectedDoc.title}</strong> and email the PDF files directly to you once verified.
-                  </p>
-                  <button 
-                    type="button" 
-                    className="btn-reset-order"
-                    onClick={() => setSelectedDoc(null)}
-                  >
-                    Order Another Document
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="doc-order-form">
-                  <div className="doc-order-header">
-                    <div className="doc-header-info">
-                      <span className="doc-badge">Selected Document</span>
-                      <h3>{selectedDoc.title}</h3>
-                    </div>
-                    <div className="doc-header-price">
-                      <span className="price-tag">{selectedDoc.price}</span>
-                      <span className="vat-hint">incl. VAT</span>
-                    </div>
-                  </div>
-                  
-                  <div className="doc-form-grid">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="doc-postcode">Postcode</label>
-                      <input 
-                        id="doc-postcode"
-                        type="text" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. EC1V 2NX" 
-                        value={postcode}
-                        onChange={(e) => setPostcode(e.target.value)}
-                      />
-                    </div>
-                    
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="doc-number">House Number or Name</label>
-                      <input 
-                        id="doc-number"
-                        type="text" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. Flat 4 or 128" 
-                        value={houseNumber}
-                        onChange={(e) => setHouseNumber(e.target.value)}
-                      />
-                    </div>
-                    
-                    <div className="form-group full-width">
-                      <label className="form-label" htmlFor="doc-name">Your Full Name</label>
-                      <input 
-                        id="doc-name"
-                        type="text" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. John Smith" 
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                    </div>
-                    
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="doc-email">Email Address</label>
-                      <input 
-                        id="doc-email"
-                        type="email" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. john@example.com" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                    
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="doc-phone">Phone Number</label>
-                      <input 
-                        id="doc-phone"
-                        type="tel" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. 07123 456789" 
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Price Split Breakdown */}
-                  <div className="price-split-breakdown" style={{ 
-                    marginTop: '20px', 
-                    padding: '16px', 
-                    backgroundColor: 'var(--bg-secondary)', 
-                    borderRadius: '8px', 
-                    border: '1px solid var(--border-default)', 
-                    fontSize: '13px'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
-                      <span>Document Fee (from gov.uk):</span>
-                      <span style={{ fontWeight: 600 }}>£{documentFee.toFixed(2)}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
-                      <span>Search &amp; Processing Fee:</span>
-                      <span style={{ fontWeight: 600 }}>£{searchProcessingFee.toFixed(2)}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
-                      <span>VAT (20%):</span>
-                      <span style={{ fontWeight: 600 }}>£{vat.toFixed(2)}</span>
-                    </div>
-                    <div style={{ height: '1px', backgroundColor: 'var(--border-default)', margin: '12px 0' }} />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>
-                      <span>Total Price (incl. VAT):</span>
-                      <span>£{total.toFixed(2)}</span>
-                    </div>
-                  </div>
-
-                  {/* Required Cancellation Waiver Checkbox */}
-                  <div className="compliance-checkbox-group" style={{ marginTop: '16px', marginBottom: '16px' }}>
-                    <label style={{ display: 'flex', gap: '10px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                      <input 
-                        type="checkbox" 
-                        required 
-                        style={{ marginTop: '3px', accentColor: 'var(--blue-600)' }}
-                      />
-                      <span style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                        I agree to waive my 14-day cancellation right to allow Swift Task Services Ltd to start the search and document retrieval immediately. I understand that the search and processing fee is non-refundable once started.
-                      </span>
-                    </label>
-                  </div>
-                  
-                  <button type="submit" disabled={loading} className="btn-order-submit">
-                    {loading ? (
-                      <>
-                        <Loader2 size={16} className="spinner" />
-                        Processing Order...
-                      </>
-                    ) : (
-                      <>
-                        Request Document Access <ArrowRight size={16} />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div>
-          )}
-          
         </div>
         
-        {/* Right Side: Slogan / Banner card */}
-        <div className="doc-access-right">
-          <div className="doc-banner-card">
-            <div className="doc-banner-gradient-overlay" />
-            <div className="doc-banner-mesh" />
-            
-            <div className="doc-banner-content">
-              <div className="doc-icon-frame">
-                <FileText size={36} className="doc-banner-icon" />
-                <Sparkles size={16} className="doc-banner-spark" />
-              </div>
-              <h3 className="doc-banner-slogan">
-                OFFICIAL DOCUMENTS, DELIVERED WITH CLEAR NEXT STEPS
-              </h3>
+        {/* Right Side: Features Cards */}
+        <div className="doc-access-right" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ backgroundColor: '#ffffff', border: '1.5px solid var(--border-default)', borderRadius: '16px', padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ backgroundColor: 'rgba(47, 79, 70, 0.08)', padding: '10px', borderRadius: '10px', color: 'var(--blue-600)' }}>
+              <ShieldCheck size={24} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <h4 style={{ margin: '0 0 4px', fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>Official HM Land Registry Copies</h4>
+              <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>All documents are sourced directly from official government registry archives.</p>
+            </div>
+          </div>
+
+          <div style={{ backgroundColor: '#ffffff', border: '1.5px solid var(--border-default)', borderRadius: '16px', padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ backgroundColor: 'rgba(47, 79, 70, 0.08)', padding: '10px', borderRadius: '10px', color: 'var(--blue-600)' }}>
+              <Clock size={24} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <h4 style={{ margin: '0 0 4px', fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>Fast-Track Available</h4>
+              <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>Standard delivery within 24 working hours, with fast-track processing in under 12 hours.</p>
             </div>
           </div>
         </div>
