@@ -167,7 +167,6 @@ export default function DocumentAccessSection() {
                       <span className="doc-item-desc" style={{ display: 'block', fontSize: '12.5px', color: 'var(--text-secondary)' }}>{doc.desc}</span>
                     </div>
                     <div className="doc-item-action" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span className="doc-item-price" style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text-accent)', backgroundColor: 'rgba(199, 162, 90, 0.1)', padding: '4px 8px', borderRadius: '6px' }}>{doc.price}</span>
                       <ArrowRight size={14} style={{ color: 'var(--text-tertiary)' }} />
                     </div>
                   </div>

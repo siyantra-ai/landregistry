@@ -17,34 +17,17 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
   const [callDuration, setCallDuration] = useState(0);
 
   const services = [
-    { value: 'transfer-of-equity', label: 'Transfer of Equity (£450)' },
-    { value: 'death-of-joint-proprietor', label: 'Death of a Joint Proprietor (£400)' },
-    { value: 'name-change', label: 'Name Change (£150)' },
-    { value: 'removal-of-restriction', label: 'Removal of a Restriction (£350)' },
-    { value: 'transfer-of-equity-wills-probate', label: 'Transfer of Equity – Wills/Probate (£450)' },
-    { value: 'applying-for-restriction', label: 'Applying for a Restriction (£350)' },
-    { value: 'first-registration', label: 'First Registration (£600)' },
+    { value: 'transfer-of-equity', label: 'Transfer of Equity' },
+    { value: 'death-of-joint-proprietor', label: 'Death of a Joint Proprietor' },
+    { value: 'name-change', label: 'Name Change' },
+    { value: 'removal-of-restriction', label: 'Removal of a Restriction' },
+    { value: 'transfer-of-equity-wills-probate', label: 'Transfer of Equity – Wills/Probate' },
+    { value: 'applying-for-restriction', label: 'Applying for a Restriction' },
+    { value: 'first-registration', label: 'First Registration' },
     { value: 'other', label: 'Other / General Enquiry' }
   ];
 
-  const getPriceSplit = () => {
-    const serviceObj = services.find(s => s.value === service);
-    if (!serviceObj) return null;
-    const match = serviceObj.label.match(/£\d+/);
-    if (!match) return null;
-    const totalVal = parseFloat(match[0].replace('£', ''));
-    const docFeeVal = 7.00;
-    const taxableVal = totalVal - docFeeVal;
-    const vatVal = taxableVal * 1 / 6;
-    const searchProcessingFeeVal = taxableVal * 5 / 6;
-    return {
-      documentFee: docFeeVal,
-      searchProcessingFee: searchProcessingFeeVal,
-      vat: vatVal,
-      total: totalVal
-    };
-  };
-  const priceSplit = getPriceSplit();
+  const priceSplit = null;
 
   useEffect(() => {
     if (initialService) setService(initialService);
@@ -235,7 +218,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
     if (callDuration < 4) {
       return `Hi Charlotte! Oliver here from Landregistrytransfers.com. I saw your Transfer of Equity request...`;
     } else if (callDuration < 9) {
-      return `I've opened the title records. The fixed fee is £450 as quoted on our website, including VAT.`;
+      return `I've opened the title records. It's a standard transfer, which we can draft and file for you.`;
     } else {
       return `I've sent the draft Transfer Deed (TR1) to charlotte@example.com. Let me know if you need anything else! ✦`;
     }

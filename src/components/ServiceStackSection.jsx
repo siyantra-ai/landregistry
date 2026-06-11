@@ -194,12 +194,8 @@ export default function ServiceStackSection({ services }) {
                       </ul>
                     )}
 
-                    <div className="ssc-footer">
-                      <div className="ssc-price-row">
-                        <span className="ssc-price">{s.price}</span>
-                        <span className="ssc-vat">incl. VAT · fixed fee</span>
-                      </div>
-                      <span className="ssc-cta-btn">
+                    <div className="ssc-footer" style={{ justifyContent: 'center' }}>
+                      <span className="ssc-cta-btn" style={{ width: '100%', justifyContent: 'center' }}>
                         Book now <ArrowRight size={14} />
                       </span>
                     </div>

@@ -44,13 +44,6 @@ export default function ServiceDetail() {
             <h1>{s.title}</h1>
             <p className="service-hero-desc">{s.desc}</p>
 
-            <div className="price-card">
-              <div>
-                <div className="price-card-label">Fixed Conveyancing Fee</div>
-                <div className="price-card-amount">{s.price}</div>
-              </div>
-              <span className="price-card-vat">VAT Included</span>
-            </div>
 
             <div style={{ marginTop: 24, display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
               <Link to={`/apply/${id}`} className="btn-primary">
@@ -146,8 +139,7 @@ export default function ServiceDetail() {
                 <div className="micro-grid-bg" />
                 <h4>{r.title}</h4>
                 <p>{r.tag}</p>
-                <div className="related-card-footer">
-                  <span className="related-card-price">{r.price} <span style={{ fontSize: 9, color: 'var(--text-tertiary)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: 0.5 }}>inc. VAT</span></span>
+                <div className="related-card-footer" style={{ justifyContent: 'flex-end' }}>
                   <span className="related-card-arrow">View <ArrowRight size={12}/></span>
                 </div>
               </Link>

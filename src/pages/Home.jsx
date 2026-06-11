@@ -23,13 +23,13 @@ export default function Home() {
   const [fadeState, setFadeState] = useState('fade-in');
 
   const services = [
-    { id: 'transfer-of-equity', title: 'Transfer of Equity', price: '£450', desc: 'Add or remove a partner, spouse, or family member from your property title deeds.', gif: '/gifs/add_name.gif' },
-    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor', price: '£400', desc: 'Remove a deceased joint owner from the land registry title with care and precision.', gif: '/gifs/death.gif' },
-    { id: 'name-change', title: 'Name Change on Deeds', price: '£150', desc: 'Update your legal name on property records due to marriage, divorce, or deed poll.', gif: '/gifs/namechange.gif' },
-    { id: 'removal-of-restriction', title: 'Removal of a Restriction', price: '£350', desc: 'Clear outdated charges, restrictions, or cautions from your property title.', gif: '/gifs/tennant.gif' },
-    { id: 'transfer-of-equity-wills-probate', title: 'Transfer of Equity (Wills / Probate)', price: '£450', desc: 'Transfer property ownership following probate, inheritance, or estate administration.', gif: '/gifs/add_name.gif' },
-    { id: 'applying-for-restriction', title: 'Applying for a Restriction', price: '£350', desc: 'Protect your interest or trust ownership to prevent unauthorized property sale.', gif: '/gifs/tennant.gif' },
-    { id: 'first-registration', title: 'First Registration', price: '£600', desc: 'Register unregistered historic deeds with HM Land Registry for modern legal security.', gif: '/gifs/first_registration.gif' }
+    { id: 'transfer-of-equity', title: 'Transfer of Equity', desc: 'Add or remove a partner, spouse, or family member from your property title deeds.', gif: '/gifs/add_name.gif' },
+    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor', desc: 'Remove a deceased joint owner from the land registry title with care and precision.', gif: '/gifs/death.gif' },
+    { id: 'name-change', title: 'Name Change on Deeds', desc: 'Update your legal name on property records due to marriage, divorce, or deed poll.', gif: '/gifs/namechange.gif' },
+    { id: 'removal-of-restriction', title: 'Removal of a Restriction', desc: 'Clear outdated charges, restrictions, or cautions from your property title.', gif: '/gifs/tennant.gif' },
+    { id: 'transfer-of-equity-wills-probate', title: 'Transfer of Equity (Wills / Probate)', desc: 'Transfer property ownership following probate, inheritance, or estate administration.', gif: '/gifs/add_name.gif' },
+    { id: 'applying-for-restriction', title: 'Applying for a Restriction', desc: 'Protect your interest or trust ownership to prevent unauthorized property sale.', gif: '/gifs/tennant.gif' },
+    { id: 'first-registration', title: 'First Registration', desc: 'Register unregistered historic deeds with HM Land Registry for modern legal security.', gif: '/gifs/first_registration.gif' }
   ];
 
   useEffect(() => {
@@ -136,7 +136,6 @@ export default function Home() {
     "name": "Landregistrytransfers.com",
     "url": "https://landregistrytransfers.com",
     "telephone": "+443335770077",
-    "priceRange": "£150-£600",
     "address": { "@type": "PostalAddress", "streetAddress": "1 Limbrick", "addressLocality": "Blackburn", "postalCode": "BB1 8AB", "addressCountry": "GB" },
     "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "17:00" }
   };
