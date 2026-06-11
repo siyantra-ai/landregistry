@@ -170,9 +170,26 @@ export default function Home() {
               <a href="#services" className="btn-primary">
                 View Services <ArrowRight size={16} />
               </a>
-              <a href="#main-enquiry-form" className="btn-secondary">
-                Get a Quote
-              </a>
+              {import.meta.env.VITE_CALENDLY_URL ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.Calendly) {
+                      window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                    } else {
+                      window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
+                    }
+                  }}
+                  className="btn-secondary"
+                  style={{ border: 'none', cursor: 'pointer', outline: 'none' }}
+                >
+                  Book a Call
+                </button>
+              ) : (
+                <a href="#main-enquiry-form" className="btn-secondary">
+                  Get a Quote
+                </a>
+              )}
             </div>
 
             <div className="hero-social-proof">
@@ -270,7 +287,17 @@ export default function Home() {
           </div>
           <div className="services-grid">
             {services.map((s, idx) => (
-              <Link key={s.id} to={`/services/${s.id}`} style={{ textDecoration: 'none' }}>
+              <div 
+                key={s.id} 
+                onClick={() => {
+                  if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
+                    window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                  } else {
+                    window.location.href = `/services/${s.id}`;
+                  }
+                }}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="service-card service-card-visible">
                   <div className="service-card-left">
                     <h3 className="service-card-name">{s.title}</h3>
@@ -284,7 +311,7 @@ export default function Home() {
                     <img src={s.gif} alt={s.title} className="service-card-gif" />
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

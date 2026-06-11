@@ -146,11 +146,17 @@ export default function ServiceStackSection({ services }) {
           {services.map((s, idx) => {
             const bullets = SERVICE_DETAILS[s.id] || [];
             return (
-              <Link
+              <div
                 key={s.id}
-                to={`/services/${s.id}`}
+                onClick={() => {
+                  if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
+                    window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                  } else {
+                    window.location.href = `/services/${s.id}`;
+                  }
+                }}
                 className="service-stack-card-link"
-                style={{ textDecoration: 'none', ...getCardTransform(idx) }}
+                style={{ textDecoration: 'none', cursor: 'pointer', ...getCardTransform(idx) }}
               >
                 <div className="ssc-card">
 
@@ -200,7 +206,7 @@ export default function ServiceStackSection({ services }) {
 
                   </div>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>
