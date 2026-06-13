@@ -299,13 +299,20 @@ export default function Home() {
             Comprehensive conveyancing solutions to make property changes easy and efficient. Speak directly with our specialists.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <a 
-              href="tel:03335770077" 
+            <button
+              onClick={() => {
+                const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com';
+                if (window.Calendly) {
+                  window.Calendly.initPopupWidget({ url: calendlyUrl });
+                } else {
+                  window.open(calendlyUrl, '_blank');
+                }
+              }}
               className="btn-primary btn-lg"
-              style={{ padding: '18px 48px', fontSize: '18px', fontWeight: 700, borderRadius: '8px', background: '#C7A25A', color: '#ffffff', textDecoration: 'none', border: 'none', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }}
+              style={{ padding: '18px 48px', fontSize: '18px', fontWeight: 700, borderRadius: '8px', background: '#C7A25A', color: '#ffffff', textDecoration: 'none', border: 'none', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }}
             >
               Book a Free Call
-            </a>
+            </button>
           </div>
         </div>
       </section>
