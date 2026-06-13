@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 90" role="img" aria-labelledby="title">
-  <title>Landregistrytransfers.com</title>
+  <title>Landregistrytransfers</title>
   
   <!-- Icon Group: Document + Location Pin -->
   <g transform="translate(15, 2)">
@@ -57,6 +57,6 @@
     fill="#2F4F46" 
     letter-spacing="-0.02em"
   >
-    Landregistry<tspan fill="#C7A25A">transfers.com</tspan>
+    Landregistry<tspan fill="#C7A25A">transfers</tspan>
   </text>
 </svg>

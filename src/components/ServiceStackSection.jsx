@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 /* Per-service bullet points shown in the card */
@@ -42,17 +41,10 @@ const SERVICE_DETAILS = {
 };
 
 export default function ServiceStackSection({ services }) {
-  const outerRef   = useRef(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [isMobile,  setIsMobile]  = useState(false);
-  const [viewportH, setViewportH] = useState(700);
-
-  const SCROLL_PER_CARD = 420;
-  const TOTAL_SCROLL    = SCROLL_PER_CARD * (services.length - 1);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const update = () => {
-      setViewportH(window.innerHeight);
       setIsMobile(window.innerWidth <= 767);
     };
     update();
@@ -60,166 +52,65 @@ export default function ServiceStackSection({ services }) {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  useEffect(() => {
-    if (!isMobile) return;
-    const outer = outerRef.current;
-    if (!outer) return;
-
-    const onScroll = () => {
-      const outerTop     = outer.getBoundingClientRect().top + window.scrollY;
-      const scrolledInto = Math.max(0, window.scrollY - outerTop);
-      const idx          = Math.min(
-        Math.floor(scrolledInto / SCROLL_PER_CARD),
-        services.length - 1
-      );
-      setActiveIdx(idx);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [isMobile, services.length]);
-
   if (!isMobile) return null;
 
-  const getCardTransform = (idx) => {
-    const isCurrent = idx === activeIdx;
-    const isStacked = idx < activeIdx;
-    const isPending = idx > activeIdx;
-
-    if (isPending) {
-      return {
-        opacity: 0,
-        transform: 'translateY(110%) scale(0.92)',
-        transition: 'opacity 0.46s cubic-bezier(0.22,1,0.36,1), transform 0.46s cubic-bezier(0.22,1,0.36,1)',
-        pointerEvents: 'none',
-        zIndex: idx + 2,
-      };
-    }
-    if (isStacked && !isCurrent) {
-      const depth  = activeIdx - idx;
-      const offset = depth * 9;
-      const scale  = 1 - depth * 0.028;
-      const op     = Math.max(0.2, 1 - depth * 0.25);
-      return {
-        opacity: op,
-        transform: `translateY(${offset}px) scale(${scale})`,
-        transition: 'opacity 0.46s cubic-bezier(0.22,1,0.36,1), transform 0.46s cubic-bezier(0.22,1,0.36,1)',
-        pointerEvents: 'none',
-        zIndex: idx + 2,
-      };
-    }
-    return {
-      opacity: 1,
-      transform: 'translateY(0) scale(1)',
-      transition: 'opacity 0.46s cubic-bezier(0.22,1,0.36,1), transform 0.46s cubic-bezier(0.22,1,0.36,1)',
-      pointerEvents: 'auto',
-      zIndex: idx + 2,
-    };
-  };
-
-  const outerHeight = TOTAL_SCROLL + viewportH;
+  // Filter out the Deceased Joint Proprietor / Death of a Joint Proprietor service for mobile view
+  const filteredServices = services.filter(
+    (s) => s.id !== 'death-of-joint-proprietor' && s.id !== 'deceased-joint-proprietor'
+  );
 
   return (
-    <div
-      ref={outerRef}
-      className="service-stack-outer"
-      style={{ height: outerHeight }}
-    >
-      <div className="service-stack-sticky">
+    <div className="mobile-services-clean-section">
+      <div className="section-header" style={{ marginBottom: '24px', textAlign: 'center' }}>
+        <span className="section-eyebrow">Our Services</span>
+        <h2 className="section-title" style={{ fontSize: '24px', marginTop: '8px' }}>
+          Property Deed &amp; Land Registry Services
+        </h2>
+        <p className="section-desc" style={{ fontSize: '14px' }}>
+          Direct, fixed pricing on all common HM Land Registry deed alterations, ownership transfers, and official restrictions.
+        </p>
+      </div>
 
-        {/* header */}
-        <div className="service-stack-header">
-          <span className="section-eyebrow">Our Services</span>
-          <h2 className="section-title" style={{ fontSize: '21px', marginTop: 7, lineHeight: 1.2 }}>
-            Property Deed &amp; Land Registry Services
-          </h2>
-          <div className="service-stack-pips">
-            {services.map((_, i) => (
-              <div key={i} className={`service-stack-pip${i <= activeIdx ? ' active' : ''}`} />
-            ))}
-          </div>
-        </div>
-
-        {/* arena */}
-        <div className="service-stack-arena">
-          {services.map((s, idx) => {
-            const bullets = SERVICE_DETAILS[s.id] || [];
-            return (
-              <div
-                key={s.id}
-                onClick={() => {
-                  if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
-                    window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
-                  } else {
-                    window.location.href = `/services/${s.id}`;
-                  }
-                }}
-                className="service-stack-card-link"
-                style={{ textDecoration: 'none', cursor: 'pointer', ...getCardTransform(idx) }}
-              >
-                <div className="ssc-card">
-
-                  {/* ── TOP: gradient hero with GIF + title ── */}
-                  <div className="ssc-hero">
-                    {/* decorative blobs */}
-                    <div className="ssc-blob ssc-blob-1" />
-                    <div className="ssc-blob ssc-blob-2" />
-
-                    {/* counter pill */}
-                    <span className="ssc-counter">
-                      {(idx + 1).toString().padStart(2, '0')} / {services.length.toString().padStart(2, '0')}
-                    </span>
-
-                    {/* GIF */}
-                    <img src={s.gif} alt={s.title} className="ssc-gif" />
-
-                    {/* service title inside hero */}
-                    <h3 className="ssc-hero-title">{s.title}</h3>
-                  </div>
-
-                  {/* ── BOTTOM: description + bullets + price + CTA ── */}
-                  <div className="ssc-body">
-
-                    <p className="ssc-desc">{s.desc}</p>
-
-                    {bullets.length > 0 && (
-                      <ul className="ssc-bullets">
-                        {bullets.map((b, bi) => (
-                          <li key={bi} className="ssc-bullet">
-                            <CheckCircle size={13} className="ssc-bullet-icon" />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    <div className="ssc-footer" style={{ justifyContent: 'center' }}>
-                      <span className="ssc-cta-btn" style={{ width: '100%', justifyContent: 'center' }}>
-                        Book now <ArrowRight size={14} />
-                      </span>
-                    </div>
-
-                  </div>
-                </div>
+      <div className="mobile-services-grid">
+        {filteredServices.map((s, idx) => {
+          const bullets = SERVICE_DETAILS[s.id] || [];
+          return (
+            <div
+              key={s.id}
+              onClick={() => {
+                if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
+                  window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                } else {
+                  window.location.href = `/services/${s.id}`;
+                }
+              }}
+              className="mobile-service-card"
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="mobile-service-card-top">
+                <span className="mobile-card-index">{(idx + 1).toString().padStart(2, '0')}</span>
+                <img src={s.gif} alt={s.title} className="mobile-service-card-gif" />
               </div>
-            );
-          })}
-        </div>
-
-        {/* bottom hints */}
-        {activeIdx === 0 && (
-          <div className="service-stack-scroll-hint">
-            <div className="scroll-hint-line" />
-            <span>Scroll to explore services</span>
-            <div className="scroll-hint-line" />
-          </div>
-        )}
-        {activeIdx === services.length - 1 && (
-          <div className="service-stack-done-hint">
-            <span>Keep scrolling to continue ↓</span>
-          </div>
-        )}
+              <div className="mobile-service-card-body">
+                <h3 className="mobile-service-card-title">{s.title}</h3>
+                <p className="mobile-service-card-desc">{s.desc}</p>
+                {bullets.length > 0 && (
+                  <ul className="mobile-service-card-bullets">
+                    {bullets.map((b, bi) => (
+                      <li key={bi} className="mobile-service-card-bullet">
+                        <CheckCircle size={13} className="bullet-icon" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <span className="mobile-service-card-cta">
+                  Book now <ArrowRight size={13} />
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

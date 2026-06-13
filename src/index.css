@@ -617,8 +617,8 @@ input, select, textarea { font: inherit; }
 .hero {
   position: relative;
   background-image: 
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.72) 100%),
-    url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.75) 100%),
+    url('https://www.allproperties.com.ph/wp-content/uploads/2022/11/real-estate-investment-trust-of-real-estate-properties.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -630,8 +630,8 @@ input, select, textarea { font: inherit; }
 @media (min-width: 992px) {
   .hero {
     background-image: 
-      linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 50%, rgba(255, 255, 255, 0.2) 100%),
-      url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
+      linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.6) 100%),
+      url('https://www.allproperties.com.ph/wp-content/uploads/2022/11/real-estate-investment-trust-of-real-estate-properties.jpg');
     background-position: center right;
     padding: 120px 0 40px;
   }
@@ -4317,3 +4317,332 @@ input, select, textarea { font: inherit; }
     gap: 48px;
   }
 }
+
+/* Redesigned Footer Stack and Grid styles */
+.footer-redesigned-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  padding: 12px 0;
+}
+
+@media (min-width: 768px) {
+  .footer-redesigned-grid {
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+  }
+}
+
+.footer-left-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.footer-right-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-brand-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  margin: 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.footer-link-item {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.footer-link-item:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  padding-left: 2px;
+}
+
+.footer-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.footer-detail-item svg {
+  color: rgba(255, 255, 255, 0.65);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+a.footer-detail-item:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-compliance-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-legal-disclaimer {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer-legal-notice-secondary {
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* Mobile Clean Services grid styles */
+.mobile-services-clean-section {
+  padding: 30px 0;
+}
+
+.mobile-services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.mobile-service-card {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-service-card:active {
+  transform: scale(0.97);
+}
+
+.mobile-service-card-top {
+  position: relative;
+  background: linear-gradient(145deg, #2F4F46 0%, #3f6a5e 100%);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-card-index {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mobile-service-card-gif {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.mobile-service-card-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.mobile-service-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.mobile-service-card-desc {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+}
+
+.mobile-service-card-bullets {
+  display: none; /* Hide bullets to fit clean grid layout on mobile */
+}
+
+.mobile-service-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-accent);
+  margin-top: auto;
+}
+
+/* Document Access Section Redesign matching screenshot exactly */
+.doc-access-redesign-section {
+  width: 100%;
+  background-color: #f7f8f9;
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.doc-access-redesign-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 992px) {
+  .doc-access-redesign-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.doc-access-redesign-left {
+  padding: 60px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .doc-access-redesign-left {
+    padding: 80px 60px;
+    justify-content: flex-end;
+  }
+}
+
+.doc-access-content-wrapper {
+  width: 100%;
+  max-width: 480px;
+  text-align: left;
+}
+
+.doc-access-redesign-title {
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 500;
+  color: #2F4F46;
+  margin: 0 0 12px 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.doc-access-redesign-subtitle {
+  font-size: 18px;
+  color: #4A635B;
+  font-weight: 500;
+  margin: 0 0 40px 0;
+}
+
+.doc-access-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.doc-access-link-block {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.doc-access-link-block:hover {
+  opacity: 0.8;
+}
+
+.doc-access-item-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2F4F46;
+}
+
+.doc-access-item-cta {
+  font-size: 13px;
+  color: #7A9B8D;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.doc-access-item-cta .cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.doc-access-link-block:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+.doc-access-redesign-right {
+  min-height: 360px;
+  background-image: url('https://images.unsplash.com/photo-1503387762-592dedb82297?auto=format&fit=crop&w=1200&q=80');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+@media (min-width: 992px) {
+  .doc-access-redesign-right {
+    min-height: 640px;
+  }
+}
+
+.doc-access-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 79, 70, 0.05);
+}
+
+
+
+

@@ -4,9 +4,9 @@ import { ArrowRight, Star, ChevronDown } from 'lucide-react';
 import SEO from '../components/SEO';
 import EnquiryForm from '../components/EnquiryForm';
 import ServiceStackSection from '../components/ServiceStackSection';
+import DocumentAccessSection from '../components/DocumentAccessSection';
 
 export default function Home() {
-  const [activeFaq, setActiveFaq] = useState(null);
   const servicesSectionRef = useRef(null);
   const [visibleServiceCount, setVisibleServiceCount] = useState(0);
 
@@ -119,13 +119,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const faqs = [
-    { q: 'How long does a Transfer of Equity take to register with HM Land Registry?', a: 'Preparing and drafting the TR1 transfer deed takes 3 to 5 working days. Once signed and submitted electronically to HM Land Registry, the official processing time can range from 2 weeks to several months depending on their current application queues. We track your application status to ensure swift registration.' },
-    { q: 'Do I need a solicitor to change or update a name on my property deeds?', a: 'While you can file applications independently, using a regulated practitioner ensures forms (like the AP1) are filled legally and comply with strict anti-fraud checks. We manage the entire process for name changes due to marriage, divorce, or deed poll.' },
-    { q: 'What is the process to remove a deceased joint owner from land registry deeds?', a: 'To remove a deceased owner, a surviving proprietor must file a Deceased Joint Proprietor application (Form DJP) supported by a certified copy of the Death Certificate or Grant of Probate. This updates the register under survivorship rules, ensuring legal records remain accurate.' },
-    { q: 'Can I transfer property deeds if there is an active mortgage on the property?', a: 'Yes, transferring equity on a mortgaged property requires the written consent of the mortgage lender. Our partner conveyancers handle the lender liaison, submitting the necessary documentation to ensure the mortgage terms are successfully updated alongside the property title transfer.' },
-    { q: 'How do I clear an outdated restriction or charge from my property deeds?', a: 'Outdated restrictions or charges (such as a paid-off private loan or tenant-in-common restriction) are removed by filing Form RX3 or RX4 with HM Land Registry. This requires official supporting evidence of release or cancellation. Our team reviews your documents to ensure a successful removal.' }
-  ];
+
 
 
   const businessSchema = {
@@ -254,28 +248,7 @@ export default function Home() {
 
       {/* Desktop grid (hidden on mobile via CSS) */}
       <section className="section section-gray section-services-desktop-only" id="services-desktop" ref={servicesSectionRef}>
-        {/* Decorative elements to match screenshot */}
-        <div className="services-deco-arrow">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15,80 Q45,25 75,40 T35,70 Q25,60 85,25" stroke="#c084fc" strokeWidth="2.5" strokeLinecap="round" />
-            <path d="M75,22 L86,24 L82,35" stroke="#c084fc" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
         
-        <div className="services-deco-paperclip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-          </svg>
-        </div>
-        
-        <div className="services-deco-cardboard">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="#c49a6c" xmlns="http://www.w3.org/2000/svg">
-            <path d="M100,0 L0,0 L12,10 L8,14 L28,24 L22,28 L48,38 L42,42 L68,54 L62,58 L100,90 Z" />
-            {/* inner shredded paper look */}
-            <path d="M100,0 L8,0 L15,6 L12,9 L30,19 L25,23 L50,33 L45,37 L70,49 L65,53 L100,85 Z" fill="#b08557" opacity="0.6" />
-          </svg>
-        </div>
-
         <div className="container">
           <div className="section-header">
             <span className="section-eyebrow">Our Services</span>
@@ -314,57 +287,29 @@ export default function Home() {
         </div>
       </section>
 
+      <DocumentAccessSection />
 
-
-
-      {/* ── FAQ ── */}
-      <section className="section section-gray" id="faq">
-        <div className="container faq-section-grid">
-          
-          {/* Left Column: Eyebrow, Title & Sticky Help Card */}
-          <div className="faq-section-left">
-            <span className="section-eyebrow">FAQ</span>
-            <h2 className="section-title">Deed Transfer &amp; Conveyancing FAQs</h2>
-            <p className="section-desc">
-              Clear answers to your property registry, ownership transfers, and official document queries.
-            </p>
-            
-            <div className="faq-help-card">
-              <div className="help-card-glow" />
-              <div className="help-card-mesh" />
-              <div className="help-card-content">
-                <h4>Still have questions?</h4>
-                <p>Speak directly to an experienced conveyancing specialist today.</p>
-                <a href="#main-enquiry-form" className="help-card-btn">
-                  Get a Free Consultation <ArrowRight size={14} />
-                </a>
-              </div>
-            </div>
+      {/* ── BOOK A FREE CALL CTA ── */}
+      <section className="section section-dark cta-call-section" style={{ textAlign: 'center', padding: '120px 24px', background: '#2F4F46' }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <h2 className="section-title" style={{ color: 'white', marginBottom: 20, fontSize: 'clamp(28px, 5vw, 42px)', lineHeight: 1.2 }}>
+            Simplify Your Property Matters with Expert Conveyancing Services
+          </h2>
+          <p className="section-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: 40, fontSize: '18px', lineHeight: 1.6, maxWidth: '640px', marginInline: 'auto' }}>
+            Comprehensive conveyancing solutions to make property changes easy and efficient. Speak directly with our specialists.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <a 
+              href="tel:03335770077" 
+              className="btn-primary btn-lg"
+              style={{ padding: '18px 48px', fontSize: '18px', fontWeight: 700, borderRadius: '8px', background: '#C7A25A', color: '#ffffff', textDecoration: 'none', border: 'none', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }}
+            >
+              Book a Free Call
+            </a>
           </div>
-
-          {/* Right Column: Next-Level Accordion List */}
-          <div className="faq-section-right">
-            <div className="faq-list">
-              {faqs.map((faq, i) => (
-                <div key={i} className={`faq-item ${activeFaq === i ? 'active' : ''}`}>
-                  <button className="faq-trigger" onClick={() => setActiveFaq(activeFaq === i ? null : i)}>
-                    <span>{faq.q}</span>
-                    <span className="faq-icon"><ChevronDown size={15} /></span>
-                  </button>
-                  <div className="faq-answer-wrapper">
-                    <div className="faq-answer-inner">
-                      <div className="faq-answer">
-                        <p>{faq.a}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
         </div>
       </section>
+
     </>
   );
 }

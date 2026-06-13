@@ -72,22 +72,13 @@ export default function Header({ onRequestCallback }) {
         </nav>
 
         <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {import.meta.env.VITE_CALENDLY_URL && (
-            <button 
-              type="button"
-              onClick={() => {
-                if (window.Calendly) {
-                  window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
-                } else {
-                  window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
-                }
-              }}
-              className="header-book-btn"
-              style={{ border: 'none', cursor: 'pointer', outline: 'none' }}
-            >
-              Book a Call
-            </button>
-          )}
+          <a 
+            href="tel:03335770077"
+            className="header-book-btn"
+            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            Call 0333 577 0077
+          </a>
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="mobile-toggle rounded-md border border-[#ced6e6] text-[#2F4F46] lg:hidden" aria-label="Toggle menu">

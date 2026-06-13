@@ -7,6 +7,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import ApplyWizard from './pages/ApplyWizard';
+import Faq from './pages/Faq';
 
 // Scroll to top helper on page/route transition
 function ScrollToTop() {
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<Faq />} />
           <Route path="/privacy" element={<Legal />} />
           <Route path="/terms" element={<Legal />} />
           <Route path="/cookies" element={<Legal />} />
