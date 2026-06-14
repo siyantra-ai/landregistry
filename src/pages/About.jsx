@@ -27,6 +27,15 @@ export default function About() {
           <p style={{ fontSize: '15.5px', lineHeight: '1.7', color: 'var(--text-secondary)' }}>
             Swift Task Services Ltd is a UK-based property services company helping homeowners, families and businesses with property deed changes quickly and at a fixed price. Whether you need to add or remove a name, deal with a deceased joint owner, change your name on the title, or register a property for the first time, our team handles the entire process for you — clearly, efficiently and without the legal jargon.
           </p>
+          <div style={{ marginTop: '24px', padding: '16px', background: 'white', border: '1px solid var(--border-default)', borderRadius: 'var(--r-md)', display: 'inline-block', textAlign: 'left' }}>
+            <h4 style={{ fontSize: '14px', color: 'var(--text-primary)', marginBottom: '8px' }}>Registered Office</h4>
+            <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--text-secondary)', margin: 0 }}>
+              Swift Task Services Ltd<br />
+              1 Limbrick<br />
+              Blackburn, BB1 8AB<br />
+              United Kingdom
+            </p>
+          </div>
         </div>
       </section>
 

@@ -26,7 +26,7 @@ export default function Footer() {
                 />
               </Link>
               <span className="footer-copyright-text">
-                &copy; {year} Swift Task Services Ltd. All rights reserved.
+                &copy; {year} Landregistrytransfers.com. All rights reserved.
               </span>
             </div>
             
@@ -44,7 +44,7 @@ export default function Footer() {
 
           {/* Right Column Stack: Details, Contact, Hours & Disclaimer */}
           <div className="footer-right-stack">
-            <h4 className="footer-section-title">Contact & Company Details</h4>
+            <h4 className="footer-section-title">Contact Details</h4>
             
             <div className="footer-contact-details">
               <a href="tel:03335770077" className="footer-detail-item">
@@ -56,10 +56,6 @@ export default function Footer() {
                 <span>enquiries@landregistrytransfers.com</span>
               </a>
               <div className="footer-detail-item">
-                <MapPin size={14} />
-                <span>Swift Task Services Ltd, 1 Limbrick, Blackburn, BB1 8AB</span>
-              </div>
-              <div className="footer-detail-item">
                 <Clock size={14} />
                 <span>Opening Hours: Mon – Fri, 9am – 5pm</span>
               </div>
@@ -70,7 +66,7 @@ export default function Footer() {
                 We are an independent service. Not affiliated with HM Land Registry or the UK Government. The same documents are available from gov.uk for £7.
               </p>
               <p className="footer-legal-notice-secondary">
-                Disclaimer: Landregistrytransfers.com is an independent property services portal operated by Swift Task Services Ltd. We are not associated or affiliated with HM Land Registry, the UK Government, or any government department. SRA-regulated lawyers handle legal conveyancing filings.
+                Disclaimer: Landregistrytransfers.com is an independent property services portal. We are not associated or affiliated with HM Land Registry, the UK Government, or any government department. SRA-regulated lawyers handle legal conveyancing filings.
               </p>
             </div>
           </div>

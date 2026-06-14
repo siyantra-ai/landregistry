@@ -20,6 +20,15 @@ export default function Header({ onRequestCallback }) {
     { id: 'first-registration', title: 'First Registration', href: '/apply/first-registration', description: 'Register unregistered land with HM Land Registry.' },
   ]
 
+  const documents = [
+    { id: 'title-register', title: 'Title Register', href: '/apply/title-register' },
+    { id: 'title-plan', title: 'Title Plan', href: '/apply/title-plan' },
+    { id: 'map-search', title: 'Map Search', href: '/apply/map-search' },
+    { id: 'deed-search', title: 'Deed Search', href: '/apply/deed-search' },
+    { id: 'property-ownership', title: 'Property Ownership', href: '/apply/property-ownership' },
+    { id: 'property-alert', title: "HM Land Registry's Property Alert", href: '/apply/property-alert' },
+  ]
+
   return (
     <header className="site-header">
       <div className="container header-inner gap-4 lg:gap-8">
@@ -47,20 +56,28 @@ export default function Header({ onRequestCallback }) {
             {servicesOpen && (
               <div
                 id="services-dropdown"
-                className="services-menu-panel absolute right-0 top-[calc(100%+12px)] z-50 w-[360px] overflow-hidden"
+                className="services-menu-panel absolute right-0 top-[calc(100%+12px)] z-50 w-[340px] rounded-xl border border-slate-200/60 bg-white shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200"
                 role="menu"
               >
-                <div className="services-menu-header">Services</div>
+                <div className="bg-slate-50/50 px-5 py-3 border-b border-slate-100 text-center">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Our Services</span>
+                </div>
                 <ul className="flex w-full flex-col">
                   {services.map((service) => (
-                    <li key={service.id} className="border-b border-[#edf1f7] last:border-b-0" role="none">
+                    <li key={service.id} role="none" className="border-b border-slate-100 last:border-b-0">
                       {service.href && service.href.startsWith('http') ? (
-                        <a href={service.href} target="_blank" rel="noreferrer" role="menuitem" className="services-menu-link block w-full px-4 py-3 text-[17px] font-normal text-[#2d2f36]" onClick={() => setServicesOpen(false)}>
-                          {service.title}
+                        <a href={service.href} target="_blank" rel="noreferrer" role="menuitem" className="group flex items-center justify-between px-5 py-3.5 transition-all duration-200 hover:bg-slate-50" onClick={() => setServicesOpen(false)}>
+                          <span className="text-[15px] font-medium text-slate-700 group-hover:text-[#2F4F46] transition-colors">{service.title}</span>
+                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
+                             &rarr;
+                          </span>
                         </a>
                       ) : (
-                        <Link to={service.href} role="menuitem" className="services-menu-link block w-full px-4 py-3 text-[17px] font-normal text-[#2d2f36]" onClick={() => setServicesOpen(false)}>
-                          {service.title}
+                        <Link to={service.href} role="menuitem" className="group flex items-center justify-between px-5 py-3.5 transition-all duration-200 hover:bg-slate-50" onClick={() => setServicesOpen(false)}>
+                          <span className="text-[15px] font-medium text-slate-700 group-hover:text-[#2F4F46] transition-colors">{service.title}</span>
+                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
+                             &rarr;
+                          </span>
                         </Link>
                       )}
                     </li>
@@ -72,12 +89,12 @@ export default function Header({ onRequestCallback }) {
         </nav>
 
         <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <a 
+          <a
             href="tel:03335770077"
             className="header-book-btn"
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}
           >
-            Call 0333 577 0077
+            SALES 0333 577 0077
           </a>
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -90,43 +107,50 @@ export default function Header({ onRequestCallback }) {
               </Button>
             </SheetTrigger>
             <SheetContent className="w-full gap-0 p-0 sm:max-w-sm" showClose={false}>
-              <div className="mobile-menu-top flex items-center justify-between px-4 py-4">
-                <div className="mobile-menu-title">Menu</div>
-                <Link to="/" className="brand" onClick={() => setMobileOpen(false)}>
-                  <img
-                    src="/land-registry-transfers-logo.svg"
-                    alt="Landregistrytransfers.com"
-                    className="brand-logo brand-logo--mobile"
-                  />
-                </Link>
+              <div className="mobile-menu-top relative flex items-center justify-center px-4 py-4">
+                <div className="mobile-menu-title font-bold text-lg text-slate-800">Menu</div>
                 <SheetClose asChild>
-                  <Button variant="ghost" size="icon" className="rounded-md border border-[#ced6e6] text-[#2F4F46]">
+                  <Button variant="ghost" size="icon" className="absolute right-4 rounded-md border border-[#ced6e6] text-[#2F4F46]">
                     <span className="sr-only">Close menu</span>
                     ×
                   </Button>
                 </SheetClose>
               </div>
 
-              <div className="mobile-menu-content px-4 pb-6 pt-2">
-                <div className="mobile-menu-section">
-                  <Accordion type="single" collapsible defaultValue="services">
-                    <AccordionItem value="services">
-                      <AccordionTrigger>Services</AccordionTrigger>
-                      <AccordionContent>
-                        <div className="mobile-menu-sublist">
-                          {services.map((service) => (
-                            <SheetClose asChild key={service.id}>
-                              <a href={service.href} target={service.href.startsWith('http') ? '_blank' : undefined} rel={service.href.startsWith('http') ? 'noreferrer' : undefined} className="mobile-menu-sublink" onClick={() => setMobileOpen(false)}>
-                                {service.title}
-                              </a>
-                            </SheetClose>
-                          ))}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+              <div className="mobile-menu-content overflow-y-auto px-4 pb-12 pt-2 h-[calc(100vh-70px)]">
+                <div className="mobile-menu-section border-b border-slate-100 pb-6 mb-6">
+                  <div className="text-[17px] font-bold text-slate-800 py-2">Services</div>
+                  <div className="flex flex-col gap-1 pt-1">
+                    {services.map((service) => (
+                      <SheetClose asChild key={service.id}>
+                        <a href={service.href} target={service.href.startsWith('http') ? '_blank' : undefined} rel={service.href.startsWith('http') ? 'noreferrer' : undefined} className="group flex items-center justify-between rounded-lg px-3 py-3 text-[15.5px] font-medium text-slate-600 transition-all hover:bg-slate-50 hover:text-[#2F4F46]" onClick={() => setMobileOpen(false)}>
+                          <span>{service.title}</span>
+                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">&rarr;</span>
+                        </a>
+                      </SheetClose>
+                    ))}
+                  </div>
                 </div>
 
+                <div className="mobile-menu-section">
+                  <div className="flex flex-col items-start gap-1 py-2">
+                    <span className="text-[17px] font-bold text-slate-800">Individual Documents Access</span>
+                    <span className="text-[13px] font-normal text-slate-500">Need individual documents?</span>
+                  </div>
+                  <div className="flex flex-col gap-1 pt-1">
+                    {documents.map((doc) => (
+                      <SheetClose asChild key={doc.id}>
+                        <Link to={doc.href} className="group flex items-center justify-between rounded-lg px-3 py-3 text-[15.5px] font-medium text-slate-600 transition-all hover:bg-slate-50 hover:text-[#2F4F46]" onClick={() => setMobileOpen(false)}>
+                          <div className="flex flex-col">
+                            <span>{doc.title}</span>
+                            <span className="text-[12px] text-[#C7A25A]">Get the document</span>
+                          </div>
+                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">&rarr;</span>
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </div>
+                </div>
               </div>
             </SheetContent>
           </Sheet>

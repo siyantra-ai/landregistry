@@ -158,9 +158,6 @@ export default function Home() {
             </p>
 
             <div className="hero-actions">
-              <a href="#services" className="btn-primary">
-                View Services <ArrowRight size={16} />
-              </a>
               {import.meta.env.VITE_CALENDLY_URL ? (
                 <button
                   type="button"
@@ -171,14 +168,14 @@ export default function Home() {
                       window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
                     }
                   }}
-                  className="btn-secondary"
-                  style={{ border: 'none', cursor: 'pointer', outline: 'none' }}
+                  className="btn-primary btn-lg"
+                  style={{ border: 'none', cursor: 'pointer', outline: 'none', padding: '16px 40px', fontSize: '17px' }}
                 >
-                  Book a Call
+                  Book a Call <ArrowRight size={18} style={{ marginLeft: '8px' }} />
                 </button>
               ) : (
-                <a href="#main-enquiry-form" className="btn-secondary">
-                  Get a Quote
+                <a href="#main-enquiry-form" className="btn-primary btn-lg" style={{ padding: '16px 40px', fontSize: '17px' }}>
+                  Get a Quote <ArrowRight size={18} style={{ marginLeft: '8px' }} />
                 </a>
               )}
             </div>
