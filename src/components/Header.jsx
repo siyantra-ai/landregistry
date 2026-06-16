@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Phone, Mail } from 'lucide-react'
 
 import { Button } from './ui/button'
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
@@ -149,6 +149,24 @@ export default function Header({ onRequestCallback }) {
                         </Link>
                       </SheetClose>
                     ))}
+                  </div>
+                </div>
+
+                <div className="mobile-menu-section mt-8 border-t border-slate-100 pt-6 mb-4">
+                  <div className="flex flex-col gap-3 px-3">
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">Contact Us</span>
+                    <a href="tel:03335770077" className="flex items-center gap-3 text-[15.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-[#C7A25A]">
+                        <Phone size={16} />
+                      </div>
+                      0333 577 0077
+                    </a>
+                    <a href="mailto:enquiries@landregistrytransfers.com" className="flex items-center gap-3 text-[15.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-[#C7A25A]">
+                        <Mail size={16} />
+                      </div>
+                      enquiries@landregistrytransfers.com
+                    </a>
                   </div>
                 </div>
               </div>

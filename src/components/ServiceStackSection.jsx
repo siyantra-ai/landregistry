@@ -1,6 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
+const getCalendlyPrefill = () => {
+  try {
+    const name = localStorage.getItem('landregistry_prefill_name') || '';
+    const email = localStorage.getItem('landregistry_prefill_email') || '';
+    const phone = localStorage.getItem('landregistry_prefill_phone') || '';
+    
+    const prefill = {};
+    if (name) prefill.name = name;
+    if (email) prefill.email = email;
+    if (phone) {
+      prefill.customAnswers = {
+        a1: phone,
+        a2: phone,
+        a3: phone
+      };
+    }
+    return Object.keys(prefill).length > 0 ? prefill : undefined;
+  } catch (e) {
+    return undefined;
+  }
+};
+
 /* Per-service bullet points shown in the card */
 const SERVICE_DETAILS = {
   'transfer-of-equity': [
@@ -79,7 +101,10 @@ export default function ServiceStackSection({ services }) {
               key={s.id}
               onClick={() => {
                 if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
-                  window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                  window.Calendly.initPopupWidget({ 
+                    url: import.meta.env.VITE_CALENDLY_URL,
+                    prefill: getCalendlyPrefill()
+                  });
                 } else {
                   window.location.href = `/services/${s.id}`;
                 }

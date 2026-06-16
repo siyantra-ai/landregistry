@@ -6,6 +6,28 @@ import EnquiryForm from '../components/EnquiryForm';
 import ServiceStackSection from '../components/ServiceStackSection';
 import DocumentAccessSection from '../components/DocumentAccessSection';
 
+const getCalendlyPrefill = () => {
+  try {
+    const name = localStorage.getItem('landregistry_prefill_name') || '';
+    const email = localStorage.getItem('landregistry_prefill_email') || '';
+    const phone = localStorage.getItem('landregistry_prefill_phone') || '';
+    
+    const prefill = {};
+    if (name) prefill.name = name;
+    if (email) prefill.email = email;
+    if (phone) {
+      prefill.customAnswers = {
+        a1: phone,
+        a2: phone,
+        a3: phone
+      };
+    }
+    return Object.keys(prefill).length > 0 ? prefill : undefined;
+  } catch (e) {
+    return undefined;
+  }
+};
+
 export default function Home() {
   const servicesSectionRef = useRef(null);
   const [visibleServiceCount, setVisibleServiceCount] = useState(0);
@@ -163,7 +185,10 @@ export default function Home() {
                   type="button"
                   onClick={() => {
                     if (window.Calendly) {
-                      window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                      window.Calendly.initPopupWidget({ 
+                        url: import.meta.env.VITE_CALENDLY_URL,
+                        prefill: getCalendlyPrefill()
+                      });
                     } else {
                       window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
                     }
@@ -258,7 +283,10 @@ export default function Home() {
                 key={s.id} 
                 onClick={() => {
                   if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
-                    window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                    window.Calendly.initPopupWidget({ 
+                      url: import.meta.env.VITE_CALENDLY_URL,
+                      prefill: getCalendlyPrefill()
+                    });
                   } else {
                     window.location.href = `/services/${s.id}`;
                   }
@@ -300,7 +328,10 @@ export default function Home() {
               onClick={() => {
                 const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com';
                 if (window.Calendly) {
-                  window.Calendly.initPopupWidget({ url: calendlyUrl });
+                  window.Calendly.initPopupWidget({ 
+                    url: calendlyUrl,
+                    prefill: getCalendlyPrefill()
+                  });
                 } else {
                   window.open(calendlyUrl, '_blank');
                 }

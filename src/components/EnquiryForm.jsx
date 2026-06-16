@@ -237,6 +237,14 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
     });
     setLoading(false);
     if (res.success) {
+      try {
+        localStorage.setItem('landregistry_prefill_name', name);
+        localStorage.setItem('landregistry_prefill_email', email);
+        localStorage.setItem('landregistry_prefill_phone', phone);
+      } catch (err) {
+        console.error('Failed to save prefill details:', err);
+      }
+
       if (isPhoneMockup) {
         setDemoState('submitting');
         const callTime = setTimeout(() => {
@@ -259,7 +267,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
             <div className="phone-call-screen">
               <div>
                 <div className="call-avatar">LT</div>
-                <div className="call-caller">Landregistrytransfers.com</div>
+                <div className="call-caller">0333 577 0077</div>
                 <div className="call-sub">Conveyancing Team</div>
               </div>
 
@@ -291,7 +299,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
           <div className="phone-screen" style={{ background: '#0f172a' }}>
             <div className="phone-call-screen" style={{ background: '#0f172a', paddingTop: '36px', paddingBottom: '16px' }}>
               <div>
-                <div className="call-caller" style={{ color: 'white', marginTop: 12 }}>Landregistrytransfers.com</div>
+                <div className="call-caller" style={{ color: 'white', marginTop: 12 }}>0333 577 0077</div>
                 <div className="call-sub" style={{ color: '#3b82f6', fontWeight: 600 }}>{formatDuration(callDuration)}</div>
               </div>
 
@@ -347,7 +355,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
             <p style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>A property expert responds within 1 hour.</p>
           </div>
           
-          <form onSubmit={handleSubmit} id="main-enquiry-form" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <form onSubmit={handleSubmit} id="main-enquiry-form" style={{ display: 'flex', flexDirection: 'column', gap: 10, pointerEvents: 'none' }}>
             <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="form-label" style={{ fontSize: 11, marginBottom: 4 }}>Full Name</label>
               <input type="text" required onFocus={handleUserInteraction} className="form-input" style={{ padding: '8px 12px', fontSize: 13 }} placeholder="John Smith" value={name} onChange={(e) => setName(e.target.value)} />
@@ -422,13 +430,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
             </button>
           </form>
 
-          {demoState === 'idle' && (
-            <div style={{ textAlign: 'center', marginTop: 8 }}>
-              <button type="button" onClick={startDemo} style={{ fontSize: 11, color: 'var(--text-accent)', fontWeight: 700, textDecoration: 'underline' }}>
-                Replay Call Demo
-              </button>
-            </div>
-          )}
+          {/* Replay Call Demo button removed as requested */}
 
           <div className="form-secure-badge" style={{ marginTop: 10, borderTop: '1px solid var(--border-default)', paddingTop: 10, justifyContent: 'center' }}>
             <Lock size={10} />

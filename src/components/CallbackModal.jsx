@@ -2,6 +2,28 @@ import React, { useState } from 'react';
 import { X, Phone, Clock, User, CheckCircle } from 'lucide-react';
 import { saveEnquiry } from '../db/supabase';
 
+const getCalendlyPrefill = () => {
+  try {
+    const name = localStorage.getItem('landregistry_prefill_name') || '';
+    const email = localStorage.getItem('landregistry_prefill_email') || '';
+    const phone = localStorage.getItem('landregistry_prefill_phone') || '';
+    
+    const prefill = {};
+    if (name) prefill.name = name;
+    if (email) prefill.email = email;
+    if (phone) {
+      prefill.customAnswers = {
+        a1: phone,
+        a2: phone,
+        a3: phone
+      };
+    }
+    return Object.keys(prefill).length > 0 ? prefill : undefined;
+  } catch (e) {
+    return undefined;
+  }
+};
+
 export default function CallbackModal({ isOpen, onClose }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -17,6 +39,12 @@ export default function CallbackModal({ isOpen, onClose }) {
     const res = await saveEnquiry({ name, phone, email: 'callback@request', service: 'Callback Request', notes: `Preferred time: ${timeSlot}` });
     setLoading(false);
     if (res.success) {
+      try {
+        localStorage.setItem('landregistry_prefill_name', name);
+        localStorage.setItem('landregistry_prefill_phone', phone);
+      } catch (err) {
+        console.error('Failed to save prefill details:', err);
+      }
       setSuccess(true);
       setTimeout(() => { setSuccess(false); setName(''); setPhone(''); setTimeSlot('As soon as possible'); onClose(); }, 2500);
     }
@@ -46,7 +74,26 @@ export default function CallbackModal({ isOpen, onClose }) {
                   type="button"
                   onClick={() => {
                     if (window.Calendly) {
-                      window.Calendly.initPopupWidget({ url: import.meta.env.VITE_CALENDLY_URL });
+                      const modalPrefill = {};
+                      if (name) modalPrefill.name = name;
+                      if (phone) {
+                        modalPrefill.customAnswers = {
+                          a1: phone,
+                          a2: phone,
+                          a3: phone
+                        };
+                      }
+                      
+                      const savedPrefill = getCalendlyPrefill() || {};
+                      const prefill = {
+                        ...savedPrefill,
+                        ...modalPrefill
+                      };
+
+                      window.Calendly.initPopupWidget({ 
+                        url: import.meta.env.VITE_CALENDLY_URL,
+                        prefill: Object.keys(prefill).length > 0 ? prefill : undefined
+                      });
                     } else {
                       window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
                     }
