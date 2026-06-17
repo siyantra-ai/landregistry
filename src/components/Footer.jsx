@@ -62,9 +62,6 @@ export default function Footer() {
             </div>
 
             <div className="footer-compliance-box">
-              <p className="footer-legal-disclaimer">
-                We are an independent service. Not affiliated with HM Land Registry or the UK Government. The same documents are available from gov.uk for £7.
-              </p>
               <p className="footer-legal-notice-secondary">
                 Disclaimer: Landregistrytransfers.com is an independent property services portal. We are not associated or affiliated with HM Land Registry, the UK Government, or any government department. SRA-regulated lawyers handle legal conveyancing filings.
               </p>
