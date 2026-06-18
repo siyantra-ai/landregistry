@@ -86,6 +86,9 @@ export default function Header({ onRequestCallback }) {
               </div>
             )}
           </div>
+          <Link to="/blog" className="hover:text-[#C7A25A] transition-colors">
+            Blog
+          </Link>
         </nav>
 
         <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -130,6 +133,15 @@ export default function Header({ onRequestCallback }) {
                       </SheetClose>
                     ))}
                   </div>
+                </div>
+
+                <div className="mobile-menu-section border-b border-slate-100 pb-4 mb-4">
+                  <SheetClose asChild>
+                    <Link to="/blog" className="group flex items-center justify-between rounded-lg px-3 py-3 text-[16.5px] font-bold text-slate-800 transition-all hover:bg-slate-50 hover:text-[#2F4F46]">
+                      <span>Blog</span>
+                      <span className="text-[#C7A25A]">&rarr;</span>
+                    </Link>
+                  </SheetClose>
                 </div>
 
                 <div className="mobile-menu-section">

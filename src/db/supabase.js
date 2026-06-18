@@ -80,3 +80,43 @@ async function triggerNotification(payload) {
     body: `Name: ${payload.name}\nPhone: ${payload.phone}\nEmail: ${payload.email}\nDetails: ${payload.notes || 'None'}`
   });
 }
+
+/**
+ * Save a help request/contact enquiry to Supabase help_requests table.
+ */
+export async function saveHelpRequest(helpRequestData) {
+  const payload = {
+    customer_name: helpRequestData.name,
+    customer_email: helpRequestData.email,
+    subject: helpRequestData.subject,
+    body: helpRequestData.body,
+    status: 'pending',
+    created_at: new Date().toISOString()
+  };
+
+  if (supabase) {
+    try {
+      const { data: brand } = await supabase
+        .from('brands')
+        .select('id')
+        .eq('code', 'LRT')
+        .single();
+
+      const { data, error } = await supabase
+        .from('help_requests')
+        .insert([{
+          ...payload,
+          brand_id: brand?.id || null
+        }])
+        .select();
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Supabase help request save error:', error);
+      return { success: false, error };
+    }
+  } else {
+    return { success: true, data: payload, warning: 'Offline mode' };
+  }
+}

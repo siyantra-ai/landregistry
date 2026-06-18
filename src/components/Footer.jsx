@@ -36,6 +36,8 @@ export default function Footer() {
                 <Link to="/about" className="footer-link-item">About Us</Link>
                 <Link to="/contact" className="footer-link-item">Contact</Link>
                 <Link to="/faq" className="footer-link-item">FAQs</Link>
+                <Link to="/blog" className="footer-link-item">Blog</Link>
+                <a href="/sitemap.xml" target="_blank" className="footer-link-item">Sitemap</a>
                 <Link to="/privacy" className="footer-link-item">Privacy Policy</Link>
                 <Link to="/terms" className="footer-link-item">Terms of Use</Link>
               </div>

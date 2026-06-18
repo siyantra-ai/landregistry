@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Shield, Send, CheckCircle } from 'lucide-react';
 import SEO from '../components/SEO';
-import { saveEnquiry } from '../db/supabase';
+import { saveHelpRequest } from '../db/supabase';
 
 export default function Contact() {
   const [firstName, setFirstName] = useState('');
@@ -30,14 +30,12 @@ export default function Contact() {
 
     const selectedDeptLabel = departments.find(d => d.value === department)?.label || 'General Enquiry';
     const fullName = `${firstName.trim()} ${lastName.trim()}`;
-    const combinedNotes = `Subject: ${subject.trim()}\n\n${message.trim()}`;
 
-    const res = await saveEnquiry({
+    const res = await saveHelpRequest({
       name: fullName,
       email: email,
-      phone: phone,
-      service: selectedDeptLabel,
-      notes: combinedNotes
+      subject: `${selectedDeptLabel} - ${subject.trim()}`,
+      body: `Phone: ${phone}\n\n${message.trim()}`
     });
 
     setLoading(false);
