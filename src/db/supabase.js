@@ -86,37 +86,27 @@ async function triggerNotification(payload) {
  */
 export async function saveHelpRequest(helpRequestData) {
   const payload = {
-    customer_name: helpRequestData.name,
-    customer_email: helpRequestData.email,
+    name: helpRequestData.name,
+    email: helpRequestData.email,
     subject: helpRequestData.subject,
-    body: helpRequestData.body,
-    status: 'pending',
-    created_at: new Date().toISOString()
+    message: helpRequestData.body,
+    source: 'LRT'
   };
 
-  if (supabase) {
-    try {
-      const { data: brand } = await supabase
-        .from('brands')
-        .select('id')
-        .eq('code', 'LRT')
-        .single();
+  try {
+    const response = await fetch('http://localhost:3001/api/webhooks/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-      const { data, error } = await supabase
-        .from('help_requests')
-        .insert([{
-          ...payload,
-          brand_id: brand?.id || null
-        }])
-        .select();
-
-      if (error) throw error;
-      return { success: true, data };
-    } catch (error) {
-      console.error('Supabase help request save error:', error);
-      return { success: false, error };
+    if (!response.ok) {
+      throw new Error('Failed to submit request');
     }
-  } else {
-    return { success: true, data: payload, warning: 'Offline mode' };
+
+    return { success: true };
+  } catch (error) {
+    console.error('Webhook help request save error:', error);
+    return { success: false, error };
   }
 }
