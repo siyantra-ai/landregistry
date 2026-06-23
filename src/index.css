@@ -460,6 +460,83 @@ input, select, textarea { font: inherit; }
   font-size: 15px;
 }
 
+/* Mega CTA Button - Highly Attractive and Standout */
+.btn-mega-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 52px !important;
+  background: var(--gradient-brand) !important;
+  color: white !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  border-radius: var(--r-full) !important;
+  border: none !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 8px 30px rgba(47, 79, 70, 0.4), 0 0 0 0 rgba(47, 79, 70, 0.5) !important;
+  transition: all var(--duration-normal) var(--ease-out) !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  position: relative;
+  overflow: hidden;
+  animation: pulse-glow-cta 2.5s infinite;
+}
+
+.btn-mega-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s;
+  animation: shine-sweep 4s infinite ease-in-out;
+}
+
+@keyframes pulse-glow-cta {
+  0% {
+    box-shadow: 0 8px 24px rgba(47, 79, 70, 0.4), 0 0 0 0 rgba(47, 79, 70, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 36px rgba(47, 79, 70, 0.6), 0 0 0 14px rgba(47, 79, 70, 0);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 8px 24px rgba(47, 79, 70, 0.4), 0 0 0 0 rgba(47, 79, 70, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes shine-sweep {
+  0% {
+    left: -120%;
+  }
+  15%, 100% {
+    left: 120%;
+  }
+}
+
+.btn-mega-cta:hover {
+  background: linear-gradient(135deg, #3d685c 0%, #1e332d 100%) !important;
+  transform: translateY(-3px) scale(1.04) !important;
+  box-shadow: 0 12px 40px rgba(47, 79, 70, 0.65) !important;
+  animation-play-state: paused;
+}
+
+.btn-mega-cta:active {
+  transform: translateY(-1px) scale(0.98) !important;
+}
+
 .btn-white {
   display: inline-flex;
   align-items: center;

@@ -1,6 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Send, CheckCircle, Lock, Phone, PhoneOff, Hourglass, MicOff, Volume2, Grid, Plus, User } from 'lucide-react';
 import { saveEnquiry } from '../db/supabase';
+import { SERVICES } from '../data/services';
+
+const DEMO_SCENARIOS = [
+  {
+    name: "Charlotte Smith",
+    email: "charlotte@example.com",
+    phone: "07700 900077",
+    service: "transfer-of-equity",
+    notes: "Adding husband to deeds."
+  },
+  {
+    name: "James Wilson",
+    email: "james.w@example.co.uk",
+    phone: "07800 800088",
+    service: "death-of-joint-proprietor",
+    notes: "Remove deceased joint owner."
+  },
+  {
+    name: "Sarah Davies",
+    email: "sarah.davies@example.com",
+    phone: "07900 700099",
+    service: "name-change",
+    notes: "Change to married name on deeds."
+  },
+  {
+    name: "Robert Taylor",
+    email: "robert.t@example.com",
+    phone: "07500 600055",
+    service: "removal-of-restriction",
+    notes: "Clear outdated charge from title."
+  },
+  {
+    name: "Arthur Pendelton",
+    email: "arthur@example.com",
+    phone: "07400 500044",
+    service: "first-registration",
+    notes: "Register historic paper deeds."
+  }
+];
 
 export default function EnquiryForm({ initialService = '', isPhoneMockup = false }) {
   const [name, setName] = useState('');
@@ -12,18 +51,33 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
   const [success, setSuccess] = useState(false);
 
   const [demoState, setDemoState] = useState('idle'); // 'idle', 'typing', 'submitting', 'incoming-call', 'active-call'
-  const [activeIntervals, setActiveIntervals] = useState([]);
-  const [activeTimeouts, setActiveTimeouts] = useState([]);
   const [callDuration, setCallDuration] = useState(0);
 
+  const scenarioIdxRef = useRef(0);
+  const [activeScenario, setActiveScenario] = useState(DEMO_SCENARIOS[0]);
+  const timersRef = useRef({ intervals: [], timeouts: [] });
+
+  const addTimeout = (cb, delay) => {
+    const id = setTimeout(cb, delay);
+    timersRef.current.timeouts.push(id);
+    return id;
+  };
+
+  const addInterval = (cb, delay) => {
+    const id = setInterval(cb, delay);
+    timersRef.current.intervals.push(id);
+    return id;
+  };
+
+  const clearAllDemoTimers = () => {
+    timersRef.current.timeouts.forEach(clearTimeout);
+    timersRef.current.intervals.forEach(clearInterval);
+    timersRef.current.timeouts = [];
+    timersRef.current.intervals = [];
+  };
+
   const services = [
-    { value: 'transfer-of-equity', label: 'Transfer of Equity' },
-    { value: 'death-of-joint-proprietor', label: 'Death of a Joint Proprietor' },
-    { value: 'name-change', label: 'Name Change' },
-    { value: 'removal-of-restriction', label: 'Removal of a Restriction' },
-    { value: 'transfer-of-equity-wills-probate', label: 'Transfer of Equity – Wills/Probate' },
-    { value: 'applying-for-restriction', label: 'Applying for a Restriction' },
-    { value: 'first-registration', label: 'First Registration' },
+    ...SERVICES.map(s => ({ value: s.id, label: s.title })),
     { value: 'other', label: 'Other / General Enquiry' }
   ];
 
@@ -33,20 +87,12 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
     if (initialService) setService(initialService);
   }, [initialService]);
 
-  const clearAllDemoTimers = () => {
-    activeIntervals.forEach(clearInterval);
-    activeTimeouts.forEach(clearTimeout);
-    setActiveIntervals([]);
-    setActiveTimeouts([]);
-  };
-
   useEffect(() => {
     if (isPhoneMockup) {
-      const startTimeout = setTimeout(() => {
+      const startTimeout = addTimeout(() => {
         startDemo();
       }, 1500);
       return () => {
-        clearTimeout(startTimeout);
         clearAllDemoTimers();
       };
     }
@@ -86,109 +132,100 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
     setDemoState('typing');
     setName(''); setEmail(''); setPhone(''); setService(''); setNotes('');
 
-    const intervals = [];
-    const timeouts = [];
+    const scenario = DEMO_SCENARIOS[scenarioIdxRef.current];
+    setActiveScenario(scenario);
+    scenarioIdxRef.current = (scenarioIdxRef.current + 1) % DEMO_SCENARIOS.length;
 
     // 1. Type Name
-    const nameStr = "Charlotte Smith";
+    const nameStr = scenario.name;
     let nameVal = "";
     let i = 0;
-    const nInt = setInterval(() => {
+    const nInt = addInterval(() => {
       if (i < nameStr.length) {
         nameVal += nameStr[i];
         setName(nameVal);
         i++;
       } else {
         clearInterval(nInt);
-        const eTime = setTimeout(typeEmail, 300);
-        timeouts.push(eTime);
+        timersRef.current.intervals = timersRef.current.intervals.filter(id => id !== nInt);
+        addTimeout(typeEmail, 300);
       }
     }, 70);
-    intervals.push(nInt);
 
     // 2. Type Email
     const typeEmail = () => {
-      const emailStr = "charlotte@example.com";
+      const emailStr = scenario.email;
       let emailVal = "";
       let j = 0;
-      const eInt = setInterval(() => {
+      const eInt = addInterval(() => {
         if (j < emailStr.length) {
           emailVal += emailStr[j];
           setEmail(emailVal);
           j++;
         } else {
           clearInterval(eInt);
-          const pTime = setTimeout(typePhone, 300);
-          timeouts.push(pTime);
+          timersRef.current.intervals = timersRef.current.intervals.filter(id => id !== eInt);
+          addTimeout(typePhone, 300);
         }
       }, 60);
-      intervals.push(eInt);
     };
 
     // 3. Type Phone
     const typePhone = () => {
-      const phoneStr = "07700 900077";
+      const phoneStr = scenario.phone;
       let phoneVal = "";
       let k = 0;
-      const pInt = setInterval(() => {
+      const pInt = addInterval(() => {
         if (k < phoneStr.length) {
           phoneVal += phoneStr[k];
           setPhone(phoneVal);
           k++;
         } else {
           clearInterval(pInt);
-          const sTime = setTimeout(selectService, 300);
-          timeouts.push(sTime);
+          timersRef.current.intervals = timersRef.current.intervals.filter(id => id !== pInt);
+          addTimeout(selectService, 300);
         }
       }, 80);
-      intervals.push(pInt);
     };
 
     // 4. Select Service
     const selectService = () => {
-      setService('transfer-of-equity');
-      const ntTime = setTimeout(typeNotes, 600);
-      timeouts.push(ntTime);
+      setService(scenario.service);
+      addTimeout(typeNotes, 600);
     };
 
     // 5. Type Notes
     const typeNotes = () => {
-      const notesStr = "Adding husband to deeds.";
+      const notesStr = scenario.notes;
       let notesVal = "";
       let l = 0;
-      const ntInt = setInterval(() => {
+      const ntInt = addInterval(() => {
         if (l < notesStr.length) {
           notesVal += notesStr[l];
           setNotes(notesVal);
           l++;
         } else {
           clearInterval(ntInt);
-          const subTime = setTimeout(triggerSubmit, 600);
-          timeouts.push(subTime);
+          timersRef.current.intervals = timersRef.current.intervals.filter(id => id !== ntInt);
+          addTimeout(triggerSubmit, 600);
         }
       }, 50);
-      intervals.push(ntInt);
     };
 
     // 6. Submit
     const triggerSubmit = () => {
       setDemoState('submitting');
       setLoading(true);
-      const resTime = setTimeout(() => {
+      addTimeout(() => {
         setLoading(false);
         setDemoState('incoming-call');
         
         // Auto accept call after 3.5s
-        const autoAcceptTime = setTimeout(() => {
+        addTimeout(() => {
           setDemoState('active-call');
         }, 3500);
-        setActiveTimeouts(prev => [...prev, autoAcceptTime]);
       }, 2500);
-      timeouts.push(resTime);
     };
-
-    setActiveIntervals(intervals);
-    setActiveTimeouts(timeouts);
   };
 
   const handleDeclineCall = () => {
@@ -197,10 +234,9 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
     setName(''); setEmail(''); setPhone(''); setService(''); setNotes('');
     
     // Auto-loop: restart demo typing after 3 seconds of idle time
-    const loopTimeout = setTimeout(() => {
+    addTimeout(() => {
       startDemo();
     }, 3000);
-    setActiveTimeouts([loopTimeout]);
   };
 
   const handleAcceptCall = () => {
@@ -215,12 +251,16 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
   };
 
   const getCallCaption = () => {
+    const firstName = activeScenario?.name ? activeScenario.name.split(' ')[0] : 'there';
+    const email = activeScenario?.email || 'your email';
+    const serviceName = services.find(s => s.value === activeScenario?.service)?.label || 'Property Transfer';
+
     if (callDuration < 4) {
-      return `Hi Charlotte! Oliver here from Landregistrytransfers.com. I saw your Transfer of Equity request...`;
+      return `Hi ${firstName}! Oliver here from Landregistrytransfers.com. I saw your ${serviceName} request...`;
     } else if (callDuration < 9) {
       return `I've opened the title records. It's a standard transfer, which we can draft and file for you.`;
     } else {
-      return `I've sent the draft Transfer Deed (TR1) to charlotte@example.com. Let me know if you need anything else! ✦`;
+      return `I've sent the draft Transfer Deed (TR1) to ${email}. Let me know if you need anything else! ✦`;
     }
   };
 
@@ -247,10 +287,9 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
 
       if (isPhoneMockup) {
         setDemoState('submitting');
-        const callTime = setTimeout(() => {
+        addTimeout(() => {
           setDemoState('incoming-call');
         }, 2000);
-        setActiveTimeouts([callTime]);
       } else {
         setSuccess(true);
         setName(''); setEmail(''); setPhone(''); setNotes('');
@@ -351,7 +390,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
           )}
 
           <div style={{ textAlign: 'center', marginBottom: 14, paddingTop: 12 }}>
-            <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)' }}>Get Your Free Quote</h3>
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)' }}>Book an Appointment</h3>
             <p style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>A property expert responds within 1 hour.</p>
           </div>
           
@@ -426,7 +465,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
             )}
             
             <button type="submit" disabled={loading} className="form-submit" style={{ padding: '10px', fontSize: 13, marginTop: 4 }}>
-              {loading ? 'Submitting…' : <><Send size={12} /> Request Free Quote</>}
+              {loading ? 'Submitting…' : <><Send size={12} /> Book Appointment</>}
             </button>
           </form>
 
@@ -444,7 +483,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
   return (
     <div className="enquiry-card">
       <div className="enquiry-card-header">
-        <h3 className="enquiry-card-title">Get Your Free Quote</h3>
+        <h3 className="enquiry-card-title">Book an Appointment</h3>
         <p className="enquiry-card-subtitle">A property expert responds within 1 hour.</p>
       </div>
 
@@ -520,7 +559,7 @@ export default function EnquiryForm({ initialService = '', isPhoneMockup = false
           )}
           
           <button type="submit" disabled={loading} className="form-submit">
-            {loading ? 'Submitting…' : <><Send size={14} /> Request Free Quote</>}
+            {loading ? 'Submitting…' : <><Send size={14} /> Book Appointment</>}
           </button>
 
           {success && (

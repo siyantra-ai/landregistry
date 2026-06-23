@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle, FileText, Loader2, Lock, Clock, Sparkles, MapPin, Calendar, User, ShieldAlert } from 'lucide-react';
 import SEO from '../components/SEO';
 import { saveEnquiry } from '../db/supabase';
+import { SERVICES_MAP } from '../data/services';
 
 function PostcodeLookup({ onAddressSelect }) {
   const [postcode, setPostcode] = useState('');
@@ -109,48 +110,7 @@ function PostcodeLookup({ onAddressSelect }) {
   );
 }
 
-const SERVICES = {
-  'transfer-of-equity': {
-    title: 'Transfer of Equity',
-    price: 450,
-    subtitle: 'Add or remove a partner, spouse, or family member from property deeds.'
-  },
-  'death-of-joint-proprietor': {
-    title: 'Death of a Joint Proprietor',
-    price: 400,
-    subtitle: 'Remove a deceased joint owner from property deeds.'
-  },
-  'deceased-joint-proprietor': {
-    title: 'Death of a Joint Proprietor',
-    price: 400,
-    subtitle: 'Remove a deceased joint owner from property deeds.'
-  },
-  'name-change': {
-    title: 'Name Change on Deeds',
-    price: 150,
-    subtitle: 'Update your legal name on property records.'
-  },
-  'removal-of-restriction': {
-    title: 'Removal of a Restriction',
-    price: 350,
-    subtitle: 'Clear outdated charges, cautions, or restrictions.'
-  },
-  'transfer-of-equity-wills-probate': {
-    title: 'Transfer of Equity (Wills / Probate)',
-    price: 450,
-    subtitle: 'Transfer inherited property to executors or beneficiaries.'
-  },
-  'applying-for-restriction': {
-    title: 'Applying for a Restriction',
-    price: 350,
-    subtitle: 'Protect your trust or financial interest on property titles.'
-  },
-  'first-registration': {
-    title: 'First Registration',
-    price: 600,
-    subtitle: 'Register unregistered historic deeds with HM Land Registry.'
-  }
-};
+const SERVICES = SERVICES_MAP;
 
 export default function ApplyWizard() {
   const { serviceId, stepId } = useParams();

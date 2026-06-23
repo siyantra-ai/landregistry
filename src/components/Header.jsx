@@ -6,19 +6,18 @@ import { Button } from './ui/button'
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion'
 
+import { SERVICES } from '../data/services'
+
 export default function Header({ onRequestCallback }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
 
-  const services = [
-    { id: 'transfer-of-equity', title: 'Transfer of Equity', href: '/apply/transfer-of-equity', description: 'Add or remove a partner, spouse, or family member from property deeds.' },
-    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor', href: '/apply/deceased-joint-proprietor', description: 'Remove a deceased joint owner from the title deeds.' },
-    { id: 'name-change', title: 'Name Change on Deeds', href: '/apply/name-change', description: 'Update legal name on property records.' },
-    { id: 'removal-of-restriction', title: 'Removal of a Restriction', href: '/apply/removal-of-restriction', description: 'Clear outdated charges or restrictions from the title.' },
-    { id: 'transfer-of-equity-wills-probate', title: 'Transfer of Equity (Wills/Probate)', href: '/apply/transfer-of-equity-wills-probate', description: 'Property transfer following probate or execution of a will.' },
-    { id: 'applying-for-restriction', title: 'Applying for a Restriction', href: '/apply/applying-for-restriction', description: 'Protect your interest on property deeds.' },
-    { id: 'first-registration', title: 'First Registration', href: '/apply/first-registration', description: 'Register unregistered land with HM Land Registry.' },
-  ]
+  const services = SERVICES.map(s => ({
+    id: s.id,
+    title: s.title,
+    href: s.id === 'death-of-joint-proprietor' ? '/apply/deceased-joint-proprietor' : `/apply/${s.id}`,
+    description: s.subtitle || s.desc
+  }))
 
   const documents = [
     { id: 'title-register', title: 'Title Register', href: '/apply/title-register' },

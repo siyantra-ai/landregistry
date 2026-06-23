@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import EnquiryForm from '../components/EnquiryForm';
 import ServiceStackSection from '../components/ServiceStackSection';
 import DocumentAccessSection from '../components/DocumentAccessSection';
+import { SERVICES } from '../data/services';
 
 const getCalendlyPrefill = () => {
   try {
@@ -43,15 +44,7 @@ export default function Home() {
   const [eyebrowIdx, setEyebrowIdx] = useState(0);
   const [fadeState, setFadeState] = useState('fade-in');
 
-  const services = [
-    { id: 'transfer-of-equity', title: 'Transfer of Equity', desc: 'Add or remove a partner, spouse, or family member from your property title deeds.', gif: '/gifs/add_name.gif' },
-    { id: 'death-of-joint-proprietor', title: 'Death of a Joint Proprietor', desc: 'Remove a deceased joint owner from the land registry title with care and precision.', gif: '/gifs/death.gif' },
-    { id: 'name-change', title: 'Name Change on Deeds', desc: 'Update your legal name on property records due to marriage, divorce, or deed poll.', gif: '/gifs/namechange.gif' },
-    { id: 'removal-of-restriction', title: 'Removal of a Restriction', desc: 'Clear outdated charges, restrictions, or cautions from your property title.', gif: '/gifs/tennant.gif' },
-    { id: 'transfer-of-equity-wills-probate', title: 'Transfer of Equity (Wills / Probate)', desc: 'Transfer property ownership following probate, inheritance, or estate administration.', gif: '/gifs/add_name.gif' },
-    { id: 'applying-for-restriction', title: 'Applying for a Restriction', desc: 'Protect your interest or trust ownership to prevent unauthorized property sale.', gif: '/gifs/tennant.gif' },
-    { id: 'first-registration', title: 'First Registration', desc: 'Register unregistered historic deeds with HM Land Registry for modern legal security.', gif: '/gifs/first_registration.gif' }
-  ];
+  const services = SERVICES;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -193,14 +186,13 @@ export default function Home() {
                       window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
                     }
                   }}
-                  className="btn-primary btn-lg"
-                  style={{ border: 'none', cursor: 'pointer', outline: 'none', padding: '16px 40px', fontSize: '17px' }}
+                  className="btn-mega-cta"
                 >
-                  Book a Call <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+                  Book a Call <ArrowRight size={20} style={{ marginLeft: '10px' }} />
                 </button>
               ) : (
-                <a href="#main-enquiry-form" className="btn-primary btn-lg" style={{ padding: '16px 40px', fontSize: '17px' }}>
-                  Get a Quote <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+                <a href="#main-enquiry-form" className="btn-mega-cta">
+                  Get a Quote <ArrowRight size={20} style={{ marginLeft: '10px' }} />
                 </a>
               )}
             </div>
@@ -336,8 +328,7 @@ export default function Home() {
                   window.open(calendlyUrl, '_blank');
                 }
               }}
-              className="btn-primary btn-lg"
-              style={{ padding: '18px 48px', fontSize: '18px', fontWeight: 700, borderRadius: '8px', background: '#C7A25A', color: '#ffffff', textDecoration: 'none', border: 'none', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }}
+              className="btn-mega-cta"
             >
               Book a Free Call
             </button>
