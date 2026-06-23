@@ -36,6 +36,21 @@ const VALID_WIZARD_SERVICES = [
 // Redirect helper for /apply/:serviceId to /apply/:serviceId/step/1
 function ApplyRedirect() {
   const { serviceId } = useParams();
+
+  const documentMappings = {
+    'title-register': 'https://www.onlinelandregistry.uk/order?service=title-register',
+    'title-plan': 'https://www.onlinelandregistry.uk/order?service=title-plan',
+    'map-search': 'https://www.onlinelandregistry.uk/order?service=map-land-search',
+    'deed-search': 'https://www.onlinelandregistry.uk/order?service=deed-search',
+    'property-ownership': 'https://www.onlinelandregistry.uk/order?service=ownership-bundle',
+    'property-alert': 'https://www.onlinelandregistry.uk/order?service=property-alert',
+  };
+
+  if (serviceId && documentMappings[serviceId]) {
+    window.location.href = documentMappings[serviceId];
+    return null;
+  }
+
   if (VALID_WIZARD_SERVICES.includes(serviceId)) {
     return <Navigate to={`/apply/${serviceId}/step/1`} replace />;
   }
