@@ -1,6 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ChevronDown, Phone, Mail } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronRight,
+  Phone,
+  Mail,
+  Users,
+  FileText,
+  Award,
+  ShieldAlert,
+  Heart,
+  Lock,
+  Sparkles,
+  MapPin,
+  User,
+  AlertCircle,
+  BookOpen
+} from 'lucide-react'
 
 import { Button } from './ui/button'
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
@@ -11,6 +27,39 @@ import { SERVICES } from '../data/services'
 export default function Header({ onRequestCallback }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    if (!servicesOpen) return
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setServicesOpen(false)
+      }
+    }
+
+    const handleScroll = () => {
+      setServicesOpen(false)
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setServicesOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+      window.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [servicesOpen])
 
   const services = SERVICES.map(s => ({
     id: s.id,
@@ -19,14 +68,52 @@ export default function Header({ onRequestCallback }) {
     description: s.subtitle || s.desc
   }))
 
+  const serviceIcons = {
+    'transfer-of-equity': Users,
+    'death-of-joint-proprietor': FileText,
+    'name-change': Award,
+    'removal-of-restriction': ShieldAlert,
+    'transfer-of-equity-wills-probate': Heart,
+    'applying-for-restriction': Lock,
+    'first-registration': Sparkles
+  }
+
+  const serviceColors = {
+    'transfer-of-equity': 'bg-blue-50 text-blue-600 border border-blue-100/50',
+    'death-of-joint-proprietor': 'bg-rose-50 text-rose-600 border border-rose-100/50',
+    'name-change': 'bg-emerald-50 text-emerald-600 border border-emerald-100/50',
+    'removal-of-restriction': 'bg-amber-50 text-amber-600 border border-amber-100/50',
+    'transfer-of-equity-wills-probate': 'bg-purple-50 text-purple-600 border border-purple-100/50',
+    'applying-for-restriction': 'bg-indigo-50 text-indigo-600 border border-indigo-100/50',
+    'first-registration': 'bg-teal-50 text-teal-600 border border-teal-100/50'
+  }
+
   const documents = [
-    { id: 'title-register', title: 'Title Register', href: '/apply/title-register' },
-    { id: 'title-plan', title: 'Title Plan', href: '/apply/title-plan' },
-    { id: 'map-search', title: 'Map Search', href: '/apply/map-search' },
-    { id: 'deed-search', title: 'Deed Search', href: '/apply/deed-search' },
-    { id: 'property-ownership', title: 'Property Ownership', href: '/apply/property-ownership' },
-    { id: 'property-alert', title: "HM Land Registry's Property Alert", href: '/apply/property-alert' },
+    { id: 'title-register', title: 'Title Register', href: '/apply/title-register', desc: 'Proof of ownership and registered charges.' },
+    { id: 'title-plan', title: 'Title Plan', href: '/apply/title-plan', desc: 'Official map showing boundaries.' },
+    { id: 'map-search', title: 'Map Search', href: '/apply/map-search', desc: 'Identify property titles from map coordinates.' },
+    { id: 'deed-search', title: 'Deed Search', href: '/apply/deed-search', desc: 'Retrieve historical deeds and documents.' },
+    { id: 'property-ownership', title: 'Property Ownership', href: '/apply/property-ownership', desc: 'Check who currently owns any UK property.' },
+    { id: 'property-alert', title: "Property Alert", href: '/apply/property-alert', desc: 'Monitor and protect property against fraud.' },
   ]
+
+  const documentIcons = {
+    'title-register': FileText,
+    'title-plan': MapPin,
+    'map-search': MapPin,
+    'deed-search': FileText,
+    'property-ownership': User,
+    'property-alert': AlertCircle
+  }
+
+  const documentColors = {
+    'title-register': 'bg-[#C7A25A]/10 text-[#C7A25A] border border-[#C7A25A]/20',
+    'title-plan': 'bg-[#C7A25A]/10 text-[#C7A25A] border border-[#C7A25A]/20',
+    'map-search': 'bg-[#C7A25A]/10 text-[#C7A25A] border border-[#C7A25A]/20',
+    'deed-search': 'bg-[#C7A25A]/10 text-[#C7A25A] border border-[#C7A25A]/20',
+    'property-ownership': 'bg-[#C7A25A]/10 text-[#C7A25A] border border-[#C7A25A]/20',
+    'property-alert': 'bg-[#C7A25A]/10 text-[#C7A25A] border border-[#C7A25A]/20'
+  }
 
   return (
     <header className="site-header">
@@ -40,7 +127,7 @@ export default function Header({ onRequestCallback }) {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-end gap-8 text-[15px] font-semibold text-[#2F4F46] lg:flex" aria-label="Primary">
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <button
               type="button"
               className="nav-dropdown-trigger bg-transparent px-0 text-[15px] font-semibold text-[#2F4F46] hover:bg-transparent hover:text-[#2F4F46]"
@@ -119,64 +206,119 @@ export default function Header({ onRequestCallback }) {
                 </SheetClose>
               </div>
 
-              <div className="mobile-menu-content overflow-y-auto px-4 pb-12 pt-2 h-[calc(100vh-70px)]">
-                <div className="mobile-menu-section border-b border-slate-100 pb-6 mb-6">
-                  <div className="text-[17px] font-bold text-slate-800 py-2">Services</div>
-                  <div className="flex flex-col gap-1 pt-1">
-                    {services.map((service) => (
-                      <SheetClose asChild key={service.id}>
-                        <a href={service.href} target={service.href.startsWith('http') ? '_blank' : undefined} rel={service.href.startsWith('http') ? 'noreferrer' : undefined} className="group flex items-center justify-between rounded-lg px-3 py-3 text-[15.5px] font-medium text-slate-600 transition-all hover:bg-slate-50 hover:text-[#2F4F46]" onClick={() => setMobileOpen(false)}>
-                          <span>{service.title}</span>
-                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">&rarr;</span>
-                        </a>
-                      </SheetClose>
-                    ))}
+              <div className="mobile-menu-content overflow-y-auto bg-slate-50/50 px-4 pb-12 pt-4 h-[calc(100vh-70px)]">
+                {/* Services Section */}
+                <div className="mobile-menu-section border-b border-slate-100 pb-5 mb-5">
+                  <div className="text-[12px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-3">Services</div>
+                  <div className="flex flex-col gap-2.5">
+                    {services.map((service) => {
+                      const IconComponent = serviceIcons[service.id] || FileText
+                      const colorClass = serviceColors[service.id] || 'bg-slate-50 text-slate-500'
+                      return (
+                        <SheetClose asChild key={service.id}>
+                          <Link
+                            to={service.href}
+                            className="group flex items-center gap-3.5 rounded-2xl border border-slate-100 bg-white p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-150 active:scale-[0.98] active:bg-slate-50/50"
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            <div className={`flex items-center justify-center w-10 h-10 rounded-xl ${colorClass} shrink-0`}>
+                              <IconComponent size={20} />
+                            </div>
+                            <div className="flex-1 min-w-0 text-left">
+                              <span className="block text-[14px] font-bold text-slate-800 group-hover:text-[#2F4F46] transition-colors leading-tight">
+                                {service.title}
+                              </span>
+                              {service.description && (
+                                <span className="block text-[11px] text-slate-400 mt-1 font-normal leading-normal truncate">
+                                  {service.description}
+                                </span>
+                              )}
+                            </div>
+                            <ChevronRight size={16} className="text-slate-300 group-hover:text-[#C7A25A] shrink-0 transition-colors" />
+                          </Link>
+                        </SheetClose>
+                      )
+                    })}
                   </div>
                 </div>
 
-                <div className="mobile-menu-section border-b border-slate-100 pb-4 mb-4">
+                {/* Individual Documents Access Section */}
+                <div className="mobile-menu-section border-b border-slate-100 pb-5 mb-5">
+                  <div className="px-3 mb-3">
+                    <span className="text-[12px] font-bold text-slate-400 uppercase tracking-wider">Individual Documents Access</span>
+                    <p className="text-[11px] text-slate-400 mt-1 font-normal">Need individual deeds or registry files?</p>
+                  </div>
+                  <div className="flex flex-col gap-2.5">
+                    {documents.map((doc) => {
+                      const IconComponent = documentIcons[doc.id] || FileText
+                      const colorClass = documentColors[doc.id] || 'bg-slate-50 text-slate-500'
+                      return (
+                        <SheetClose asChild key={doc.id}>
+                          <Link
+                            to={doc.href}
+                            className="group flex items-center gap-3.5 rounded-2xl border border-slate-100 bg-white p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-150 active:scale-[0.98] active:bg-slate-50/50"
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            <div className={`flex items-center justify-center w-10 h-10 rounded-xl ${colorClass} shrink-0`}>
+                              <IconComponent size={18} />
+                            </div>
+                            <div className="flex-1 min-w-0 text-left">
+                              <span className="block text-[14px] font-bold text-slate-800 group-hover:text-[#2F4F46] transition-colors leading-tight">
+                                {doc.title}
+                              </span>
+                              {doc.desc && (
+                                <span className="block text-[11px] text-slate-400 mt-1 font-normal leading-normal truncate">
+                                  {doc.desc}
+                                </span>
+                              )}
+                            </div>
+                            <ChevronRight size={16} className="text-slate-300 group-hover:text-[#C7A25A] shrink-0 transition-colors" />
+                          </Link>
+                        </SheetClose>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Blog Section */}
+                <div className="mobile-menu-section border-b border-slate-100 pb-5 mb-5">
                   <SheetClose asChild>
-                    <Link to="/blog" className="group flex items-center justify-between rounded-lg px-3 py-3 text-[16.5px] font-bold text-slate-800 transition-all hover:bg-slate-50 hover:text-[#2F4F46]">
-                      <span>Blog</span>
-                      <span className="text-[#C7A25A]">&rarr;</span>
+                    <Link
+                      to="/blog"
+                      className="group flex items-center gap-3.5 rounded-2xl border border-[#C7A25A]/25 bg-[#C7A25A]/5 p-3.5 shadow-sm transition-all duration-150 active:scale-[0.98] active:bg-[#C7A25A]/10"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#C7A25A] text-white shrink-0 shadow-sm">
+                        <BookOpen size={18} />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <span className="block text-[14px] font-bold text-[#2F4F46]">
+                          Latest News & Blog
+                        </span>
+                        <span className="block text-[11px] text-[#2F4F46]/70 mt-1 font-normal leading-normal">
+                          Read articles and guides on property transfers.
+                        </span>
+                      </div>
+                      <ChevronRight size={16} className="text-[#C7A25A] shrink-0" />
                     </Link>
                   </SheetClose>
                 </div>
 
-                <div className="mobile-menu-section">
-                  <div className="flex flex-col items-start gap-1 py-2">
-                    <span className="text-[17px] font-bold text-slate-800">Individual Documents Access</span>
-                    <span className="text-[13px] font-normal text-slate-500">Need individual documents?</span>
-                  </div>
-                  <div className="flex flex-col gap-1 pt-1">
-                    {documents.map((doc) => (
-                      <SheetClose asChild key={doc.id}>
-                        <Link to={doc.href} className="group flex items-center justify-between rounded-lg px-3 py-3 text-[15.5px] font-medium text-slate-600 transition-all hover:bg-slate-50 hover:text-[#2F4F46]" onClick={() => setMobileOpen(false)}>
-                          <div className="flex flex-col">
-                            <span>{doc.title}</span>
-                            <span className="text-[12px] text-[#C7A25A]">Get the document</span>
-                          </div>
-                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">&rarr;</span>
-                        </Link>
-                      </SheetClose>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mobile-menu-section mt-8 border-t border-slate-100 pt-6 mb-4">
+                {/* Contact Us Section */}
+                <div className="mobile-menu-section pt-1 mb-4">
                   <div className="flex flex-col gap-3 px-3">
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">Contact Us</span>
-                    <a href="tel:03335770077" className="flex items-center gap-3 text-[15.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-[#C7A25A]">
-                        <Phone size={16} />
+                    <span className="text-[12px] font-bold text-slate-400 uppercase tracking-wider">Contact Us</span>
+                    <a href="tel:03335770077" className="flex items-center gap-3 text-[14.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 text-[#C7A25A] border border-slate-100">
+                        <Phone size={14} />
                       </div>
                       0333 577 0077
                     </a>
-                    <a href="mailto:enquiries@landregistrytransfers.com" className="flex items-center gap-3 text-[15.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-[#C7A25A]">
-                        <Mail size={16} />
+                    <a href="mailto:enquiries@landregistrytransfers.com" className="flex items-center gap-3 text-[14.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 text-[#C7A25A] border border-slate-100">
+                        <Mail size={14} />
                       </div>
-                      enquiries@landregistrytransfers.com
+                      <span className="truncate">enquiries@landregistrytransfers.com</span>
                     </a>
                   </div>
                 </div>
