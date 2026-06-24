@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { blogPosts } from '../data/blogPosts';
+import { supabase } from '../db/supabase';
+import { blogPosts as fallbackPosts } from '../data/blogPosts';
 import './BlogPost.css';
 
 export default function BlogPost() {
@@ -9,13 +10,50 @@ export default function BlogPost() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    const foundPost = blogPosts.find(p => p.slug === slug);
-    if (foundPost) {
-      setPost(foundPost);
-      setNotFound(false);
-    } else {
-      setNotFound(true);
+    async function fetchPost() {
+      if (!supabase) {
+        const foundPost = fallbackPosts.find(p => p.slug === slug);
+        if (foundPost) {
+          setPost(foundPost);
+          setNotFound(false);
+        } else {
+          setNotFound(true);
+        }
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select('*')
+          .eq('slug', slug)
+          .single();
+          
+        if (error || !data) {
+          // Fallback to local
+          const foundPost = fallbackPosts.find(p => p.slug === slug);
+          if (foundPost) {
+            setPost(foundPost);
+            setNotFound(false);
+          } else {
+            setNotFound(true);
+          }
+        } else {
+          setPost(data);
+          setNotFound(false);
+        }
+      } catch (err) {
+        const foundPost = fallbackPosts.find(p => p.slug === slug);
+        if (foundPost) {
+          setPost(foundPost);
+          setNotFound(false);
+        } else {
+          setNotFound(true);
+        }
+      }
     }
+    
+    fetchPost();
   }, [slug]);
 
   if (notFound) {
@@ -39,11 +77,15 @@ export default function BlogPost() {
             <span className="blog-post-date">{post.date}</span>
           </div>
           <h1 className="blog-post-title">{post.title}</h1>
-          {post.image && (
+          {post.image_url ? (
+            <div className="blog-post-featured-image">
+              <img src={post.image_url} alt={post.title} />
+            </div>
+          ) : post.image ? (
             <div className="blog-post-featured-image">
               <img src={post.image} alt={post.title} />
             </div>
-          )}
+          ) : null}
           <div 
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: post.content }}

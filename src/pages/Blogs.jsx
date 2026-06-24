@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { allBlogPosts } from '../data/blogPosts';
+import { supabase } from '../db/supabase';
+import { allBlogPosts as fallbackPosts } from '../data/blogPosts';
 import './Blogs.css';
 
 export default function Blogs() {
@@ -9,7 +10,33 @@ export default function Blogs() {
   const postsPerPage = 10;
 
   useEffect(() => {
-    setPosts(allBlogPosts);
+    async function fetchBlogs() {
+      if (!supabase) {
+        setPosts(fallbackPosts);
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select('*')
+          .eq('is_published', true)
+          .order('created_at', { ascending: false });
+          
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          setPosts(data);
+        } else {
+          setPosts(fallbackPosts);
+        }
+      } catch (err) {
+        console.error('Error fetching blogs:', err);
+        setPosts(fallbackPosts);
+      }
+    }
+    
+    fetchBlogs();
   }, []);
 
   const indexOfLastPost = currentPage * postsPerPage;
