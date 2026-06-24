@@ -24,12 +24,12 @@ export const SERVICES = [
     subtitle: 'Update your legal name on property records.'
   },
   {
-    id: 'removal-of-restriction',
-    title: 'Removal of a Restriction',
-    desc: 'Clear outdated charges, restrictions, or cautions from your property title.',
+    id: 'tenants-in-common',
+    title: 'Tenants in Common',
+    desc: 'Change your ownership structure to Tenants in Common to protect your specific share.',
     gif: '/gifs/tennant.gif',
     price: 350,
-    subtitle: 'Clear outdated charges, cautions, or restrictions.'
+    subtitle: 'Change ownership structure to protect your specific share.'
   },
   {
     id: 'transfer-of-equity-wills-probate',
@@ -40,20 +40,20 @@ export const SERVICES = [
     subtitle: 'Transfer inherited property to executors or beneficiaries.'
   },
   {
-    id: 'applying-for-restriction',
-    title: 'Applying for a Restriction',
-    desc: 'Protect your interest or trust ownership to prevent unauthorized property sale.',
-    gif: '/gifs/tennant.gif',
-    price: 350,
-    subtitle: 'Protect your trust or financial interest on property titles.'
-  },
-  {
     id: 'first-registration',
     title: 'First Registration',
     desc: 'Register unregistered historic deeds with HM Land Registry for modern legal security.',
     gif: '/gifs/first_registration.gif',
     price: 600,
     subtitle: 'Register unregistered historic deeds with HM Land Registry.'
+  },
+  {
+    id: 'additional-services',
+    title: 'Additional Services',
+    desc: 'Need something more specific? Our conveyancers support a wide range of property and registry matters—tell us what you are trying to achieve.',
+    gif: '/gifs/support.gif',
+    price: null,
+    subtitle: 'Tailored conveyancing for specific registry matters.'
   }
 ];
 

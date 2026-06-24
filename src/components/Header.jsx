@@ -15,7 +15,8 @@ import {
   MapPin,
   User,
   AlertCircle,
-  BookOpen
+  BookOpen,
+  PlusCircle
 } from 'lucide-react'
 
 import { Button } from './ui/button'
@@ -72,20 +73,20 @@ export default function Header({ onRequestCallback }) {
     'transfer-of-equity': Users,
     'death-of-joint-proprietor': FileText,
     'name-change': Award,
-    'removal-of-restriction': ShieldAlert,
+    'tenants-in-common': Users,
     'transfer-of-equity-wills-probate': Heart,
-    'applying-for-restriction': Lock,
-    'first-registration': Sparkles
+    'first-registration': Sparkles,
+    'additional-services': PlusCircle
   }
 
   const serviceColors = {
     'transfer-of-equity': 'bg-blue-50 text-blue-600 border border-blue-100/50',
     'death-of-joint-proprietor': 'bg-rose-50 text-rose-600 border border-rose-100/50',
     'name-change': 'bg-emerald-50 text-emerald-600 border border-emerald-100/50',
-    'removal-of-restriction': 'bg-amber-50 text-amber-600 border border-amber-100/50',
+    'tenants-in-common': 'bg-amber-50 text-amber-600 border border-amber-100/50',
     'transfer-of-equity-wills-probate': 'bg-purple-50 text-purple-600 border border-purple-100/50',
-    'applying-for-restriction': 'bg-indigo-50 text-indigo-600 border border-indigo-100/50',
-    'first-registration': 'bg-teal-50 text-teal-600 border border-teal-100/50'
+    'first-registration': 'bg-teal-50 text-teal-600 border border-teal-100/50',
+    'additional-services': 'bg-slate-100 text-slate-600 border border-slate-200/50'
   }
 
   const documents = [
@@ -142,33 +143,60 @@ export default function Header({ onRequestCallback }) {
             {servicesOpen && (
               <div
                 id="services-dropdown"
-                className="services-menu-panel absolute right-0 top-[calc(100%+12px)] z-50 w-[340px] rounded-xl border border-slate-200/60 bg-white shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200"
+                className="services-menu-panel absolute right-0 top-[calc(100%+12px)] z-50 w-[420px] rounded-2xl border border-slate-200/60 bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200"
                 role="menu"
               >
-                <div className="bg-slate-50/50 px-5 py-3 border-b border-slate-100 text-center">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Our Services</span>
+                <div className="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                  <span className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">Our Services</span>
+                  <span className="text-[11px] font-medium text-slate-400 bg-white px-2 py-0.5 rounded-full border border-slate-200/60 shadow-sm">{services.length} options</span>
                 </div>
-                <ul className="flex w-full flex-col">
-                  {services.map((service) => (
-                    <li key={service.id} role="none" className="border-b border-slate-100 last:border-b-0">
-                      {service.href && service.href.startsWith('http') ? (
-                        <a href={service.href} target="_blank" rel="noreferrer" role="menuitem" className="group flex items-center justify-between px-5 py-3.5 transition-all duration-200 hover:bg-slate-50" onClick={() => setServicesOpen(false)}>
-                          <span className="text-[15px] font-medium text-slate-700 group-hover:text-[#2F4F46] transition-colors">{service.title}</span>
-                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
-                             &rarr;
-                          </span>
-                        </a>
-                      ) : (
-                        <Link to={service.href} role="menuitem" className="group flex items-center justify-between px-5 py-3.5 transition-all duration-200 hover:bg-slate-50" onClick={() => setServicesOpen(false)}>
-                          <span className="text-[15px] font-medium text-slate-700 group-hover:text-[#2F4F46] transition-colors">{service.title}</span>
-                          <span className="text-[#C7A25A] opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
-                             &rarr;
-                          </span>
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                <div className="p-3">
+                  <ul className="flex w-full flex-col gap-1">
+                    {services.map((service) => {
+                      const IconComponent = serviceIcons[service.id] || FileText
+                      const colorClass = serviceColors[service.id] || 'bg-slate-50 text-slate-500'
+
+                      const linkContent = (
+                        <>
+                          <div className={`flex items-center justify-center w-11 h-11 rounded-xl ${colorClass} shrink-0 shadow-sm transition-transform duration-200 group-hover:scale-105`}>
+                            <IconComponent size={20} />
+                          </div>
+                          <div className="flex-1 min-w-0 text-left">
+                            <span className="block text-[15px] font-bold text-slate-800 group-hover:text-[#2F4F46] transition-colors leading-tight">
+                              {service.title}
+                            </span>
+                            {service.description && (
+                              <span className="block text-[13px] text-slate-500 mt-0.5 font-medium leading-snug truncate">
+                                {service.description}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-[#C7A25A]/10 text-[#C7A25A]">
+                            <ChevronRight size={16} />
+                          </div>
+                        </>
+                      )
+
+                      return (
+                        <li key={service.id} role="none">
+                          {service.href && service.href.startsWith('http') ? (
+                            <a href={service.href} target="_blank" rel="noreferrer" role="menuitem" className="group flex items-center gap-4 rounded-xl p-3 transition-all duration-200 hover:bg-slate-50" onClick={() => setServicesOpen(false)}>
+                              {linkContent}
+                            </a>
+                          ) : (
+                            <Link to={service.href} role="menuitem" className="group flex items-center gap-4 rounded-xl p-3 transition-all duration-200 hover:bg-slate-50" onClick={() => setServicesOpen(false)}>
+                              {linkContent}
+                            </Link>
+                          )}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+                <div className="bg-slate-50 border-t border-slate-100 px-6 py-4 flex items-center justify-between">
+                  <div className="text-[13px] font-medium text-slate-600">Need help deciding?</div>
+                  <Link to="/contact" onClick={() => setServicesOpen(false)} className="text-[13px] font-bold text-[#C7A25A] hover:text-[#b08d4a] transition-colors flex items-center gap-1">Contact Support <ChevronRight size={14} /></Link>
+                </div>
               </div>
             )}
           </div>

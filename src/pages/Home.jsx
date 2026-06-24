@@ -307,7 +307,16 @@ export default function Home() {
       <DocumentAccessSection />
 
       {/* ── BOOK A FREE CALL CTA ── */}
-      <section className="section section-dark cta-call-section" style={{ textAlign: 'center', padding: '120px 24px', background: '#2F4F46' }}>
+      <section 
+        className="section section-dark cta-call-section" 
+        style={{ 
+          textAlign: 'center', 
+          padding: '120px 24px', 
+          background: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.55)), url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="section-title" style={{ color: 'white', marginBottom: 20, fontSize: 'clamp(28px, 5vw, 42px)', lineHeight: 1.2 }}>
             Simplify Your Property Matters with Expert Conveyancing Services

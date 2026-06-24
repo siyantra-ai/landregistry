@@ -40,25 +40,25 @@ const SERVICE_DETAILS = {
     'Official title register update',
     'Confirmation letter provided',
   ],
-  'removal-of-restriction': [
-    'Restriction assessment included',
-    'RX3 / RX4 form preparation',
-    'Outdated charge or caveat cleared',
-  ],
   'transfer-of-equity-wills-probate': [
     'Probate grant review',
     'Assent or transfer deed drafted',
     'Estate administration support',
   ],
-  'applying-for-restriction': [
-    'RX1 restriction application',
-    'Protects trust / joint ownership',
-    'Prevents unauthorised sale',
+  'tenants-in-common': [
+    'Severance of joint tenancy',
+    'Protect your specific property share',
+    'Change your ownership structure',
   ],
   'first-registration': [
     'Historic deeds reviewed & verified',
     'Form FR1 filed electronically',
     'Official title register created',
+  ],
+  'additional-services': [
+    'Custom conveyancing solutions',
+    'Expert registry advice',
+    'Complex property matters',
   ],
 };
 
