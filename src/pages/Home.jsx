@@ -245,7 +245,6 @@ export default function Home() {
               <div className="marquee-item"><span>✦</span> FIXED VAT-INCLUSIVE FEES</div>
               <div className="marquee-item"><span>✦</span> DRAFTED IN 3–5 WORKING DAYS</div>
               <div className="marquee-item"><span>✦</span> DIRECT ACCESS TO SPECIALISTS</div>
-              <div className="marquee-item"><span>✦</span> HM LAND REGISTRY ELECTRONIC SUBMISSIONS</div>
             </React.Fragment>
           ))}
         </div>
