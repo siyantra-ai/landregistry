@@ -6,31 +6,37 @@ const DOCUMENT_SERVICES = [
   {
     id: 'title-register',
     title: 'Title Register',
+    desc: 'Proof of ownership and registered charges.',
     cta: 'Get the document',
   },
   {
     id: 'title-plan',
     title: 'Title Plan',
+    desc: 'Official map showing boundaries.',
     cta: 'Get the document',
   },
   {
     id: 'map-search',
     title: 'Map Search',
+    desc: 'Identify property titles from map coordinates.',
     cta: 'Get the document',
   },
   {
     id: 'deed-search',
     title: 'Deed Search',
+    desc: 'Retrieve historical deeds and documents.',
     cta: 'Get the document',
   },
   {
     id: 'property-ownership',
     title: 'Property Ownership',
+    desc: 'Check who currently owns any UK property.',
     cta: 'Get the document',
   },
   {
     id: 'property-alert',
-    title: "HM Land Registry's Property Alert",
+    title: "Land Registry's Property Alert",
+    desc: 'Monitor and protect property against fraud.',
     cta: 'Setup Alerts',
   }
 ];
@@ -64,6 +70,7 @@ export default function DocumentAccessSection() {
                   onClick={() => handleSelectService(doc.id)}
                 >
                   <span className="doc-access-item-name">{doc.title}</span>
+                  <p className="doc-access-item-desc">{doc.desc}</p>
                   <span className="doc-access-item-cta">
                     {doc.cta} <ArrowRight size={14} className="cta-arrow" />
                   </span>

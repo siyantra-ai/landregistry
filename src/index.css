@@ -4707,6 +4707,13 @@ a.footer-detail-item:hover {
   color: #2F4F46;
 }
 
+.doc-access-item-desc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
 .doc-access-item-cta {
   font-size: 13px;
   color: #7A9B8D;
