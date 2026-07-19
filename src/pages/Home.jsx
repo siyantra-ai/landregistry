@@ -30,6 +30,7 @@ const getCalendlyPrefill = () => {
 };
 
 export default function Home() {
+  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/enquiries-landregistrytransfers/30min';
   const servicesSectionRef = useRef(null);
   const [visibleServiceCount, setVisibleServiceCount] = useState(0);
 
@@ -326,7 +327,6 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button
               onClick={() => {
-                const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/enquiries-landregistrytransfers/30min';
                 if (window.Calendly) {
                   window.Calendly.initPopupWidget({ 
                     url: calendlyUrl,
