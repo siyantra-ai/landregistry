@@ -100,9 +100,10 @@ export default function ServiceStackSection({ services }) {
             <div
               key={s.id}
               onClick={() => {
-                if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
+                const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/enquiries-landregistrytransfers/30min';
+                if (calendlyUrl && window.Calendly) {
                   window.Calendly.initPopupWidget({ 
-                    url: import.meta.env.VITE_CALENDLY_URL,
+                    url: calendlyUrl,
                     prefill: getCalendlyPrefill()
                   });
                 } else {

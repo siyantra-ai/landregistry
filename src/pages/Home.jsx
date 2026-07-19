@@ -173,17 +173,17 @@ export default function Home() {
             </p>
 
             <div className="hero-actions">
-              {import.meta.env.VITE_CALENDLY_URL ? (
+              {calendlyUrl ? (
                 <button
                   type="button"
                   onClick={() => {
                     if (window.Calendly) {
                       window.Calendly.initPopupWidget({ 
-                        url: import.meta.env.VITE_CALENDLY_URL,
+                        url: calendlyUrl,
                         prefill: getCalendlyPrefill()
                       });
                     } else {
-                      window.open(import.meta.env.VITE_CALENDLY_URL, '_blank');
+                      window.open(calendlyUrl, '_blank');
                     }
                   }}
                   className="btn-mega-cta"
@@ -273,9 +273,9 @@ export default function Home() {
               <div 
                 key={s.id} 
                 onClick={() => {
-                  if (import.meta.env.VITE_CALENDLY_URL && window.Calendly) {
+                  if (calendlyUrl && window.Calendly) {
                     window.Calendly.initPopupWidget({ 
-                      url: import.meta.env.VITE_CALENDLY_URL,
+                      url: calendlyUrl,
                       prefill: getCalendlyPrefill()
                     });
                   } else {
@@ -326,7 +326,7 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button
               onClick={() => {
-                const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com';
+                const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/enquiries-landregistrytransfers/30min';
                 if (window.Calendly) {
                   window.Calendly.initPopupWidget({ 
                     url: calendlyUrl,
