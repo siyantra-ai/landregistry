@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { Check, Clock, FileText, ArrowRight, ShieldCheck, AlertCircle, ChevronDown } from 'lucide-react';
 import SEO from '../components/SEO';
 import EnquiryForm from '../components/EnquiryForm';
+import ReviewsSection from '../components/ReviewsSection';
 
 const GIFS = {
   'transfer-of-equity': '/gifs/add_name.gif',
@@ -114,6 +115,9 @@ export default function ServiceDetail() {
           </div>
         </div>
       </section>
+
+      {/* Verified Reviews Section */}
+      <ReviewsSection initialFilter={id} />
 
       {/* Dedicated Conversion Form Section */}
       <section className="section section-gray" id="enquiry-section">

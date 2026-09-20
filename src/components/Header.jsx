@@ -206,13 +206,6 @@ export default function Header({ onRequestCallback }) {
         </nav>
 
         <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <a
-            href="tel:03335770077"
-            className="header-book-btn"
-            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}
-          >
-            SALES 0333 577 0077
-          </a>
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="mobile-toggle rounded-md border border-[#ced6e6] text-[#2F4F46] lg:hidden" aria-label="Toggle menu">

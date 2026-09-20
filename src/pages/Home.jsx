@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import EnquiryForm from '../components/EnquiryForm';
 import ServiceStackSection from '../components/ServiceStackSection';
 import DocumentAccessSection from '../components/DocumentAccessSection';
+import ReviewsSection from '../components/ReviewsSection';
 import { SERVICES } from '../data/services';
 
 const getCalendlyPrefill = () => {
@@ -145,7 +146,13 @@ export default function Home() {
     "url": "https://landregistrytransfers.com",
     "telephone": "+443335770077",
     "address": { "@type": "PostalAddress", "streetAddress": "1 Limbrick", "addressLocality": "Blackburn", "postalCode": "BB1 8AB", "addressCountry": "GB" },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "17:00" }
+    "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "17:00" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "1280",
+      "bestRating": "5"
+    }
   };
 
   return (
@@ -305,6 +312,9 @@ export default function Home() {
       </section>
 
       <DocumentAccessSection />
+
+      {/* ── CLIENT REVIEWS SECTION ── */}
+      <ReviewsSection calendlyUrl={calendlyUrl} />
 
       {/* ── BOOK A FREE CALL CTA ── */}
       <section 
