@@ -110,6 +110,62 @@ export const REVIEWS = [
     initials: 'FM',
     title: 'Cleared an obsolete restriction in time to prevent our property sale collapsing',
     body: 'Two weeks before our agreed completion date, our buyer’s solicitor flagged an old restriction dating from 2009 relating to a long-cleared private agreement. We panicked that the sale would fall through. Landregistrytransfers prepared Form RX3 with the correct discharge evidence and expedited the cancellation with HM Land Registry. Saved our sale!'
+  },
+  {
+    id: 'rev-9',
+    name: 'Tariq & Yasmin Khan',
+    location: 'Roundhay, Leeds',
+    serviceId: 'transfer-of-equity',
+    serviceName: 'Transfer of Equity',
+    servicePrice: '£450',
+    rating: 5,
+    date: 'Verified Client • 2 months ago',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80',
+    initials: 'TK',
+    title: 'Added my spouse to property deeds ahead of our Nationwide remortgage',
+    body: 'We needed to add my wife to our freehold title deeds as part of our new fixed-rate mortgage requirement with Nationwide. High street conveyancers gave us quotes exceeding £1,000 with ambiguous timelines. Here, the process was seamless, professional, and completed within 5 business days for £450 flat fee.'
+  },
+  {
+    id: 'rev-10',
+    name: 'Oliver & Charlotte Bennett',
+    location: 'Bath, Somerset',
+    serviceId: 'tenants-in-common',
+    serviceName: 'Tenants in Common',
+    servicePrice: '£350',
+    rating: 5,
+    date: 'Verified Client • 3 months ago',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80',
+    initials: 'OB',
+    title: 'Protected unequal equity contributions clearly and amicably',
+    body: 'When buying together with different capital contributions, having a formal Severance of Joint Tenancy and Declaration of Trust was crucial for our peace of mind. The conveyancer guided us with remarkable clarity and filed the Form A restriction with Land Registry immediately. Superb service.'
+  },
+  {
+    id: 'rev-11',
+    name: 'Sarah Jenkins',
+    location: 'Cardiff, South Glamorgan',
+    serviceId: 'death-of-joint-proprietor',
+    serviceName: 'Death of a Joint Proprietor',
+    servicePrice: '£400',
+    rating: 5,
+    date: 'Verified Client • 3 months ago',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&h=150&q=80',
+    initials: 'SJ',
+    title: 'Extremely compassionate and efficient handling of probate deed changes',
+    body: 'Removing my late father from the joint title deeds after probate was emotionally stressful, but the conveyancing specialist took total care of everything. They drafted Form DJP, certified documentation, and gave prompt updates until the updated Title Register arrived from HM Land Registry.'
+  },
+  {
+    id: 'rev-12',
+    name: 'Edward Thorne',
+    location: 'Norwich, Norfolk',
+    serviceId: 'name-change',
+    serviceName: 'Name Change on Deeds',
+    servicePrice: '£150',
+    rating: 5,
+    date: 'Verified Client • 4 months ago',
+    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=150&h=150&q=80',
+    initials: 'ET',
+    title: 'Name correction on title register done quickly without solicitors office visits',
+    body: 'Discovered a spelling discrepancy between my passport and property title deeds right before applying for home improvement loans. For £150 fixed fee, they handled Form AP1 and verified statutory declarations online. Completed with zero hassle.'
   }
 ];
 

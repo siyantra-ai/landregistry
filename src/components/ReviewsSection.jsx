@@ -1,13 +1,118 @@
-import React, { useState } from 'react';
-import { Star, CheckCircle, ShieldCheck, MapPin, ArrowRight, Award, Lock, ThumbsUp, MessageSquare } from 'lucide-react';
-import { REVIEWS, REVIEW_CATEGORIES } from '../data/reviews';
+import React from 'react';
+import { 
+  Star, 
+  CheckCircle, 
+  ShieldCheck, 
+  MapPin, 
+  ArrowRight, 
+  Award, 
+  Lock, 
+  MessageSquare 
+} from 'lucide-react';
+import { REVIEWS } from '../data/reviews';
 
-export default function ReviewsSection({ initialFilter = 'all', showCategories = true, calendlyUrl }) {
-  const [activeCategory, setActiveCategory] = useState(initialFilter);
+function ReviewCardItem({ rev }) {
+  return (
+    <div className="review-card">
+      {/* Card Header: Rating, Badge, Date */}
+      <div className="review-card-top">
+        <div className="review-card-stars" aria-label={`${rev.rating} out of 5 stars`}>
+          {[...Array(rev.rating)].map((_, i) => (
+            <Star key={i} size={15} fill="#C7A25A" color="#C7A25A" />
+          ))}
+        </div>
+        <div className="review-verified-tag">
+          <CheckCircle size={13} />
+          <span>Verified Transfer</span>
+        </div>
+      </div>
 
-  const filteredReviews = activeCategory === 'all'
-    ? REVIEWS
-    : REVIEWS.filter(r => r.serviceId === activeCategory);
+      {/* Service Pill Badge */}
+      <div className="review-service-pill">
+        <span className="review-service-name">{rev.serviceName}</span>
+        <span className="review-price-tag">{rev.servicePrice} Fixed Fee</span>
+      </div>
+
+      {/* Review Headline */}
+      <h3 className="review-card-title">
+        "{rev.title}"
+      </h3>
+
+      {/* Review Body */}
+      <p className="review-card-body">
+        {rev.body}
+      </p>
+
+      {/* Card Footer: User details */}
+      <div className="review-card-footer">
+        <div className="review-author-avatar">
+          {rev.avatar ? (
+            <img
+              src={rev.avatar}
+              alt={rev.name}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                if (e.target.nextSibling) {
+                  e.target.nextSibling.style.display = 'flex';
+                }
+              }}
+            />
+          ) : null}
+          <div className="review-avatar-fallback" style={{ display: rev.avatar ? 'none' : 'flex' }}>
+            {rev.initials}
+          </div>
+        </div>
+
+        <div className="review-author-info">
+          <div className="review-author-name">{rev.name}</div>
+          <div className="review-author-location">
+            <MapPin size={13} className="location-icon" />
+            <span>{rev.location}</span>
+          </div>
+        </div>
+
+        <div className="review-date-stamp">
+          {rev.date.replace('Verified Client • ', '')}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Utility to build a seamless marquee loop
+function buildMarqueeSet(items, minCount = 6) {
+  if (!items || items.length === 0) return [];
+  let base = [...items];
+  while (base.length < minCount) {
+    base = [...base, ...items];
+  }
+  // Duplicate base exactly once for seamless 0% -> -50% loop
+  return [...base, ...base];
+}
+
+export default function ReviewsSection({ initialFilter = 'all', calendlyUrl }) {
+  const reviewsList = (initialFilter && initialFilter !== 'all')
+    ? (REVIEWS.filter(r => r.serviceId === initialFilter).length > 0
+        ? REVIEWS.filter(r => r.serviceId === initialFilter)
+        : REVIEWS)
+    : REVIEWS;
+
+  let row1Reviews = [];
+  let row2Reviews = [];
+
+  if (reviewsList.length <= 1) {
+    row1Reviews = reviewsList;
+    row2Reviews = reviewsList;
+  } else {
+    row1Reviews = reviewsList.filter((_, i) => i % 2 === 0);
+    row2Reviews = reviewsList.filter((_, i) => i % 2 !== 0);
+    if (row2Reviews.length === 0) {
+      row2Reviews = row1Reviews;
+    }
+  }
+
+  const track1Items = buildMarqueeSet(row1Reviews, 6);
+  const track2Items = buildMarqueeSet(row2Reviews, 6);
 
   const getCalendlyPrefill = () => {
     return {
@@ -80,104 +185,31 @@ export default function ReviewsSection({ initialFilter = 'all', showCategories =
           </div>
         </div>
 
-        {/* Category Filter Tabs (Scrollable on Mobile) */}
-        {showCategories && (
-          <div className="reviews-filter-container">
-            <div className="reviews-filter-tabs">
-              {REVIEW_CATEGORIES.map(cat => {
-                const count = cat.id === 'all' 
-                  ? REVIEWS.length 
-                  : REVIEWS.filter(r => r.serviceId === cat.id).length;
-                
-                // Hide category pill if it has 0 items
-                if (count === 0 && cat.id !== 'all') return null;
+        {/* Reviews Right Animation Showcase */}
+        <div className="reviews-marquee-stage">
+          {/* Smooth Edge Fades */}
+          <div className="reviews-fade-edge reviews-fade-left" aria-hidden="true" />
+          <div className="reviews-fade-edge reviews-fade-right" aria-hidden="true" />
 
-                const isActive = activeCategory === cat.id;
+          <div className="reviews-marquee-container">
+            {/* Row 1: Animates to the Right */}
+            <div className="reviews-marquee-row" tabIndex={0} aria-label="Reviews right animation row 1">
+              <div className="reviews-marquee-track reviews-track-right">
+                {track1Items.map((rev, idx) => (
+                  <ReviewCardItem key={`${rev.id}-r1-${idx}`} rev={rev} />
+                ))}
+              </div>
+            </div>
 
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`reviews-filter-tab ${isActive ? 'active' : ''}`}
-                  >
-                    <span>{cat.label}</span>
-                    <span className="reviews-filter-count">{count}</span>
-                  </button>
-                );
-              })}
+            {/* Row 2 (Down Row): Animates to the Left */}
+            <div className="reviews-marquee-row" tabIndex={0} aria-label="Reviews left animation row 2">
+              <div className="reviews-marquee-track reviews-track-left">
+                {track2Items.map((rev, idx) => (
+                  <ReviewCardItem key={`${rev.id}-r2-${idx}`} rev={rev} />
+                ))}
+              </div>
             </div>
           </div>
-        )}
-
-        {/* Reviews Grid */}
-        <div className="reviews-grid">
-          {filteredReviews.map((rev) => (
-            <div key={rev.id} className="review-card">
-              
-              {/* Card Header: Rating, Badge, Date */}
-              <div className="review-card-top">
-                <div className="review-card-stars">
-                  {[...Array(rev.rating)].map((_, i) => (
-                    <Star key={i} size={15} fill="#C7A25A" color="#C7A25A" />
-                  ))}
-                </div>
-                <div className="review-verified-tag">
-                  <CheckCircle size={13} />
-                  <span>Verified Transfer</span>
-                </div>
-              </div>
-
-              {/* Service Pill Badge */}
-              <div className="review-service-pill">
-                <span>{rev.serviceName}</span>
-                <span className="review-price-tag">{rev.servicePrice} Fixed Fee</span>
-              </div>
-
-              {/* Review Headline */}
-              <h3 className="review-card-title">
-                "{rev.title}"
-              </h3>
-
-              {/* Review Body */}
-              <p className="review-card-body">
-                {rev.body}
-              </p>
-
-              {/* Card Footer: User details */}
-              <div className="review-card-footer">
-                <div className="review-author-avatar">
-                  {rev.avatar ? (
-                    <img
-                      src={rev.avatar}
-                      alt={rev.name}
-                      onError={(e) => {
-                        // Fallback to initials if image fails to load
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                  ) : null}
-                  <div className="review-avatar-fallback" style={{ display: rev.avatar ? 'none' : 'flex' }}>
-                    {rev.initials}
-                  </div>
-                </div>
-
-                <div className="review-author-info">
-                  <div className="review-author-name">{rev.name}</div>
-                  <div className="review-author-location">
-                    <MapPin size={13} className="location-icon" />
-                    <span>{rev.location}</span>
-                  </div>
-                </div>
-
-                <div className="review-date-stamp">
-                  {rev.date.replace('Verified Client • ', '')}
-                </div>
-              </div>
-
-            </div>
-          ))}
         </div>
 
         {/* Bottom Call to Action Card */}

@@ -4984,12 +4984,132 @@ a.footer-detail-item:hover {
   color: #ffffff;
 }
 
-/* Reviews Grid */
+/* Reviews Right Animation Stage */
+.reviews-marquee-stage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 10px 0 20px 0;
+  margin-top: 24px;
+}
+
+/* Smooth Gradient Edge Masks */
+.reviews-fade-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.reviews-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #f8fafc 20%, rgba(248, 250, 252, 0) 100%);
+}
+
+.reviews-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #f8fafc 20%, rgba(248, 250, 252, 0) 100%);
+}
+
+.reviews-marquee-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.reviews-marquee-row {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 6px 0 10px 0;
+}
+
+.reviews-marquee-row::-webkit-scrollbar {
+  display: none;
+}
+
+.reviews-marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  align-items: stretch;
+  will-change: transform;
+}
+
+/* Row 1: Animates to the Right */
+.reviews-track-right {
+  animation: reviewsScrollRight 50s linear infinite;
+}
+
+/* Row 2 (Down Row): Animates to the Left */
+.reviews-track-left {
+  animation: reviewsScrollLeft 50s linear infinite;
+}
+
+/* Pause on Row / Card hover */
+.reviews-marquee-row:hover .reviews-marquee-track {
+  animation-play-state: paused !important;
+}
+
+/* Rightward Keyframe: moves from Left to Right */
+@keyframes reviewsScrollRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Leftward Keyframe: moves from Right to Left */
+@keyframes reviewsScrollLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Fixed Width for Cards Inside the Animated Track */
+.reviews-marquee-track .review-card {
+  width: 370px;
+  min-width: 370px;
+  max-width: 370px;
+  height: 100%;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .reviews-marquee-stage {
+    margin-inline: -12px;
+    border-radius: 0;
+  }
+  .reviews-fade-edge {
+    width: 36px;
+  }
+  .reviews-marquee-track .review-card {
+    width: 310px;
+    min-width: 310px;
+    max-width: 310px;
+    padding: 20px;
+  }
+}
+
+/* Reviews Grid (Static fallback / toggle view) */
 .reviews-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 @media (min-width: 768px) {

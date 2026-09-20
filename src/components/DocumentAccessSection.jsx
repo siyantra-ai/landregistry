@@ -83,7 +83,7 @@ export default function DocumentAccessSection() {
         {/* Right Column: Full-Height Image matching user screenshot */}
         <div className="doc-access-redesign-right" style={{ position: 'relative', overflow: 'hidden' }}>
           <img 
-            src="https://i.pinimg.com/736x/ff/7a/7c/ff7a7c8add623c1c60660eed99efc295.jpg" 
+            src="/document-review-editorial.jpg" 
             alt="Official Land Registry copy register title document" 
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', minHeight: '360px' }}
           />
