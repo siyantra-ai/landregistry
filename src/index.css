@@ -4634,7 +4634,7 @@ a.footer-detail-item:hover {
 }
 
 .doc-access-redesign-left {
-  padding: 60px 24px;
+  padding: 30px 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -4642,7 +4642,7 @@ a.footer-detail-item:hover {
 
 @media (min-width: 992px) {
   .doc-access-redesign-left {
-    padding: 80px 60px;
+    padding: 40px 40px;
     justify-content: flex-end;
   }
 }
@@ -4666,19 +4666,19 @@ a.footer-detail-item:hover {
   font-size: 18px;
   color: #4A635B;
   font-weight: 500;
-  margin: 0 0 40px 0;
+  margin: 0 0 20px 0;
 }
 
 .doc-access-links-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 10px;
 }
 
 @media (min-width: 640px) {
   .doc-access-links-list {
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 12px;
   }
 }
 
@@ -4686,8 +4686,8 @@ a.footer-detail-item:hover {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 20px;
+  gap: 4px;
+  padding: 12px 16px;
   background: white;
   border: 1px solid var(--border-default);
   border-radius: var(--r-md);
@@ -4755,7 +4755,7 @@ a.footer-detail-item:hover {
    REVIEWS & TESTIMONIALS SECTION
    ═══════════════════════════════════════════════ */
 .reviews-section {
-  padding: 88px 0;
+  padding: 16px 0;
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   position: relative;
   overflow: hidden;
@@ -4783,15 +4783,15 @@ a.footer-detail-item:hover {
 
 /* Trust & Metrics Strip */
 .reviews-trust-strip {
-  margin-top: 40px;
+  margin-top: 8px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 18px;
-  padding: 24px 32px;
+  border-radius: 8px;
+  padding: 6px 10px;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
 }
 
 @media (min-width: 992px) {
@@ -4811,7 +4811,7 @@ a.footer-detail-item:hover {
 }
 
 .reviews-rating-number {
-  font-size: 44px;
+  font-size: 18px;
   font-weight: 900;
   color: #2F4F46;
   line-height: 1;
@@ -4831,7 +4831,7 @@ a.footer-detail-item:hover {
 }
 
 .reviews-rating-count {
-  font-size: 13.5px;
+  font-size: 10px;
   color: #64748b;
 }
 
@@ -4873,9 +4873,9 @@ a.footer-detail-item:hover {
 }
 
 .pillar-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
   background: rgba(47, 79, 70, 0.08);
   color: #2F4F46;
   display: flex;
@@ -4886,18 +4886,18 @@ a.footer-detail-item:hover {
 
 .reviews-trust-pillar-item strong {
   display: block;
-  font-size: 13.5px;
+  font-size: 9px;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.3;
+  line-height: 1.1;
 }
 
 .reviews-trust-pillar-item span {
   display: block;
-  font-size: 12px;
+  font-size: 8px;
   color: #64748b;
-  line-height: 1.4;
-  margin-top: 2px;
+  line-height: 1.2;
+  margin-top: 1px;
 }
 
 /* Filter Tabs */
@@ -4989,9 +4989,9 @@ a.footer-detail-item:hover {
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: 20px;
-  padding: 10px 0 20px 0;
-  margin-top: 24px;
+  border-radius: 12px;
+  padding: 4px 0 8px 0;
+  margin-top: 12px;
 }
 
 /* Smooth Gradient Edge Masks */
@@ -5037,7 +5037,7 @@ a.footer-detail-item:hover {
 
 .reviews-marquee-track {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   width: max-content;
   align-items: stretch;
   will-change: transform;
@@ -5080,9 +5080,9 @@ a.footer-detail-item:hover {
 
 /* Fixed Width for Cards Inside the Animated Track */
 .reviews-marquee-track .review-card {
-  width: 370px;
-  min-width: 370px;
-  max-width: 370px;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
   height: 100%;
   flex-shrink: 0;
   margin-bottom: 0;
@@ -5128,8 +5128,8 @@ a.footer-detail-item:hover {
 .review-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 18px;
-  padding: 26px;
+  border-radius: 8px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -5172,15 +5172,15 @@ a.footer-detail-item:hover {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 4px;
   background: #f8fafc;
   border: 1px solid #edf2f7;
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 12px;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 9px;
   font-weight: 600;
   color: #334155;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
 }
 
 .review-price-tag {
@@ -5192,33 +5192,33 @@ a.footer-detail-item:hover {
 }
 
 .review-card-title {
-  font-size: 15.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.4;
-  margin-bottom: 10px;
+  line-height: 1.2;
+  margin-bottom: 4px;
 }
 
 .review-card-body {
-  font-size: 14px;
+  font-size: 10px;
   color: #475569;
-  line-height: 1.65;
+  line-height: 1.3;
   flex: 1;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .review-card-footer {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-top: 16px;
+  gap: 10px;
+  padding-top: 12px;
   border-top: 1px solid #f1f5f9;
   margin-top: auto;
 }
 
 .review-author-avatar {
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -5255,17 +5255,17 @@ a.footer-detail-item:hover {
 }
 
 .review-author-name {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .review-author-location {
   display: flex;
   align-items: center;
-  gap: 3px;
-  font-size: 12px;
+  gap: 2px;
+  font-size: 9px;
   color: #64748b;
 }
 
@@ -5275,7 +5275,7 @@ a.footer-detail-item:hover {
 }
 
 .review-date-stamp {
-  font-size: 11.5px;
+  font-size: 9px;
   color: #94a3b8;
   white-space: nowrap;
 }

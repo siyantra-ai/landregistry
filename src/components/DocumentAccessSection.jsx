@@ -85,7 +85,7 @@ export default function DocumentAccessSection() {
           <img 
             src="/document-review-editorial.jpg" 
             alt="Official Land Registry copy register title document" 
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', minHeight: '360px' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', minHeight: '360px', filter: 'blur(20px)' }}
           />
           <div className="doc-access-image-overlay" />
         </div>

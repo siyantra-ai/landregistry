@@ -97,22 +97,7 @@ export default function ReviewsSection({ initialFilter = 'all', calendlyUrl }) {
         : REVIEWS)
     : REVIEWS;
 
-  let row1Reviews = [];
-  let row2Reviews = [];
-
-  if (reviewsList.length <= 1) {
-    row1Reviews = reviewsList;
-    row2Reviews = reviewsList;
-  } else {
-    row1Reviews = reviewsList.filter((_, i) => i % 2 === 0);
-    row2Reviews = reviewsList.filter((_, i) => i % 2 !== 0);
-    if (row2Reviews.length === 0) {
-      row2Reviews = row1Reviews;
-    }
-  }
-
-  const track1Items = buildMarqueeSet(row1Reviews, 6);
-  const track2Items = buildMarqueeSet(row2Reviews, 6);
+  const track1Items = buildMarqueeSet(reviewsList, 6);
 
   const getCalendlyPrefill = () => {
     return {
@@ -126,133 +111,32 @@ export default function ReviewsSection({ initialFilter = 'all', calendlyUrl }) {
     <section className="section section-gray reviews-section" id="reviews">
       <div className="container">
         
-        {/* Section Header */}
-        <div className="section-header text-center" style={{ maxWidth: '820px', marginInline: 'auto' }}>
-          <div className="reviews-eyebrow">
-            <span className="reviews-eyebrow-icon">✦</span>
-            <span>CLIENT REVIEWS &amp; VERIFIED FEEDBACK</span>
-          </div>
-
-          <h2 className="section-title" style={{ marginTop: '12px', marginBottom: '16px' }}>
-            Trusted by UK Homeowners <span className="gradient-text">Across England &amp; Wales</span>
+        {/* Compact Section Header */}
+        <div className="section-header text-center" style={{ maxWidth: '600px', marginInline: 'auto' }}>
+          <h2 className="section-title" style={{ fontSize: '20px', margin: '0 0 8px 0' }}>
+            Trusted by UK Homeowners
           </h2>
-
-          <p className="section-desc" style={{ fontSize: '17px', color: 'var(--text-secondary)' }}>
-            Real experiences from property owners who used our direct fixed-fee conveyancing services for title deed changes, ownership transfers, and Land Registry applications.
-          </p>
-        </div>
-
-        {/* Rating & Trust Metrics Strip */}
-        <div className="reviews-trust-strip">
-          <div className="reviews-rating-box">
-            <div className="reviews-rating-number">4.9</div>
-            <div className="reviews-rating-details">
-              <div className="reviews-stars-row" aria-label="5 out of 5 stars">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={18} fill="#C7A25A" color="#C7A25A" />
-                ))}
-              </div>
-              <span className="reviews-rating-count">Based on <strong>1,280+</strong> verified transfers</span>
-            </div>
+          <div className="reviews-stars-row" style={{ justifyContent: 'center', marginBottom: '12px' }}>
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={14} fill="#C7A25A" color="#C7A25A" />
+            ))}
+            <span style={{ fontSize: '12px', color: '#64748b', marginLeft: '8px' }}>4.9/5 based on 1,280+ transfers</span>
           </div>
+        </div>
+      </div>
 
-          <div className="reviews-trust-divider" />
-
-          <div className="reviews-trust-pillars">
-            <div className="reviews-trust-pillar-item">
-              <div className="pillar-icon"><ShieldCheck size={20} /></div>
-              <div>
-                <strong>Regulated Solicitors</strong>
-                <span>Direct oversight by qualified legal specialists</span>
-              </div>
-            </div>
-
-            <div className="reviews-trust-pillar-item">
-              <div className="pillar-icon"><Award size={20} /></div>
-              <div>
-                <strong>100% Fixed-Fee Promise</strong>
-                <span>VAT included, no hidden disbursements</span>
-              </div>
-            </div>
-
-            <div className="reviews-trust-pillar-item">
-              <div className="pillar-icon"><Lock size={20} /></div>
-              <div>
-                <strong>HM Land Registry Compliant</strong>
-                <span>Direct digital portal lodgement &amp; tracking</span>
-              </div>
+      {/* Reviews Animation Showcase - Moved outside container for full width */}
+      <div className="reviews-marquee-stage" style={{ marginTop: '0', padding: '0' }}>
+        <div className="reviews-marquee-container">
+          {/* Single Row: Animates to the Right */}
+          <div className="reviews-marquee-row" tabIndex={0} aria-label="Reviews animation row">
+            <div className="reviews-marquee-track reviews-track-right">
+              {track1Items.map((rev, idx) => (
+                <ReviewCardItem key={`${rev.id}-r1-${idx}`} rev={rev} />
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Reviews Right Animation Showcase */}
-        <div className="reviews-marquee-stage">
-          {/* Smooth Edge Fades */}
-          <div className="reviews-fade-edge reviews-fade-left" aria-hidden="true" />
-          <div className="reviews-fade-edge reviews-fade-right" aria-hidden="true" />
-
-          <div className="reviews-marquee-container">
-            {/* Row 1: Animates to the Right */}
-            <div className="reviews-marquee-row" tabIndex={0} aria-label="Reviews right animation row 1">
-              <div className="reviews-marquee-track reviews-track-right">
-                {track1Items.map((rev, idx) => (
-                  <ReviewCardItem key={`${rev.id}-r1-${idx}`} rev={rev} />
-                ))}
-              </div>
-            </div>
-
-            {/* Row 2 (Down Row): Animates to the Left */}
-            <div className="reviews-marquee-row" tabIndex={0} aria-label="Reviews left animation row 2">
-              <div className="reviews-marquee-track reviews-track-left">
-                {track2Items.map((rev, idx) => (
-                  <ReviewCardItem key={`${rev.id}-r2-${idx}`} rev={rev} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Call to Action Card */}
-        <div className="reviews-bottom-cta">
-          <div className="reviews-cta-content">
-            <div className="reviews-cta-icon">
-              <MessageSquare size={28} />
-            </div>
-            <div>
-              <h4 className="reviews-cta-title">Need advice regarding your property deeds?</h4>
-              <p className="reviews-cta-subtitle">
-                Speak directly with an experienced conveyancing specialist today. Transparent advice and no-obligation fixed pricing.
-              </p>
-            </div>
-          </div>
-          <div className="reviews-cta-actions">
-            <button
-              type="button"
-              onClick={() => {
-                if (calendlyUrl && window.Calendly) {
-                  window.Calendly.initPopupWidget({
-                    url: calendlyUrl,
-                    prefill: getCalendlyPrefill()
-                  });
-                } else if (calendlyUrl) {
-                  window.open(calendlyUrl, '_blank');
-                } else {
-                  const enquiryForm = document.getElementById('main-enquiry-form');
-                  if (enquiryForm) {
-                    enquiryForm.scrollIntoView({ behavior: 'smooth' });
-                  } else {
-                    window.location.href = '/contact';
-                  }
-                }
-              }}
-              className="btn-mega-cta"
-              style={{ fontSize: '15px', padding: '14px 28px' }}
-            >
-              Book a Free Call <ArrowRight size={16} style={{ marginLeft: '6px' }} />
-            </button>
-          </div>
-        </div>
-
       </div>
     </section>
   );
