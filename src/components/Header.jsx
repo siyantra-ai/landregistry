@@ -325,16 +325,8 @@ export default function Header({ onRequestCallback }) {
                   </SheetClose>
                 </div>
 
-                {/* Contact Us Section */}
                 <div className="mobile-menu-section pt-1 mb-4">
                   <div className="flex flex-col gap-3 px-3">
-                    <span className="text-[12px] font-bold text-slate-400 uppercase tracking-wider">Contact Us</span>
-                    <a href="tel:03335770077" className="flex items-center gap-3 text-[14.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 text-[#C7A25A] border border-slate-100">
-                        <Phone size={14} />
-                      </div>
-                      0333 577 0077
-                    </a>
                     <a href="mailto:enquiries@landregistrytransfers.com" className="flex items-center gap-3 text-[14.5px] font-medium text-slate-700 hover:text-[#2F4F46] transition-colors">
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 text-[#C7A25A] border border-slate-100">
                         <Mail size={14} />

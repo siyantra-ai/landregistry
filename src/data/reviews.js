@@ -11,7 +11,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'MP',
     title: 'Remortgage deadline met with 4 days to spare — half the price of high street firms',
-    body: 'We were remortgaging with Barclays and needed to add my partner to the property deeds urgently before our mortgage offer expired. Our usual high street solicitor quoted £1,250 + VAT with a 6-week estimate. Landregistrytransfers drafted our TR1 transfer deed and verified our IDs within 4 working days for £450 all-in. Barclays approved the documents immediately with zero fuss. Exceptional service.'
+    body: 'Friendly, clear service that made everything feel simple.'
   },
   {
     id: 'rev-2',
@@ -25,7 +25,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'MD',
     title: 'Compassionate, patient help removing my late husband from the title register',
-    body: 'Following the loss of my husband of 42 years, dealing with property paperwork felt completely daunting. The specialist who handled my case was wonderfully patient and respectful. They prepared Form DJP, certified the death certificate, and lodged everything with HM Land Registry directly. The updated Title Register arrived within three weeks. Truly comforting to be in such capable hands.'
+    body: 'Patient, thoughtful help when I needed it most.'
   },
   {
     id: 'rev-3',
@@ -39,7 +39,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'CR',
     title: 'Updated deeds surname after marriage — fast, painless, and transparent',
-    body: 'I had delayed updating my surname on our deeds for over two years because I assumed it would be an administrative headache involving multiple solicitor visits. The online application took under 5 minutes to submit. For a flat £150 fee, they drafted Form AP1, verified my marriage certificate copy, and kept me notified at every step. Received the official confirmation from HM Land Registry ahead of time.'
+    body: 'Quick, straightforward, and reassuring from start to finish.'
   },
   {
     id: 'rev-4',
@@ -53,7 +53,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'AP',
     title: 'Flawless Severance of Joint Tenancy protecting our unequal contributions',
-    body: 'My sister and I co-purchased an investment property with unequal deposits (65/35 split) and needed to protect our respective interests through a Severance of Joint Tenancy and a Form A restriction. The conveyancer explained the implications in plain English, completed Form SEV, and registered the restriction seamlessly. First-rate legal expertise at a very sensible cost.'
+    body: 'Everything was explained clearly, and the service was excellent.'
   },
   {
     id: 'rev-5',
@@ -67,7 +67,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'AC',
     title: 'Registered our family’s 1970s unregistered cottage with HM Land Registry',
-    body: 'Our family cottage had never been digitally registered with HM Land Registry, only having a bundle of historic conveyance documents dating back to 1974. The conveyancing specialist pieced together the epitome of title, arranged a compliant boundary plan, and submitted Form FR1. HM Land Registry approved the first registration without a single requisition or query.'
+    body: 'Helpful, professional support throughout the whole process.'
   },
   {
     id: 'rev-6',
@@ -81,7 +81,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'DH',
     title: 'Handled our mother’s estate property transfer with exceptional speed',
-    body: 'We required an Assent (Form AS1) to transfer our late mother’s house to both beneficiaries following the Grant of Probate. Local estate lawyers were quoting huge hourly rates and months of delays. The team here completed the full transfer and Land Registry submission for £450 fixed. Direct contact with a qualified specialist who answered queries within hours.'
+    body: 'Kind, responsive support that made a difficult process easier.'
   },
   {
     id: 'rev-7',
@@ -95,7 +95,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'JW',
     title: 'Smooth separation equity buyout — Santander signed off without delays',
-    body: 'Following an amicable separation, I was buying out my ex-partner’s share of our residential home. The transfer deed (TR1) had to be agreed, signed, ID verified, and submitted alongside mortgage lender consent. The entire workflow was organized with clockwork precision. No unexpected charges or hidden disbursements — true fixed fee.'
+    body: 'The whole process was smooth, clear, and well organised.'
   },
   {
     id: 'rev-8',
@@ -109,7 +109,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'FM',
     title: 'Cleared an obsolete restriction in time to prevent our property sale collapsing',
-    body: 'Two weeks before our agreed completion date, our buyer’s solicitor flagged an old restriction dating from 2009 relating to a long-cleared private agreement. We panicked that the sale would fall through. Landregistrytransfers prepared Form RX3 with the correct discharge evidence and expedited the cancellation with HM Land Registry. Saved our sale!'
+    body: 'Fast, efficient help at exactly the right time.'
   },
   {
     id: 'rev-9',
@@ -123,7 +123,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'TK',
     title: 'Added my spouse to property deeds ahead of our Nationwide remortgage',
-    body: 'We needed to add my wife to our freehold title deeds as part of our new fixed-rate mortgage requirement with Nationwide. High street conveyancers gave us quotes exceeding £1,000 with ambiguous timelines. Here, the process was seamless, professional, and completed within 5 business days for £450 flat fee.'
+    body: 'Professional, friendly service with clear updates throughout.'
   },
   {
     id: 'rev-10',
@@ -137,7 +137,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'OB',
     title: 'Protected unequal equity contributions clearly and amicably',
-    body: 'When buying together with different capital contributions, having a formal Severance of Joint Tenancy and Declaration of Trust was crucial for our peace of mind. The conveyancer guided us with remarkable clarity and filed the Form A restriction with Land Registry immediately. Superb service.'
+    body: 'Clear advice and a simple, stress-free experience.'
   },
   {
     id: 'rev-11',
@@ -151,7 +151,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'SJ',
     title: 'Extremely compassionate and efficient handling of probate deed changes',
-    body: 'Removing my late father from the joint title deeds after probate was emotionally stressful, but the conveyancing specialist took total care of everything. They drafted Form DJP, certified documentation, and gave prompt updates until the updated Title Register arrived from HM Land Registry.'
+    body: 'Compassionate, helpful, and easy to reach whenever I had a question.'
   },
   {
     id: 'rev-12',
@@ -165,7 +165,7 @@ export const REVIEWS = [
     avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=150&h=150&q=80',
     initials: 'ET',
     title: 'Name correction on title register done quickly without solicitors office visits',
-    body: 'Discovered a spelling discrepancy between my passport and property title deeds right before applying for home improvement loans. For £150 fixed fee, they handled Form AP1 and verified statutory declarations online. Completed with zero hassle.'
+    body: 'A quick and easy process with excellent communication.'
   }
 ];
 

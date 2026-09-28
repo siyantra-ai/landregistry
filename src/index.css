@@ -5280,6 +5280,128 @@ a.footer-detail-item:hover {
   white-space: nowrap;
 }
 
+.reviews-section {
+  background: #f2f2f2;
+}
+
+.reviews-section .reviews-heading {
+  max-width: none;
+  margin-bottom: 34px;
+  text-align: left;
+}
+
+.reviews-section .section-title {
+  margin: 0;
+  color: #20272a;
+  font-size: 48px;
+  line-height: 1.15;
+}
+
+.reviews-section .reviews-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 68px;
+}
+
+.reviews-section .review-card {
+  min-width: 0;
+  min-height: 280px;
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #e5e7e7;
+  border-radius: 2px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  animation: reviewsPageEnter 0.3s ease both;
+  transition: none;
+}
+
+.reviews-section .review-card:hover {
+  transform: none;
+  border-color: #e5e7e7;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section .review-author-name {
+  margin: 18px 0 0;
+  color: #405b51;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.reviews-section .review-card-body {
+  margin: 0;
+  color: #4a655b;
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.reviews-controls {
+  display: flex;
+  justify-content: center;
+  gap: 62px;
+  margin-top: 52px;
+}
+
+.reviews-controls button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  padding: 0;
+  color: #85898a;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.reviews-controls button:hover {
+  color: #405b51;
+}
+
+.reviews-controls button:focus-visible {
+  outline: 2px solid #405b51;
+  outline-offset: 4px;
+}
+
+@keyframes reviewsPageEnter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reviews-section .review-card {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .reviews-section .section-title {
+    font-size: 34px;
+  }
+
+  .reviews-section .reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .reviews-section .review-card {
+    min-height: 0;
+    padding: 24px;
+  }
+
+  .reviews-section .review-card-body {
+    font-size: 17px;
+  }
+
+  .reviews-section .review-author-name {
+    font-size: 23px;
+  }
+
+  .reviews-controls {
+    margin-top: 32px;
+  }
+}
+
 /* Bottom CTA Card */
 .reviews-bottom-cta {
   margin-top: 48px;

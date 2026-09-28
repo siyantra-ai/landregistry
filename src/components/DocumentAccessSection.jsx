@@ -83,9 +83,9 @@ export default function DocumentAccessSection() {
         {/* Right Column: Full-Height Image matching user screenshot */}
         <div className="doc-access-redesign-right" style={{ position: 'relative', overflow: 'hidden' }}>
           <img 
-            src="/document-review-editorial.jpg" 
-            alt="Official Land Registry copy register title document" 
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', minHeight: '360px', filter: 'blur(20px)' }}
+            src="/individual-document-access.webp" 
+            alt="Land Registry documents for individual property searches" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', minHeight: '360px' }}
           />
           <div className="doc-access-image-overlay" />
         </div>
