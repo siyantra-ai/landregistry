@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, CheckCircle, FileText, Loader2, Lock, Clock, Sparkles, MapPin, Calendar, User, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, FileText, Loader2, Sparkles, MapPin, Calendar, User, ShieldAlert } from 'lucide-react';
 import SEO from '../components/SEO';
 import { saveEnquiry } from '../db/supabase';
 import { SERVICES_MAP } from '../data/services';
@@ -157,35 +157,23 @@ export default function ApplyWizard() {
   const [holdsPhysicalDeeds, setHoldsPhysicalDeeds] = useState('');
   const [claimantNames, setClaimantNames] = useState('');
 
-  // Step 3: Contact & Checkout
+  // Step 3: Contact & Call Booking
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [clientPhone, setClientPhone] = useState('');
-  const [turnaroundType, setTurnaroundType] = useState('standard'); // 'standard' or 'fast-track'
-  const [waiverChecked, setWaiverChecked] = useState(false);
 
   // Submit / Success States
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  // --- PRICE SPLIT CALCULATION ---
-  const getCheckoutCalculations = () => {
-    const basePrice = s.price;
-    const fastTrackUpgrade = turnaroundType === 'fast-track' ? 95 : 0;
-    const total = basePrice + fastTrackUpgrade;
-    const documentFee = 7.00;
-    const taxable = total - documentFee;
-    const vat = taxable * 1 / 6;
-    const searchProcessingFee = taxable * 5 / 6;
+  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/enquiries-landregistrytransfers/30min';
 
-    return {
-      documentFee,
-      searchProcessingFee,
-      vat,
-      total
-    };
+  const getCallBookingUrl = () => {
+    const url = new URL(calendlyUrl);
+    url.searchParams.set('name', clientName);
+    url.searchParams.set('email', clientEmail);
+    url.searchParams.set('a1', clientPhone);
+    return url.toString();
   };
-
-  const calcs = getCheckoutCalculations();
 
   // --- FORM STEP SUBMISSIONS ---
   const handleNextStep = (e) => {
@@ -205,11 +193,10 @@ export default function ApplyWizard() {
 
   const handleSubmitApplication = async (e) => {
     e.preventDefault();
-    if (!waiverChecked) return;
     setLoading(true);
 
     // Compile custom case notes based on service
-    let caseNotes = `Application for: ${s.title}\n`;
+    let caseNotes = `Call request for: ${s.title}\n`;
     caseNotes += `Property Address: ${address}, Postcode: ${postcode}\n\n`;
 
     if (serviceId === 'transfer-of-equity') {
@@ -241,14 +228,13 @@ export default function ApplyWizard() {
       caseNotes += `Claimant names: ${claimantNames}\n`;
     }
 
-    caseNotes += `\nTurnaround Type: ${turnaroundType === 'fast-track' ? 'Fast Track (48 hours)' : 'Standard (14 working days)'}\n`;
-    caseNotes += `Pricing breakdown: Document Fee £${calcs.documentFee.toFixed(2)}, Processing £${calcs.searchProcessingFee.toFixed(2)}, VAT £${calcs.vat.toFixed(2)}, Total Paid £${calcs.total.toFixed(2)}`;
+    caseNotes += '\nRequest: Book a call to discuss this matter. No payment was taken.';
 
     const res = await saveEnquiry({
       name: clientName,
       email: clientEmail,
       phone: clientPhone,
-      service: `Apply Form: ${s.title}`,
+      service: `Call Booking: ${s.title}`,
       notes: caseNotes
     });
 
@@ -432,20 +418,21 @@ export default function ApplyWizard() {
         <SEO title="Application Submitted" description="Your property deed transfer application has been received successfully." />
         <div style={{ background: '#ffffff', borderRadius: '16px', border: '1.5px solid var(--border-default)', padding: '48px 32px', boxShadow: 'var(--shadow-lg)' }}>
           <CheckCircle size={64} style={{ color: 'var(--blue-600)', margin: '0 auto 24px' }} />
-          <h1 style={{ fontSize: '28px', color: 'var(--text-primary)', marginBottom: '12px', fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}>Application Received!</h1>
+          <h1 style={{ fontSize: '28px', color: 'var(--text-primary)', marginBottom: '12px', fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}>Your details are with our team</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6', marginBottom: '24px' }}>
-            Thank you. Your conveyance application details for <strong>{s.title}</strong> have been logged successfully. 
+            Thank you. Your details for <strong>{s.title}</strong> have been sent to our team. Choose a time on the calendar to book your call.
           </p>
           <div style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-default)', borderRadius: '10px', padding: '20px', marginBottom: '32px', textAlign: 'left' }}>
             <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', color: 'var(--text-primary)', display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <Clock size={16} style={{ color: 'var(--blue-600)' }} /> Next Steps:
+              <Calendar size={16} style={{ color: 'var(--blue-600)' }} /> Book your call
             </h4>
-            <ul style={{ paddingLeft: '16px', margin: 0, fontSize: '13px', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <li>A deed specialist will review your details against HM Land Registry index records.</li>
-              <li>We will call you on <strong>{clientPhone}</strong> to confirm identity check requirements (such as Form ID1).</li>
-              <li>Draft documentation and invoice calculations will be dispatched to <strong>{clientEmail}</strong>.</li>
-            </ul>
+            <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+              Your contact details are prefilled. Select an available time to confirm the call.
+            </p>
           </div>
+          <a href={getCallBookingUrl()} target="_blank" rel="noreferrer" className="btn-primary" style={{ display: 'inline-flex', width: '100%', justifyContent: 'center', marginBottom: '12px' }}>
+            <Calendar size={16} style={{ marginRight: '8px' }} /> Choose a call time
+          </a>
           <Link to="/" className="btn-primary" style={{ display: 'inline-flex', width: '100%', justifyContent: 'center' }}>
             Back to Homepage
           </Link>
@@ -463,7 +450,7 @@ export default function ApplyWizard() {
         
         {/* Dynamic header */}
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-accent)', fontWeight: 700, display: 'block', marginBottom: '8px' }}>Online Portal Application</span>
+          <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-accent)', fontWeight: 700, display: 'block', marginBottom: '8px' }}>Call Booking</span>
           <h1 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontFamily: 'Poppins, sans-serif', color: 'var(--text-primary)', fontWeight: 600, marginBottom: '8px' }}>{s.title}</h1>
           <p style={{ fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto' }}>{s.subtitle}</p>
         </div>
@@ -491,7 +478,7 @@ export default function ApplyWizard() {
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: currentStep >= 3 ? 'var(--blue-600)' : '#ffffff', border: currentStep >= 3 ? 'none' : '1.5px solid var(--border-default)', color: currentStep >= 3 ? '#ffffff' : 'var(--text-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12.5px', fontWeight: 700, boxShadow: currentStep === 3 ? '0 0 10px rgba(47, 79, 70, 0.3)' : 'none' }}>
               3
             </div>
-            <span style={{ fontSize: '11px', marginTop: '6px', fontWeight: currentStep === 3 ? 700 : 500, color: currentStep === 3 ? 'var(--text-primary)' : 'var(--text-tertiary)' }}>Checkout</span>
+            <span style={{ fontSize: '11px', marginTop: '6px', fontWeight: currentStep === 3 ? 700 : 500, color: currentStep === 3 ? 'var(--text-primary)' : 'var(--text-tertiary)' }}>Book a call</span>
           </div>
         </div>
 
@@ -541,7 +528,8 @@ export default function ApplyWizard() {
 
           {currentStep === 3 && (
             <form onSubmit={handleSubmitApplication}>
-              <h3 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center' }}><User size={18} /> Step 3: Contact &amp; Checkout Summary</h3>
+              <h3 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', display: 'flex', gap: '8px', alignItems: 'center' }}><User size={18} /> Step 3: Book a Call</h3>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '20px' }}>Share your contact details, then choose a suitable call time. No payment is taken.</p>
               
               <div className="form-group">
                 <label className="form-label" htmlFor="client-name">Your Full Name</label>
@@ -556,96 +544,18 @@ export default function ApplyWizard() {
                 <input id="client-phone" type="tel" required className="form-input" placeholder="e.g. 07123 456789" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
               </div>
 
-              {/* Turnaround times Selection */}
-              <div className="form-group" style={{ marginTop: '20px' }}>
-                <label className="form-label">Select Turnaround Speed</label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '6px' }}>
-                  <div 
-                    onClick={() => setTurnaroundType('standard')}
-                    style={{ border: turnaroundType === 'standard' ? '2.5px solid var(--blue-600)' : '1.5px solid var(--border-default)', padding: '16px', borderRadius: '10px', cursor: 'pointer', backgroundColor: turnaroundType === 'standard' ? 'var(--bg-secondary)' : '#ffffff', transition: 'all 0.2s ease' }}
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '13.5px', color: 'var(--text-primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span>Standard</span>
-                      {turnaroundType === 'standard' && <CheckCircle size={15} style={{ color: 'var(--blue-600)' }} />}
-                    </div>
-                    <div style={{ fontSize: '11.5px', color: 'var(--text-tertiary)', marginTop: '4px' }}>14 working days · Free</div>
-                  </div>
-                  
-                  <div 
-                    onClick={() => setTurnaroundType('fast-track')}
-                    style={{ border: turnaroundType === 'fast-track' ? '2.5px solid var(--blue-600)' : '1.5px solid var(--border-default)', padding: '16px', borderRadius: '10px', cursor: 'pointer', backgroundColor: turnaroundType === 'fast-track' ? 'var(--bg-secondary)' : '#ffffff', transition: 'all 0.2s ease' }}
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '13.5px', color: 'var(--text-primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span>Fast Track (+£95)</span>
-                      {turnaroundType === 'fast-track' && <CheckCircle size={15} style={{ color: 'var(--blue-600)' }} />}
-                    </div>
-                    <div style={{ fontSize: '11.5px', color: 'var(--text-tertiary)', marginTop: '4px' }}>48 working hours</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Price Split Breakdown */}
-              <div className="price-split-breakdown" style={{ 
-                marginTop: '24px', 
-                padding: '18px', 
-                backgroundColor: 'var(--bg-secondary)', 
-                borderRadius: '10px', 
-                border: '1.5px solid var(--border-default)', 
-                fontSize: '13px'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
-                  <span>HM Land Registry Document Fee (gov.uk cost):</span>
-                  <span style={{ fontWeight: 600 }}>£{calcs.documentFee.toFixed(2)}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
-                  <span>Search &amp; Processing Fee:</span>
-                  <span style={{ fontWeight: 600 }}>£{calcs.searchProcessingFee.toFixed(2)}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--text-secondary)' }}>
-                  <span>VAT (20% on Search &amp; Processing):</span>
-                  <span style={{ fontWeight: 600 }}>£{calcs.vat.toFixed(2)}</span>
-                </div>
-                <div style={{ height: '1.5px', backgroundColor: 'var(--border-default)', margin: '12px 0' }} />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '15.5px', color: 'var(--text-primary)' }}>
-                  <span>Total Conveyancing Fee:</span>
-                  <span>£{calcs.total.toFixed(2)}</span>
-                </div>
-              </div>
-
-              {/* Required Cancellation Waiver Checkbox */}
-              <div className="compliance-checkbox-group" style={{ marginTop: '20px', marginBottom: '24px' }}>
-                <label style={{ display: 'flex', gap: '10px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                  <input 
-                    type="checkbox" 
-                    required 
-                    checked={waiverChecked}
-                    onChange={(e) => setWaiverChecked(e.target.checked)}
-                    style={{ marginTop: '3.5px', accentColor: 'var(--blue-600)' }}
-                  />
-                  <span style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                    I agree to waive my 14-day cancellation right to allow Swift Task Services Ltd to start retrieving deed files immediately. I understand the search and processing fee is non-refundable once started.
-                  </span>
-                </label>
-              </div>
-
-              {/* Security badges */}
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', color: 'var(--text-tertiary)', fontSize: '11px', borderTop: '1px solid var(--border-default)', paddingTop: '16px' }}>
-                <Lock size={12} />
-                <span>Secure SSL Check · GDPR compliant · Encrypted Data</span>
-              </div>
-
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <button type="button" onClick={handlePrevStep} className="btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'transparent', borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}>
                   <ArrowLeft size={15} /> Back
                 </button>
-                <button type="submit" disabled={loading || !waiverChecked} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', opacity: waiverChecked ? 1 : 0.6 }}>
+                <button type="submit" disabled={loading} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   {loading ? (
                     <>
                       <Loader2 size={15} className="spinner" /> Submitting...
                     </>
                   ) : (
                     <>
-                      Submit Application <ArrowRight size={15} />
+                      Send details &amp; book a call <ArrowRight size={15} />
                     </>
                   )}
                 </button>
